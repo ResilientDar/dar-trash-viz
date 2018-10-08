@@ -14,7 +14,7 @@ let Map = class Map extends React.Component {
   };
 
   componentDidUpdate() {
-    this.setFill();
+    // this.setFill();
   }
 
   componentDidMount() {
@@ -22,26 +22,19 @@ let Map = class Map extends React.Component {
       container: this.mapContainer,
       style: 'mapbox://styles/wkimacha/cjmhko2wnbl5l2rmqn1fetf5o',
       center: [39.182384, -6.783038],
-      zoom: 9
+      zoom: 11
     });
-
-    var data = this.map.querySourceFeatures("Dar_Trash_with_image_path-2m83ys", {sourceLayer:['dartrash']});
 
     this.map.on('load', () => {
-      this.map.addSource('points', {
-        type: 'geojson',
-        data: data
-      });
-
-      // this.map.addLayer({
-      //   id: 'trash',
-      //   type: 'fill',
-      //   source: 'countries'
-      // }, 'country-label-lg'); // ID metches `mapbox/streets-v9`
+       this.map.addLayer({
+        id: 'Dar_Trash_with_image_path-2m83ys',
+        type: 'fill',
+        source: 'dartrash'
+      }, 'dartrash-label-lg');
 
       this.setFill();
-    });
-  }
+      });
+    }
 
   setFill() {
     const { property, stops } = this.props.active;
