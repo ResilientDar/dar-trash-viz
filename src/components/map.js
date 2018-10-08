@@ -25,17 +25,19 @@ let Map = class Map extends React.Component {
       zoom: 9
     });
 
+    var data = this.map.querySourceFeatures("Dar_Trash_with_image_path-2m83ys", {sourceLayer:['dartrash']});
+
     this.map.on('load', () => {
-      this.map.addSource('countries', {
+      this.map.addSource('points', {
         type: 'geojson',
-        data: this.props.data
+        data: data
       });
 
-      this.map.addLayer({
-        id: 'countries',
-        type: 'fill',
-        source: 'countries'
-      }, 'country-label-lg'); // ID metches `mapbox/streets-v9`
+      // this.map.addLayer({
+      //   id: 'trash',
+      //   type: 'fill',
+      //   source: 'countries'
+      // }, 'country-label-lg'); // ID metches `mapbox/streets-v9`
 
       this.setFill();
     });
