@@ -22,7 +22,7 @@ let Map = class Map extends React.Component {
       container: this.mapContainer,
       style: 'mapbox://styles/wkimacha/cjmhko2wnbl5l2rmqn1fetf5o',
       center: [39.182384, -6.783038],
-      zoom: 11
+      zoom: 12
     });
 
     this.map.on('load', () => {
