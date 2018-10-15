@@ -20,21 +20,52 @@ let Map = class Map extends React.Component {
   componentDidMount() {
     this.map = new mapboxgl.Map({
       container: this.mapContainer,
-      style: 'mapbox://styles/wkimacha/cjmhko2wnbl5l2rmqn1fetf5o',
+      style: 'mapbox://styles/worldbank-education/cjn4d0fleg0552spd8hfv1qfi',
       center: [39.182384, -6.783038],
       zoom: 12
     });
 
+    //Important events
+
     this.map.on('load', () => {
        this.map.addLayer({
-        id: 'Dar_Trash_with_image_path-2m83ys',
+        id: 'dar-trash',
         type: 'fill',
-        source: 'dartrash'
-      }, 'dartrash-label-lg');
+        source: 'dar-trash'
+        }, 'dartrash-label-lg');
 
       this.setFill();
-      });
-    }
+    });
+
+    this.map.on('click', (e) => {
+      var features = this.map.queryRenderedFeatures(e.point,
+       { layers: ['dar-trash'] });
+
+      if (features.length) {
+        var clickedPoint = features[0];
+        // Close all other popups and display popup for clicked point
+        this.createPopUp(clickedPoint);
+      }
+    });
+
+    
+  }
+
+  createPopUp(currentFeature) {
+    var popUps = document.getElementsByClassName('mapboxgl-popup');
+    // Check if there is already a popup on the map and if so, remove it
+    console.log(currentFeature);
+
+    if (popUps[0]) popUps[0].remove();
+
+    var popup = new mapboxgl.Popup({closeOnClick: false})
+      .setLngLat(currentFeature.geometry.coordinates)
+      // .setHTML('<img src="'+ currentFeature.properties.image_path +'" class="image_path" />')
+      .setHTML('<div><a href="#exampleModal" data-toggle="modal" class="img1" id="meta3">'+
+        '<img src="'+ currentFeature.properties.image_path +'" class="image_path"/></a></div>')
+      .addTo(this.map);
+  }
+
 
   setFill() {
     const { property, stops } = this.props.active;
@@ -43,6 +74,19 @@ let Map = class Map extends React.Component {
       stops
     });    
   }
+
+  createPopUp(currentFeature) {
+    var popUps = document.getElementsByClassName('mapboxgl-popup');
+    // Check if there is already a popup on the map and if so, remove it
+    if (popUps[0]) popUps[0].remove();
+
+    var popup = new mapboxgl.Popup({closeOnClick: false})
+      .setLngLat(currentFeature.geometry.coordinates)
+      .setHTML('<div><a href="#exampleModal" data-toggle="modal" class="img1" id="meta3">'+
+        '<img src="'+ currentFeature.properties.image_path +'" class="image_path"/></a></div>')
+      .addTo(this.map);
+  }
+
 
   render() {
     return (
