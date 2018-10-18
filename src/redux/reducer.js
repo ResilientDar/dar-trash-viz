@@ -6,21 +6,20 @@ const options = [{
   description: 'Size of trash pile',
   property: 'pop_est',
   stops: [
-    [0, '#f8d5cc'],
-    [100, '#f4bfb6'],
-    [500, '#f1a8a5'],
-    [100, '#ee8f9a'],
-    [500, '#ec739b']
+    ["Bagful", '#f8d5cc'],
+    ["Handful", '#f4bfb6'],
+    ["Cartload", '#f1a8a5'],
+    ["Trackload", '#ee8f9a']
   ]
 }, {
-  name: 'Trash by type',
+  name: 'Waste site type',
   description: 'Type of the trash pile',
   property: 'gdp_md_est',
   stops: [
-    [0, '#f8d5cc'],
-    [1000, '#f4bfb6'],
-    [5000, '#f1a8a5'],
-    [10000, '#ee8f9a']
+    ["Wind", '#f8d5cc'],
+    ["Dump", '#f4bfb6'],
+    ["Washed into Drain", '#f1a8a5'],
+    ["Liquid Waste", '#ee8f9a']
   ]
 }]
 
