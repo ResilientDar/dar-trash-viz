@@ -41,6 +41,7 @@ let Map = class Map extends React.Component {
       this.setFill();
       this.mouseEvents();
       this.clusters();
+      this.createLayerControl(this);
 
     });
 
@@ -148,25 +149,46 @@ let Map = class Map extends React.Component {
                 zoom: zoom
             });
         });
-    });
-
-    
+    });    
   }
 
-  createPopUp(currentFeature) {
-    var popUps = document.getElementsByClassName('mapboxgl-popup');
-    // Check if there is already a popup on the map and if so, remove it
-    console.log(currentFeature);
+  createLayerControl(mapInstance){
+    var toggleableLayerIds = [ 'dar-trash', 'clusters' ];
 
-    if (popUps[0]) popUps[0].remove();
+    for (var i = 0; i < toggleableLayerIds.length; i++) {
+        var id = toggleableLayerIds[i];
 
-    var popup = new mapboxgl.Popup({closeOnClick: false})
-      .setLngLat(currentFeature.geometry.coordinates)
-      // .setHTML('<img src="'+ currentFeature.properties.image_path +'" class="image_path" />')
-      .setHTML('<div><a href="'+ currentFeature.properties.image_path +'"'+
-        ' data-toggle="modal" class="img1" id="meta3">'+
-        '<img src="'+ currentFeature.properties.image_path +'" class="image_path"/></a></div>')
-      .addTo(this.map);
+        var link = document.createElement('a');
+        link.href = '#';
+        link.className = 'active';
+        link.textContent = mapInstance.getLayerTextContent(id);
+        link.id = id;
+
+        link.onclick =  (e) => {
+            var clickedLayer = this.id;
+            e.preventDefault();
+            e.stopPropagation();
+
+            var visibility = mapInstance.map.getLayoutProperty(clickedLayer, 'visibility');
+
+            if (visibility === 'visible') {
+                mapInstance.map.setLayoutProperty(clickedLayer, 'visibility', 'none');
+                this.className = '';
+            } else {
+                this.className = 'active';
+                mapInstance.map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
+            }
+        };
+
+        var layers = document.getElementById('menu');
+        layers.appendChild(link);
+    }
+
+  }
+
+  getLayerTextContent(id){
+    if (id == "dar-trash") return "Points";
+    else if (id == "clusters") return "Clusters";
   }
 
 
