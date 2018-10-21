@@ -14,6 +14,10 @@ let Map = class Map extends React.Component {
     active: PropTypes.object.isRequired
   };
 
+  state = {
+            pointsActive: true,
+            clustersActive: true};
+
   componentDidUpdate() {
     // this.setFill();
   }
@@ -25,6 +29,12 @@ let Map = class Map extends React.Component {
       center: [39.182384, -6.783038],
       zoom: 11
     });
+
+    this.map.on("render", () => {
+      if (!this.state.isReady) {
+        this.setState({ isReady: true })
+      }
+    })
 
     // Add zoom and rotation controls to the map.
     this.map.addControl(new mapboxgl.NavigationControl());
@@ -41,9 +51,10 @@ let Map = class Map extends React.Component {
       this.setFill();
       this.mouseEvents();
       this.clusters();
-      this.createLayerControl(this);
-
+      
     });
+
+    // this.createLayerControl(this);
 
     this.map.on('click', (e) => {
       var features = this.map.queryRenderedFeatures(e.point,
@@ -156,27 +167,43 @@ let Map = class Map extends React.Component {
     var toggleableLayerIds = [ 'dar-trash', 'clusters' ];
 
     for (var i = 0; i < toggleableLayerIds.length; i++) {
-        var id = toggleableLayerIds[i];
+        var id = this.getLayerTextContent(toggleableLayerIds[i]);
+
+        console.log(id);
 
         var link = document.createElement('a');
         link.href = '#';
         link.className = 'active';
-        link.textContent = mapInstance.getLayerTextContent(id);
+        link.textContent = id;
         link.id = id;
+
+
 
         link.onclick =  (e) => {
             var clickedLayer = this.id;
             e.preventDefault();
             e.stopPropagation();
 
+            console.log(mapInstance.map);
+
             var visibility = mapInstance.map.getLayoutProperty(clickedLayer, 'visibility');
 
             if (visibility === 'visible') {
-                mapInstance.map.setLayoutProperty(clickedLayer, 'visibility', 'none');
-                this.className = '';
+               
+               mapInstance.map.setLayoutProperty(clickedLayer, 'visibility', 'none');
+               this.className = '';
+
+                if(clickedLayer === "clusters"){
+                  mapInstance.map.setLayoutProperty("cluster-count", 'visibility', 'none');
+                }
             } else {
                 this.className = 'active';
                 mapInstance.map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
+
+                if(clickedLayer === "clusters"){
+                  mapInstance.map.setLayoutProperty("cluster-count", 'visibility', 'visible');
+                }
+               
             }
         };
 
@@ -187,8 +214,8 @@ let Map = class Map extends React.Component {
   }
 
   getLayerTextContent(id){
-    if (id == "dar-trash") return "Points";
-    else if (id == "clusters") return "Clusters";
+    if (id === "dar-trash") return "points";
+    else if (id === "clusters") return "clusters";
   }
 
 
@@ -212,10 +239,53 @@ let Map = class Map extends React.Component {
       .addTo(this.map);
   }
 
+  clickEventHandler(event){
+
+    var clickedLayer = event.target.id;
+
+    if(this.map != null)
+      var visibility = this.map.getLayoutProperty(clickedLayer, 'visibility');
+    else
+      var visibility = 'visible';
+
+    if (visibility === 'visible') {
+      this.map.setLayoutProperty(clickedLayer, 'visibility', 'none');
+
+      if(clickedLayer === "clusters"){
+        this.map.setLayoutProperty("cluster-count", 'visibility', 'none');
+      }
+    } else {
+       this.map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
+
+      if(clickedLayer === "clusters"){
+        this.map.setLayoutProperty("cluster-count", 'visibility', 'visible');
+      }
+    }
+
+    if(clickedLayer === 'points'){
+
+       this.setState(state => ({
+          pointsActive: !state.pointsActive
+        }));
+      }else{
+         this.setState(state => ({
+           clustersActive: !state.clustersActive
+          }));
+      }
+  }
+
 
   render() {
     return (
-      <div ref={el => this.mapContainer = el} className="absolute top right left bottom" />
+      <div>
+        <div ref={el => this.mapContainer = el} className="absolute top right left bottom" />
+         <nav id="menu" className="menu">
+      <a href="#" className={this.state.pointsActive ? 'active' : ''} 
+      onClick = {this.clickEventHandler.bind(this)} id="points"> points </a>
+      <a href="#" className={this.state.clustersActive ? 'active' : ''} 
+      onClick = {this.clickEventHandler.bind(this)} id="clusters">clusters</a>
+      </nav>
+      </div>
     );
   }
 }
