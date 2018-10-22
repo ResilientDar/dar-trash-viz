@@ -30,6 +30,8 @@ let Map = class Map extends React.Component {
       zoom: 11
     });
 
+    // Make sure all children load after map finishing rendering
+
     this.map.on("render", () => {
       if (!this.state.isReady) {
         this.setState({ isReady: true })
@@ -43,17 +45,20 @@ let Map = class Map extends React.Component {
 
     this.map.on('load', () => {
       this.mouseEvents();
-
       this.clusters();
       this.addPoints();
       
     });
 
-     this.createLayerControl(this);
+    this.createLayerControl(this);
+    this.clickEventsOnPoints();
+    
+  }
 
+  clickEventsOnPoints(){
     this.map.on('click', (e) => {
       var features = this.map.queryRenderedFeatures(e.point,
-       { layers: ['dar-trash'] });
+       { layers: ['dar-trash', 'unclustered-point'] });
 
       if (features.length) {
         var clickedPoint = features[0];
@@ -61,7 +66,6 @@ let Map = class Map extends React.Component {
         this.createPopUp(clickedPoint);
       }
     });
-    
   }
 
   mouseEvents(){
