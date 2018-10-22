@@ -42,7 +42,6 @@ let Map = class Map extends React.Component {
     //Main events
 
     this.map.on('load', () => {
-      this.setFill();
       this.mouseEvents();
 
       this.clusters();
@@ -50,7 +49,7 @@ let Map = class Map extends React.Component {
       
     });
 
-     // this.createLayerControl(this);
+     this.createLayerControl(this);
 
     this.map.on('click', (e) => {
       var features = this.map.queryRenderedFeatures(e.point,
@@ -173,21 +172,50 @@ let Map = class Map extends React.Component {
   }
 
   createLayerControl(mapInstance){
-    
+
+    var toggleableLayerIds = [ 'points', 'clusters' ];
+
+    for (var i = 0; i < toggleableLayerIds.length; i++) {
+        var id = toggleableLayerIds[i];
+
+        var link = document.createElement('a');
+        link.href = '#';
+        link.className = (id === 'clusters') ? 'active' : '';        
+        link.textContent = id;
+
+        link.onclick = function(e) {
+            var clickedLayer = mapInstance.getLayerTextContent(e.target.textContent);
+            e.preventDefault();
+            e.stopPropagation();
+
+            var visibility = mapInstance.map.getLayoutProperty(clickedLayer, 'visibility');
+
+            if (visibility === 'visible') {
+                mapInstance.map.setLayoutProperty(clickedLayer, 'visibility', 'none');
+                this.className = '';
+
+                if(clickedLayer === 'clusters'){
+                  mapInstance.map.setLayoutProperty("cluster-count", 'visibility', 'none');
+                  mapInstance.map.setLayoutProperty("unclustered-point", 'visibility', 'none');
+                }
+            } else {
+                this.className = 'active';
+                mapInstance.map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
+                 if(clickedLayer === 'clusters'){
+                  mapInstance.map.setLayoutProperty("cluster-count", 'visibility', 'visible');
+                  mapInstance.map.setLayoutProperty("unclustered-point", 'visibility', 'visible');
+                }
+            }
+        };
+
+        var layers = document.getElementById('menu');
+        layers.appendChild(link);
+      }
   }
 
   getLayerTextContent(id){
     if (id === "points") return "dar-trash";
     else if (id === "clusters") return "clusters";
-  }
-
-
-  setFill() {
-    const { property, stops } = this.props.active;
-    this.map.setPaintProperty('countries', 'fill-color', {
-      property,
-      stops
-    });    
   }
 
   createPopUp(currentFeature) {
@@ -202,54 +230,10 @@ let Map = class Map extends React.Component {
       .addTo(this.map);
   }
 
-  clickEventHandler(event){
-
-    var clickedLayer = event.target.id;
-
-    console.log(this.map);
-    console.log(clickedLayer);
-
-    var visibility = this.map.getLayoutProperty(clickedLayer, 'visibility');
-   
-
-    if (visibility === 'visible') {
-      this.map.setLayoutProperty(clickedLayer, 'visibility', 'none');
-
-      if(clickedLayer === "clusters"){
-        this.map.setLayoutProperty("cluster-count", 'visibility', 'none');
-      }
-      this.map.setLayoutProperty("dar-trash", 'visibility', this.state.pointsActive ? 'visible' : 'none');
-      this.map.setLayoutProperty("clusters", 'visibility', this.state.clustersActive ? 'visible' : 'none');
-    }
-
-    else {
-       this.map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
-
-      if(clickedLayer === "clusters"){
-        this.map.setLayoutProperty("cluster-count", 'visibility', 'visible');
-      }
-    }
-
-   this.setState(state => ({
-      pointsActive: !state.pointsActive
-    }));
-   this.setState(state => ({
-       clustersActive: !state.clustersActive
-      }));
-  }
-
-
   render() {
     return (
-      <div>
         <div ref={el => this.mapContainer = el} className="absolute top right left bottom" />
-         <nav id="menu" className="menu">
-         <a href="#" className={this.state.clustersActive ? 'active' : ''} 
-      onClick = {this.clickEventHandler.bind(this)} id="clusters">clusters</a>
-        <a href="#" className={this.state.pointsActive ? 'active' : ''} 
-        onClick = {this.clickEventHandler.bind(this)} id="dar-trash"> points </a>
-      </nav>
-      </div>
+         
     );
   }
 }
