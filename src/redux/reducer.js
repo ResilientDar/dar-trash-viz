@@ -9,7 +9,9 @@ const options = [{
     ["Bagful", '#f8d5cc'],
     ["Handful", '#f4bfb6'],
     ["Cartload", '#f1a8a5'],
-    ["Trackload", '#ee8f9a']
+    ["Trackload", '#ee8f9a'],
+    ["Other", '#18a6b9']
+    
   ]
 }, {
   name: 'Waste site type',
@@ -19,7 +21,8 @@ const options = [{
     ["Wind", '#f8d5cc'],
     ["Dump", '#f4bfb6'],
     ["Washed into Drain", '#f1a8a5'],
-    ["Liquid Waste", '#ee8f9a']
+    ["Liquid Waste", '#ee8f9a'],
+    ["Other", '#18a6b9']
   ]
 }]
 

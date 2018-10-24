@@ -98,7 +98,7 @@ let Map = class Map extends React.Component {
         data: data,
         cluster: true, // Enable clustering
         clusterRadius: 50, // Radius of each cluster when clustering points
-        clusterMaxZoom: 15 // Max zoom to cluster points on
+        clusterMaxZoom: 23 // Max zoom to cluster points on
     });
 
      this.map.addLayer({
