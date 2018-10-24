@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import mapboxgl from 'mapbox-gl'
 import { connect } from 'react-redux'
 import data from '../dar-trash.geojson'
+import SetFeatures from '../redux/SetFeatures'
 
 mapboxgl.accessToken = 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw';
 
@@ -41,6 +42,22 @@ let Map = class Map extends React.Component {
     // Add zoom and rotation controls to the map.
     this.map.addControl(new mapboxgl.NavigationControl());
 
+    // Change the cursor to a pointer when the mouse is over the places layer.
+    this.map.on('mouseenter', 'dartrash', () => {
+      this.map.getCanvas().style.cursor = 'pointer';
+    });
+
+    // Change it back to a pointer when it leaves.
+    this.map.on('mouseleave', 'dartrash',  () => {
+        this.map.getCanvas().style.cursor = '';
+    })
+
+    // Pass mouse click actions to overlay componetnt
+    this.map.on('click', (e) => {
+      const features_ = this.map.queryRenderedFeatures(e.point, {layers:['unclustered-point']});
+      this.props.SetFeatures(features_);
+    });
+
     //Main events
 
     this.map.on('load', () => {
@@ -60,11 +77,15 @@ let Map = class Map extends React.Component {
       var features = this.map.queryRenderedFeatures(e.point,
        { layers: ['dar-trash', 'unclustered-point'] });
 
+      //  this.props.SetFeatures(features);
+
       if (features.length) {
         var clickedPoint = features[0];
         // Close all other popups and display popup for clicked point
         this.createPopUp(clickedPoint);
       }
+
+    
     });
   }
 
@@ -162,6 +183,9 @@ let Map = class Map extends React.Component {
     this.map.on('click', 'clusters', (e) => {
         var features = this.map.queryRenderedFeatures(e.point,
          { layers: ['clusters'] });
+
+          
+
         var clusterId = features[0].properties.cluster_id;
         this.map.getSource('trash').getClusterExpansionZoom(clusterId, (err, zoom) => {
             if (err)
@@ -245,10 +269,11 @@ let Map = class Map extends React.Component {
 function mapStateToProps(state) {
   return {
     data: state.data,
-    active: state.active
+    active: state.active,
+    features_: state.features_
   };
 }
 
-Map = connect(mapStateToProps)(Map);
+Map = connect(mapStateToProps,{SetFeatures})(Map);
 
 export default Map;

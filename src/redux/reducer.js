@@ -1,5 +1,6 @@
 import * as Constants from '../constants'
 import data from '../data.json'
+import Map from '../components/map'
 
 const options = [{
   name: 'Trash by size',
@@ -26,7 +27,8 @@ const options = [{
 const initialState: State = {
   data,
   options,
-  active: options[0]
+  active: options[0],
+  features_: []
 };
 
 function reducer(state = initialState, action) {
@@ -35,6 +37,12 @@ function reducer(state = initialState, action) {
       return Object.assign({}, state, {
         active: action.option
       });
+
+    case Constants.SET_FEATURES:
+      return Object.assign({}, state, {
+        features_: action.features_
+      });
+
     default:
       return state;
   }

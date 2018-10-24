@@ -7,15 +7,19 @@ import Map from './components/map'
 import Toggle from './components/toggle'
 import Legend from './components/legend'
 import Nav from './components/nav'
+import Sidebar from './components/sidebar'
+import Info from './components/popup'
 
 class Application extends React.Component {
   render() {
     return (
       <Provider store={store}>
         <div>
-          <Map />
+          <Map store = {store} />
           <Toggle onChange={setActiveOption} />
+          <Sidebar />
           <Nav />
+          <Info />
           <Legend />
         </div>
       </Provider>

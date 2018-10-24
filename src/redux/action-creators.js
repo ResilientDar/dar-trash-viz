@@ -7,3 +7,10 @@ export function setActiveOption(option) {
     option
   });
 }
+
+export function setFeatures(features_){
+  return {
+    type: Constants.SET_FEATURES,
+   features_
+  }
+}
