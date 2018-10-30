@@ -206,6 +206,8 @@ let Map = class Map extends React.Component {
             e.preventDefault();
             e.stopPropagation();
 
+            mapInstance.removePopUp();
+
             var visibility = mapInstance.map.getLayoutProperty(clickedLayer, 'visibility');
 
             if (visibility === 'visible') {
@@ -237,16 +239,19 @@ let Map = class Map extends React.Component {
   }
 
   createPopUp(currentFeature) {
-    var popUps = document.getElementsByClassName('mapboxgl-popup');
-    // Check if there is already a popup on the map and if so, remove it
-    if (popUps[0]) popUps[0].remove();
-    console.log(currentFeature);
+    this.removePopUp();
 
     var popup = new mapboxgl.Popup({closeOnClick: false})
       .setLngLat(currentFeature.geometry.coordinates)
       .setHTML('<div><a href="#exampleModal" data-toggle="modal" class="img1" id="meta3">'+
         '<img src="'+ currentFeature.properties.image_path +'" class="image_path"/></a></div>')
       .addTo(this.map);
+  }
+
+  removePopUp(){
+    var popUps = document.getElementsByClassName('mapboxgl-popup');
+    // Check if there is already a popup on the map and if so, remove it
+    if (popUps[0]) popUps[0].remove();
   }
 
   render() {
