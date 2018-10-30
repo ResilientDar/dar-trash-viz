@@ -2,9 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import mapboxgl from 'mapbox-gl'
 import { connect } from 'react-redux'
-import data from '../dar-trash.geojson'
+import data from '../data.json'
 
-mapboxgl.accessToken = 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw';
+mapboxgl.accessToken = 'pk.eyJ1Ijoic2FtdHdlc2EiLCJhIjoiZTc1OTQ4ODE0ZmY2MzY0MGYwMDNjOWNlYTYxMjU4NDYifQ.F1zCcOYqpXWd4C9l9xqvEQ';
 
 let Map = class Map extends React.Component {
   map;
@@ -19,13 +19,13 @@ let Map = class Map extends React.Component {
             clustersActive: true};
 
   componentDidUpdate() {
-    // this.setFill();
+     this.setFill();
   }
 
   componentDidMount() {
     this.map = new mapboxgl.Map({
       container: this.mapContainer,
-      style: 'mapbox://styles/worldbank-education/cjn4d0fleg0552spd8hfv1qfi',
+      style: 'mapbox://styles/samtwesa/cjnrbl5zc1u6b2smsvrep1rqq',
       center: [39.182384, -6.783038],
       zoom: 11
     });
@@ -47,12 +47,21 @@ let Map = class Map extends React.Component {
       this.mouseEvents();
       this.clusters();
       this.addPoints();
-      
+      // this.setFill();
     });
 
     this.createLayerControl(this);
     this.clickEventsOnPoints();
     
+  }
+
+  setFill() {
+    const { property, stops } = this.props.active;
+    this.map.setPaintProperty('dar-trash', 'circle-color', {
+      property,
+      stops,
+      type: "categorical"
+    });    
   }
 
   clickEventsOnPoints(){
@@ -88,7 +97,7 @@ let Map = class Map extends React.Component {
         }
 
         }, 'dartrash-label-lg');
-    this.map.setLayoutProperty('dar-trash', 'visibility', 'none');
+    // this.map.setLayoutProperty('dar-trash', 'visibility', 'none');
   }
 
   clusters(){
@@ -172,7 +181,12 @@ let Map = class Map extends React.Component {
                 zoom: zoom
             });
         });
-    });    
+    });  
+
+    // Hide clusters layers, from first time load
+    this.map.setLayoutProperty('clusters', 'visibility', 'none');  
+    this.map.setLayoutProperty("cluster-count", 'visibility', 'none');
+    this.map.setLayoutProperty("unclustered-point", 'visibility', 'none');
   }
 
   createLayerControl(mapInstance){
@@ -184,7 +198,7 @@ let Map = class Map extends React.Component {
 
         var link = document.createElement('a');
         link.href = '#';
-        link.className = (id === 'clusters') ? 'active' : '';        
+        link.className = (id === 'points') ? 'active' : '';        
         link.textContent = id;
 
         link.onclick = function(e) {
@@ -226,6 +240,7 @@ let Map = class Map extends React.Component {
     var popUps = document.getElementsByClassName('mapboxgl-popup');
     // Check if there is already a popup on the map and if so, remove it
     if (popUps[0]) popUps[0].remove();
+    console.log(currentFeature);
 
     var popup = new mapboxgl.Popup({closeOnClick: false})
       .setLngLat(currentFeature.geometry.coordinates)

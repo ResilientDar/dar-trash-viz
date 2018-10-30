@@ -4,25 +4,27 @@ import data from '../data.json'
 const options = [{
   name: 'Trash by size',
   description: 'Size of trash pile',
-  property: 'pop_est',
+  property: 'trash_size',
   stops: [
     ["Bagful", '#f8d5cc'],
     ["Handful", '#f4bfb6'],
     ["Cartload", '#f1a8a5'],
-    ["Trackload", '#ee8f9a'],
-    ["Other", '#18a6b9']
+    ["Truckload", '#ee8f9a'],
+    ["Other", '#18a6b9'],
+    ["Unidentified", '#008000']
     
   ]
 }, {
   name: 'Waste site type',
   description: 'Type of the trash pile',
-  property: 'gdp_md_est',
+  property: 'waste_site',
   stops: [
-    ["Wind", '#f8d5cc'],
+    ["Blown_by_Wind", '#f8d5cc'],
     ["Dump", '#f4bfb6'],
-    ["Washed into Drain", '#f1a8a5'],
-    ["Liquid Waste", '#ee8f9a'],
-    ["Other", '#18a6b9']
+    ["Washed_into_Drain", '#f1a8a5'],
+    ["Liquid_Waste", '#ee8f9a'],
+    ["Other", '#18a6b9'],
+    ["Unidentified", '#008000']
   ]
 }]
 
