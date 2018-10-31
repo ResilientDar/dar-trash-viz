@@ -98,8 +98,9 @@
     z-index: 1;
     top: 120px;
     right: 10px;
-    border-radius: 5px;
     width: 120px;
+    padding: 0.7%;
+    border-radius: 4px;
     font-family: Arial;
 }
 
@@ -108,7 +109,7 @@
     color: #404040;
     display: block;
     margin: 0;
-    padding: 5%;
+    border-radius: 2px;
     text-decoration: none;
     text-align: center;
 }
@@ -128,10 +129,25 @@
     background: #3074a4;
 }
 
-/*Customize listing group from mapbox*/
+/*Customize listing group  from mapbox*/
 
 .listing-group {
   font-family: Arial, sans-serif;
-  padding: 1.3%;
+  padding: 1%;
   border-radius: 4px;
 }
+
+/*Customize toggle from mapbox*/
+
+.toggle{
+  border-radius: 2px;
+  padding: 0 19px;
+}
+
+/*Customize checked from mapbox*/
+
+input:checked+.toggle {
+    background: #3887be;
+    color: #fff;
+}
+
