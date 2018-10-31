@@ -249,7 +249,7 @@ let Map = class Map extends React.Component {
     var popup = new mapboxgl.Popup({closeOnClick: false})
       .setLngLat(currentFeature.geometry.coordinates)
       .setHTML('<div><a href="#exampleModal" data-toggle="modal" class="img1" id="meta3">'+
-        '<img src="'+ currentFeature.properties.image_path +'" class="image_path"/></a></div>')
+        '<img src="'+ currentFeature.properties.imp +'" class="image_path"/></a></div>')
       .addTo(this.map);
   }
 

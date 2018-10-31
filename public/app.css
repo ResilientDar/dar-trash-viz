@@ -100,8 +100,7 @@
     right: 10px;
     border-radius: 5px;
     width: 120px;
-    border: 1px solid rgba(0,0,0,0.4);
-    font-family: 'Open Sans', sans-serif;
+    font-family: Arial;
 }
 
 #menu a {
@@ -109,16 +108,11 @@
     color: #404040;
     display: block;
     margin: 0;
-    padding: 0;
-    padding: 10px;
+    padding: 5%;
     text-decoration: none;
-    border-bottom: 1px solid rgba(0,0,0,0.25);
     text-align: center;
 }
 
-#menu a:last-child {
-    border: none;
-}
 
 #menu a:hover {
     background-color: #f8f8f8;
@@ -132,4 +126,12 @@
 
 #menu a.active:hover {
     background: #3074a4;
+}
+
+/*Customize listing group from mapbox*/
+
+.listing-group {
+  font-family: Arial, sans-serif;
+  padding: 1.3%;
+  border-radius: 4px;
 }
