@@ -69,6 +69,8 @@ let Map = class Map extends React.Component {
       var features = this.map.queryRenderedFeatures(e.point,
        { layers: ['dar-trash', 'unclustered-point'] });
 
+      this.removePopUp();
+
       if (features.length) {
         var clickedPoint = features[0];
         // Close all other popups and display popup for clicked point
@@ -88,6 +90,10 @@ let Map = class Map extends React.Component {
   }
 
   addPoints(){
+    var id = this.getLayerPosition('symbol');
+
+    // this.removeLayerFromMap('dar-trash');
+
     this.map.addLayer({
         id: 'dar-trash',
         type: 'fill',
@@ -96,7 +102,7 @@ let Map = class Map extends React.Component {
           visibility :  'none'
         }
 
-        }, 'dartrash-label-lg');
+        }, id);
     // this.map.setLayoutProperty('dar-trash', 'visibility', 'none');
   }
 
@@ -239,13 +245,32 @@ let Map = class Map extends React.Component {
   }
 
   createPopUp(currentFeature) {
-    this.removePopUp();
 
     var popup = new mapboxgl.Popup({closeOnClick: false})
       .setLngLat(currentFeature.geometry.coordinates)
       .setHTML('<div><a href="#exampleModal" data-toggle="modal" class="img1" id="meta3">'+
         '<img src="'+ currentFeature.properties.image_path +'" class="image_path"/></a></div>')
       .addTo(this.map);
+  }
+
+  //Helpers
+
+  getLayerPosition(name){
+    var layers = this.map.getStyle().layers;
+    // Find the index of the first symbol layer in the map style
+    var firstSymbolId;
+    for (var i = 0; i < layers.length; i++) {
+      // console.log(layers[i].type + " " + layers[i].id);
+        if (layers[i].type === name) {
+            firstSymbolId = layers[i].id;
+            break;
+        }
+    }
+    return firstSymbolId;
+  }
+
+  removeLayerFromMap(id){
+   if(this.map.getLayer(id)) this.map.removeLayer(id);
   }
 
   removePopUp(){

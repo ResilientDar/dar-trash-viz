@@ -1,5 +1,5 @@
 import * as Constants from '../constants'
-import data from '../data.json'
+import data from '../dar-trash.geojson'
 
 const options = [{
   name: 'Trash by size',

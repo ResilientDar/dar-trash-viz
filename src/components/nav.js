@@ -10,7 +10,7 @@ let Nav = class Nav extends React.Component {
 
   render() {
     return (
-      <nav id="menu" className="menu">
+      <nav id="menu" className="menu mobile-cols">
      
       </nav>
     );
