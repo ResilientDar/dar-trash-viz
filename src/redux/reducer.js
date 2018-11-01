@@ -43,7 +43,7 @@ const options = [{
   property: 'clm',
   stops: [
     ["By_Hand", '#ee8f9a'],
-    ["By_Machine_Only", '#f4bfb6'],
+    ["By_Machine_Only", '#f1a8a5'],
     ["impossible", '#f4bfb6'],
     ["Unidentified", '#18a6b9']
   ]
@@ -54,7 +54,7 @@ const options = [{
   property: 'at',
   stops: [
     ["Cart", '#ee8f9a'],
-    ["Truck", '#f4bfb6'],
+    ["Truck", '#f1a8a5'],
     ["Foot only", '#f4bfb6'],
     ["Unidentified", '#18a6b9']
   ]

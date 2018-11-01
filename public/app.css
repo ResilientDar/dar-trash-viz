@@ -144,10 +144,30 @@
   padding: 0 19px;
 }
 
-/*Customize checked from mapbox*/
+/*Customize checked inputs from mapbox*/
 
 input:checked+.toggle {
     background: #3887be;
     color: #fff;
 }
 
+/*Customize filter groups from mapbox*/
+
+.filter-group > .txt-s input[type=checkbox] {
+        display: none;
+}
+
+.filter-group > .txt-s input[type=checkbox] + label {
+    background-color: #3386c0;
+    text-transform: capitalize;
+}
+
+.filter-group > .txt-s input[type=checkbox] + label:hover,
+.filter-group input[type=checkbox]:checked + label {
+    background-color: #4ea0da;
+}
+
+.filter-group > .txt-s input[type=checkbox]:checked + label:before {
+    content: '✔';
+    margin-right: 5px;
+}

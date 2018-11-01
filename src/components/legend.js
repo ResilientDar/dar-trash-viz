@@ -14,8 +14,13 @@ let Legend = class Legend extends React.Component {
     const renderLegendKeys = (stop, i) => {
       return (
         <div key={i} className='txt-s'>
-          <span className='mr6 round-full w12 h12 inline-block align-middle' style={{ backgroundColor: stop[1] }} />
-          <span>{`${stop[0].toLocaleString()}`}</span>
+            <input name="toggle" type="checkbox" />
+            <span className='mr6 round-full w12 h12 inline-block align-middle' style={{ backgroundColor: stop[1] }} />
+            <span>{`${stop[0].toLocaleString()}`}</span>
+
+            <label >
+            </label>
+           
         </div>
       );
     }
@@ -26,7 +31,9 @@ let Legend = class Legend extends React.Component {
           <h2 className="txt-bold txt-s block">{name}</h2>
           <p className='txt-s color-gray'>{description}</p>
         </div>
+        <nav className="filter-group">
         {stops.map(renderLegendKeys)}
+        </nav>
       </div>
     );
   }
