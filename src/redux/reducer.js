@@ -62,6 +62,7 @@ const options = [{
 const initialState: State = {
   options,
   active: options[0],
+  features_: [],
   selectedStops: assignSelectedStops(options[0].stops)
 };
 
@@ -104,6 +105,12 @@ function reducer(state = initialState, action) {
         active: action.option,
         selectedStops: assignSelectedStops(action.option.stops)
       });
+
+    case Constants.SET_FEATURES:
+      return Object.assign({}, state, {
+        features_: action.features_
+      });
+
     case Constants.SET_LEGEND_ACTIVE_OPTION:
       if(contains(state.selectedStops, action.option)){
         var stops = removeStop(state.selectedStops, action.option);
