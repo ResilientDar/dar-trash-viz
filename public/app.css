@@ -1,7 +1,7 @@
 /* Marker tweaks */
-.mapboxgl-popup-close-button {
+/*.mapboxgl-popup-close-button {
   display: none;
-}
+}*/
 
 .mapboxgl-popup-content {
   font: 400 15px/22px 'Source Sans Pro', 'Helvetica Neue', Sans-serif;
@@ -153,21 +153,48 @@ input:checked+.toggle {
 
 /*Customize filter groups from mapbox*/
 
-.filter-group > .txt-s input[type=checkbox] {
-        display: none;
+.filter-group {
+    font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+    font-weight: 600;
+    position: relative;
+    z-index: 1;
+    border-radius: 3px;
+    width: 120px;
+    color: #fff;
 }
 
-.filter-group > .txt-s input[type=checkbox] + label {
+.filter-group > div input[type=checkbox]:first-child + label {
+    border-radius: 3px 3px 0 0;
+}
+
+.filter-group > div  label:last-child {
+    border-radius: 0 0 3px 3px;
+    border: none;
+}
+
+/*.filter-group > .txt-s input[type=checkbox] {
+    display: none;
+}*/
+
+.filter-group > div input[type=checkbox] + label {
+    background-color: #3386c0;
+    display: block;
+    cursor: pointer;
+    padding: 10px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+}
+
+.filter-group > div input[type=checkbox] + label {
     background-color: #3386c0;
     text-transform: capitalize;
 }
 
-.filter-group > .txt-s input[type=checkbox] + label:hover,
-.filter-group input[type=checkbox]:checked + label {
+.filter-group > div input[type=checkbox] + label:hover,
+.filter-group > div input[type=checkbox]:checked + label {
     background-color: #4ea0da;
 }
 
-.filter-group > .txt-s input[type=checkbox]:checked + label:before {
+.filter-group > div input[type=checkbox]:checked + label:after {
     content: '✔';
     margin-right: 5px;
 }

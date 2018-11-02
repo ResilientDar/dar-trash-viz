@@ -11,7 +11,8 @@ let Map = class Map extends React.Component {
 
   static propTypes = {
     data: PropTypes.object.isRequired,
-    active: PropTypes.object.isRequired
+    active: PropTypes.object.isRequired,
+    activeLegend: PropTypes.string
   };
 
   state = {
@@ -19,7 +20,8 @@ let Map = class Map extends React.Component {
             clustersActive: true};
 
   componentDidUpdate() {
-     this.setFill();
+     this.setColor();
+     this.setFilter();
   }
 
   componentDidMount() {
@@ -55,13 +57,26 @@ let Map = class Map extends React.Component {
     
   }
 
-  setFill() {
+  setColor() {
     const { property, stops } = this.props.active;
+    console.log('stops');
     this.map.setPaintProperty('dar-trash', 'circle-color', {
       property,
       stops,
       type: "categorical"
     });    
+  }
+
+  setFilter() {
+    const { property, stops } = this.props.active;
+    const legend = this.props.activeLegend;
+    console.log(legend);
+    console.log(this.props.active.stops[0][0]);
+
+    if(legend != null){
+       this.map.setFilter('dar-trash', ['!=', property, legend]);
+    }
+   
   }
 
   clickEventsOnPoints(){
@@ -239,6 +254,10 @@ let Map = class Map extends React.Component {
       }
   }
 
+  addFilterItemEvent(){
+
+  }
+
   getLayerTextContent(id){
     if (id === "points") return "dar-trash";
     else if (id === "clusters") return "clusters";
@@ -290,7 +309,8 @@ let Map = class Map extends React.Component {
 function mapStateToProps(state) {
   return {
     data: state.data,
-    active: state.active
+    active: state.active,
+    activeLegend: state.activeLegend
   };
 }
 

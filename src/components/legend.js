@@ -4,24 +4,44 @@ import { connect } from 'react-redux'
 
 let Legend = class Legend extends React.Component {
 
+  constructor () {
+    super();
+    this.state = {
+      activeLegend: ''
+    };
+    this.handleChange = this.handleChange.bind(this);
+  }
+
   static propTypes = {
-    active: PropTypes.object.isRequired
+    active: PropTypes.object.isRequired,
+    activeLegend: PropTypes.string,
+    onChange: PropTypes.func.isRequired
   };
+
+
+  handleChange (evt) {
+    // check it out: we get the evt.target.name
+    // and use it to target the key on our `state` object with the same name, using bracket syntax
+    this.setState({ activeLegend: evt.target.id });
+    this.props.onChange(this.state.activeLegend);
+    console.log(this.state.activeLegend);
+    console.log(this.props.activeLegend);
+  }
 
   render() {
     const { name, description, stops } = this.props.active;
 
     const renderLegendKeys = (stop, i) => {
       return (
-        <div key={i} className='txt-s'>
-            <input name="toggle" type="checkbox" />
-            <span className='mr6 round-full w12 h12 inline-block align-middle' style={{ backgroundColor: stop[1] }} />
-            <span>{`${stop[0].toLocaleString()}`}</span>
-
-            <label >
+           <div key={i} >
+            <input name="activeLegend" onChange={this.handleChange} 
+            checked={stop[0] !== this.props.activeLegend} id={stop[0]} type="checkbox" />
+            
+            <label htmlFor={`${stop[0].toLocaleString()}`}>
+            {`${stop[0].toLocaleString()}`}
             </label>
+             </div>
            
-        </div>
       );
     }
 
@@ -31,7 +51,7 @@ let Legend = class Legend extends React.Component {
           <h2 className="txt-bold txt-s block">{name}</h2>
           <p className='txt-s color-gray'>{description}</p>
         </div>
-        <nav className="filter-group">
+         <nav id="filter-group" className="filter-group">
         {stops.map(renderLegendKeys)}
         </nav>
       </div>
@@ -41,7 +61,8 @@ let Legend = class Legend extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    active: state.active
+    active: state.active,
+    activeLegend: state.activeLegend
   };
 }
 

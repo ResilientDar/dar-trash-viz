@@ -7,3 +7,10 @@ export function setActiveOption(option) {
     option
   });
 }
+
+export function setActiveLegendOption(option) {
+  store.dispatch({
+    type: Constants.SET_LEGEND_ACTIVE_OPTION,
+    option
+  });
+}
