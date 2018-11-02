@@ -1,7 +1,7 @@
 /* Marker tweaks */
-.mapboxgl-popup-close-button {
+/*.mapboxgl-popup-close-button {
   display: none;
-}
+}*/
 
 .mapboxgl-popup-content {
   font: 400 15px/22px 'Source Sans Pro', 'Helvetica Neue', Sans-serif;
@@ -96,12 +96,12 @@
     background: #fff;
     position: absolute;
     z-index: 1;
-    top: 10px;
-    right: 60px;
-    border-radius: 5px;
+    top: 120px;
+    right: 10px;
     width: 120px;
-    border: 1px solid rgba(0,0,0,0.4);
-    font-family: 'Open Sans', sans-serif;
+    padding: 0.7%;
+    border-radius: 4px;
+    font-family: Arial;
 }
 
 #menu a {
@@ -109,16 +109,11 @@
     color: #404040;
     display: block;
     margin: 0;
-    padding: 0;
-    padding: 10px;
+    border-radius: 2px;
     text-decoration: none;
-    border-bottom: 1px solid rgba(0,0,0,0.25);
     text-align: center;
 }
 
-#menu a:last-child {
-    border: none;
-}
 
 #menu a:hover {
     background-color: #f8f8f8;
@@ -132,4 +127,67 @@
 
 #menu a.active:hover {
     background: #3074a4;
+}
+
+/*Customize listing group  from mapbox*/
+
+.listing-group {
+  font-family: Arial, sans-serif;
+  padding: 1%;
+  border-radius: 4px;
+}
+
+/*Customize toggle from mapbox*/
+
+.toggle{
+  border-radius: 2px;
+  padding: 0 19px;
+}
+
+/*Customize checked inputs from mapbox*/
+
+input:checked+.toggle {
+    background: #3887be;
+    color: #fff;
+}
+
+/*Customize filter groups from mapbox*/
+
+.filter-group {
+    font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+    font-weight: 600;
+    position: relative;
+    z-index: 1;
+    border-radius: 3px;
+}
+
+.filter-group > div input[type=checkbox]:first-child + label {
+    border-radius: 3px 3px 0 0;
+}
+
+.filter-group > div  label:last-child {
+    border-radius: 0 0 3px 3px;
+    border: none;
+}
+
+.filter-group > div input[type=checkbox] {
+    display: none;
+}
+
+.filter-group > div input[type=checkbox] + label {
+    cursor: pointer;
+}
+
+.filter-group > div input[type=checkbox] + label {
+    text-transform: capitalize;
+}
+
+.filter-group > div input[type=checkbox] + label:hover,
+.filter-group > div input[type=checkbox]:checked + label {
+    /*background-color: #4ea0da;*/
+}
+
+.filter-group > div input[type=checkbox]:checked + label:after {
+    content: '✔';
+    margin-left: 10px;
 }

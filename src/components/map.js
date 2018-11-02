@@ -2,17 +2,17 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import mapboxgl from 'mapbox-gl'
 import { connect } from 'react-redux'
-import data from '../dar-trash.geojson'
 import SetFeatures from '../redux/SetFeatures'
+import data from '../data.json'
 
-mapboxgl.accessToken = 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw';
+mapboxgl.accessToken = 'pk.eyJ1Ijoic2FtdHdlc2EiLCJhIjoiZTc1OTQ4ODE0ZmY2MzY0MGYwMDNjOWNlYTYxMjU4NDYifQ.F1zCcOYqpXWd4C9l9xqvEQ';
 
 let Map = class Map extends React.Component {
   map;
 
   static propTypes = {
-    data: PropTypes.object.isRequired,
-    active: PropTypes.object.isRequired
+    active: PropTypes.object.isRequired,
+    selectedStops: PropTypes.array.isRequired
   };
 
   state = {
@@ -20,13 +20,14 @@ let Map = class Map extends React.Component {
             clustersActive: true};
 
   componentDidUpdate() {
-    // this.setFill();
+     this.setColor();
+     this.setFilter();
   }
 
   componentDidMount() {
     this.map = new mapboxgl.Map({
       container: this.mapContainer,
-      style: 'mapbox://styles/worldbank-education/cjn4d0fleg0552spd8hfv1qfi',
+      style: 'mapbox://styles/samtwesa/cjnrbl5zc1u6b2smsvrep1rqq',
       center: [39.182384, -6.783038],
       zoom: 11
     });
@@ -64,12 +65,42 @@ let Map = class Map extends React.Component {
       this.mouseEvents();
       this.clusters();
       this.addPoints();
-      
+      // this.setFill();
     });
 
     this.createLayerControl(this);
     this.clickEventsOnPoints();
     
+  }
+
+  setColor() {
+    const { property, stops } = this.props.active;
+    this.map.setPaintProperty('dar-trash', 'circle-color', {
+      property,
+      stops,
+      type: "categorical"
+    });    
+  }
+
+  setFilter() {
+    const { property, stops } = this.props.active;
+    const selectedStops = this.props.selectedStops;
+    const arr = this.buildFilter(selectedStops, property);
+
+    if(selectedStops != null){
+       this.map.setFilter('dar-trash', arr);
+       // Apply filter to clusters layers also
+       // try {
+       //      if(this.map.getLayer('clusters') != null){
+       //        this.map.setFilter('clusters', arr);
+       //   }
+       // }
+       //  catch(error) {
+       //     console.log('Error');
+       // }
+   
+    }
+   
   }
 
   clickEventsOnPoints(){
@@ -78,6 +109,7 @@ let Map = class Map extends React.Component {
        { layers: ['dar-trash', 'unclustered-point'] });
 
       //  this.props.SetFeatures(features);
+      this.removePopUp();
 
       if (features.length) {
         var clickedPoint = features[0];
@@ -100,6 +132,10 @@ let Map = class Map extends React.Component {
   }
 
   addPoints(){
+    var id = this.getLayerPosition('symbol');
+
+    // this.removeLayerFromMap('dar-trash');
+
     this.map.addLayer({
         id: 'dar-trash',
         type: 'fill',
@@ -108,8 +144,8 @@ let Map = class Map extends React.Component {
           visibility :  'none'
         }
 
-        }, 'dartrash-label-lg');
-    this.map.setLayoutProperty('dar-trash', 'visibility', 'none');
+        }, id);
+    // this.map.setLayoutProperty('dar-trash', 'visibility', 'none');
   }
 
   clusters(){
@@ -119,7 +155,7 @@ let Map = class Map extends React.Component {
         data: data,
         cluster: true, // Enable clustering
         clusterRadius: 50, // Radius of each cluster when clustering points
-        clusterMaxZoom: 15 // Max zoom to cluster points on
+        clusterMaxZoom: 23 // Max zoom to cluster points on
     });
 
      this.map.addLayer({
@@ -196,7 +232,12 @@ let Map = class Map extends React.Component {
                 zoom: zoom
             });
         });
-    });    
+    });  
+
+    // Hide clusters layers, from first time load
+    this.map.setLayoutProperty('clusters', 'visibility', 'none');  
+    this.map.setLayoutProperty("cluster-count", 'visibility', 'none');
+    this.map.setLayoutProperty("unclustered-point", 'visibility', 'none');
   }
 
   createLayerControl(mapInstance){
@@ -208,13 +249,15 @@ let Map = class Map extends React.Component {
 
         var link = document.createElement('a');
         link.href = '#';
-        link.className = (id === 'clusters') ? 'active' : '';        
+        link.className = (id === 'points') ? 'active' : '';        
         link.textContent = id;
 
         link.onclick = function(e) {
             var clickedLayer = mapInstance.getLayerTextContent(e.target.textContent);
             e.preventDefault();
             e.stopPropagation();
+
+            mapInstance.removePopUp();
 
             var visibility = mapInstance.map.getLayoutProperty(clickedLayer, 'visibility');
 
@@ -241,21 +284,62 @@ let Map = class Map extends React.Component {
       }
   }
 
+  addFilterItemEvent(){
+
+  }
+
   getLayerTextContent(id){
     if (id === "points") return "dar-trash";
     else if (id === "clusters") return "clusters";
   }
 
   createPopUp(currentFeature) {
-    var popUps = document.getElementsByClassName('mapboxgl-popup');
-    // Check if there is already a popup on the map and if so, remove it
-    if (popUps[0]) popUps[0].remove();
 
     var popup = new mapboxgl.Popup({closeOnClick: false})
       .setLngLat(currentFeature.geometry.coordinates)
       .setHTML('<div><a href="#exampleModal" data-toggle="modal" class="img1" id="meta3">'+
-        '<img src="'+ currentFeature.properties.image_path +'" class="image_path"/></a></div>')
+        '<img src="'+ currentFeature.properties.imp +'" class="image_path"/></a></div>')
       .addTo(this.map);
+  }
+
+  //Helpers
+
+  getLayerPosition(name){
+    var layers = this.map.getStyle().layers;
+    // Find the index of the first symbol layer in the map style
+    var firstSymbolId;
+    for (var i = 0; i < layers.length; i++) {
+      // console.log(layers[i].type + " " + layers[i].id);
+        if (layers[i].type === name) {
+            firstSymbolId = layers[i].id;
+            break;
+        }
+    }
+    return firstSymbolId;
+  }
+
+  buildFilter(arr, property) {
+    var filter = ['in', property];
+
+    if (arr.length === 0) {
+       return filter;
+    }
+    
+    for(var i = 0; i < arr.length; i += 1) {
+      filter.push(arr[i]);
+    }
+    
+    return filter;
+  }
+
+  removeLayerFromMap(id){
+   if(this.map.getLayer(id)) this.map.removeLayer(id);
+  }
+
+  removePopUp(){
+    var popUps = document.getElementsByClassName('mapboxgl-popup');
+    // Check if there is already a popup on the map and if so, remove it
+    if (popUps[0]) popUps[0].remove();
   }
 
   render() {
@@ -271,6 +355,7 @@ function mapStateToProps(state) {
     data: state.data,
     active: state.active,
     features_: state.features_
+    selectedStops: state.selectedStops
   };
 }
 

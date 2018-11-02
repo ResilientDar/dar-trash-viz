@@ -13,4 +13,9 @@ export function setFeatures(features_){
     type: Constants.SET_FEATURES,
    features_
   }
+export function setActiveLegendOption(option) {
+  store.dispatch({
+    type: Constants.SET_LEGEND_ACTIVE_OPTION,
+    option
+  });
 }
