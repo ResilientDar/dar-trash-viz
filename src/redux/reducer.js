@@ -1,5 +1,4 @@
 import * as Constants from '../constants'
-import data from '../data.json'
 
 const options = [{
   name: 'Trash by size',
@@ -61,17 +60,64 @@ const options = [{
 }]
 
 const initialState: State = {
-  data,
   options,
-  active: options[0]
+  active: options[0],
+  selectedStops: assignSelectedStops(options[0].stops)
 };
 
+function assignSelectedStops(stops){
+  var selectedStops = [];
+  for (var i = 0; i < stops.length; i++) {
+      selectedStops[i] = stops[i][0];
+  }
+  return selectedStops;
+}
+
+function contains(selectedStops, stop){
+  return selectedStops.includes(stop);
+}
+
+function addStop(selectedStops, stop){
+  // make a separate array copy
+  var slicedStops = selectedStops.slice();
+  slicedStops.push(stop);
+
+  return slicedStops;
+}
+
+function removeStop(selectedStops, stop){
+  // make a separate array copy
+  var slicedStops = selectedStops.slice();
+
+  var index = selectedStops.indexOf(stop);
+  slicedStops.splice(index, 1);
+
+  return slicedStops;
+}
+
 function reducer(state = initialState, action) {
+
   switch (action.type) {
     case Constants.SET_ACTIVE_OPTION:
+
       return Object.assign({}, state, {
-        active: action.option
+        active: action.option,
+        selectedStops: assignSelectedStops(action.option.stops)
       });
+    case Constants.SET_LEGEND_ACTIVE_OPTION:
+      if(contains(state.selectedStops, action.option)){
+        var stops = removeStop(state.selectedStops, action.option);
+        return Object.assign({}, state, {
+          selectedStops: stops
+        });
+      }
+      else{
+        var stops = addStop(state.selectedStops, action.option);
+
+          return Object.assign({}, state, {
+            selectedStops: stops
+          });
+      }
     default:
       return state;
   }

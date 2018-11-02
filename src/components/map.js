@@ -10,9 +10,8 @@ let Map = class Map extends React.Component {
   map;
 
   static propTypes = {
-    data: PropTypes.object.isRequired,
     active: PropTypes.object.isRequired,
-    activeLegend: PropTypes.string
+    selectedStops: PropTypes.array.isRequired
   };
 
   state = {
@@ -59,7 +58,6 @@ let Map = class Map extends React.Component {
 
   setColor() {
     const { property, stops } = this.props.active;
-    console.log('stops');
     this.map.setPaintProperty('dar-trash', 'circle-color', {
       property,
       stops,
@@ -69,12 +67,21 @@ let Map = class Map extends React.Component {
 
   setFilter() {
     const { property, stops } = this.props.active;
-    const legend = this.props.activeLegend;
-    console.log(legend);
-    console.log(this.props.active.stops[0][0]);
+    const selectedStops = this.props.selectedStops;
+    const arr = this.buildFilter(selectedStops, property);
 
-    if(legend != null){
-       this.map.setFilter('dar-trash', ['!=', property, legend]);
+    if(selectedStops != null){
+       this.map.setFilter('dar-trash', arr);
+       // Apply filter to clusters layers also
+       // try {
+       //      if(this.map.getLayer('clusters') != null){
+       //        this.map.setFilter('clusters', arr);
+       //   }
+       // }
+       //  catch(error) {
+       //     console.log('Error');
+       // }
+   
     }
    
   }
@@ -288,6 +295,20 @@ let Map = class Map extends React.Component {
     return firstSymbolId;
   }
 
+  buildFilter(arr, property) {
+    var filter = ['in', property];
+
+    if (arr.length === 0) {
+       return filter;
+    }
+    
+    for(var i = 0; i < arr.length; i += 1) {
+      filter.push(arr[i]);
+    }
+    
+    return filter;
+  }
+
   removeLayerFromMap(id){
    if(this.map.getLayer(id)) this.map.removeLayer(id);
   }
@@ -310,7 +331,7 @@ function mapStateToProps(state) {
   return {
     data: state.data,
     active: state.active,
-    activeLegend: state.activeLegend
+    selectedStops: state.selectedStops
   };
 }
 
