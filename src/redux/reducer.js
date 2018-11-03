@@ -108,7 +108,7 @@ function reducer(state = initialState, action) {
         selectedStops: assignSelectedStops(action.option.stops)
       });
     case Constants.SET_FEATURES:
-      console.log("set features ");
+      console.log("set features");
 
       return Object.assign({}, state, {
         currentFeature: action.currentFeature

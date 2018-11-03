@@ -29,7 +29,7 @@ let Info = class Info extends React.Component {
       <div className="bg-white popup row absolute pop bottom left shadow-darken10~ z1 wmax500">
         <div className='mb6 col popic spanpop'>
           <img src={this.props.currentFeature ? 
-            this.props.currentFeature.properties.image_path:''} 
+            this.props.currentFeature.properties.imp:''} 
           className="picha img-left" />
         </div>        
         <div className="col">
