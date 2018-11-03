@@ -10,12 +10,3 @@ Dar es salaam Trash pile visualization (with [redux](https://www.npmjs.com/packa
     npm start
 
     open http://localhost:3000/
-
-
-    OR
-
-    yarn install
-    yarn start
-
-    open http://localhost:3000/
-

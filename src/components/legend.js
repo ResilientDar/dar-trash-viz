@@ -28,7 +28,7 @@ let Legend = class Legend extends React.Component {
 
     const renderLegendKeys = (stop, i) => {
       return (
-           <div key={i} className="txt-s" alt="Click to see features with {stop[0]} value">
+           <div key={i} className="txt-s" >
             <span className='mr6 round-full w12 h12 inline-block align-middle' style={{ backgroundColor: stop[1] }} />
 
             <input name="activeLegend" onChange={() => this.props.onChange(stop[0])}
@@ -42,7 +42,8 @@ let Legend = class Legend extends React.Component {
     }
 
     return (
-      <div className="bg-white absolute bottom right mr12 mb24 py12 px12 shadow-darken10 round z1 wmax180">
+      <div className="bg-white absolute bottom right mr12 mb24 py12 px12 shadow-darken10 round z1 wmax180"
+      title="Click the list items to filter the map">
         <div className='mb6'>
           <h2 className="txt-bold txt-s block">{name}</h2>
           <p className='txt-s color-gray'>{description}</p>

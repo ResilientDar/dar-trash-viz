@@ -62,6 +62,7 @@ const options = [{
 const initialState: State = {
   options,
   active: options[0],
+  currentFeature: null,
   selectedStops: assignSelectedStops(options[0].stops)
 };
 
@@ -97,12 +98,20 @@ function removeStop(selectedStops, stop){
 
 function reducer(state = initialState, action) {
 
+  console.log("reducer called from ");
+
   switch (action.type) {
     case Constants.SET_ACTIVE_OPTION:
 
       return Object.assign({}, state, {
         active: action.option,
         selectedStops: assignSelectedStops(action.option.stops)
+      });
+    case Constants.SET_FEATURES:
+      console.log("set features ");
+
+      return Object.assign({}, state, {
+        currentFeature: action.currentFeature
       });
     case Constants.SET_LEGEND_ACTIVE_OPTION:
       if(contains(state.selectedStops, action.option)){

@@ -13,6 +13,7 @@
     "react": "^15.6.1",
     "react-dom": "^15.5.0",
     "react-redux": "^5.0.5",
+    "react-text-ellipsis": "^1.5.1",
     "redux": "^3.7.2",
     "react-scripts": "^1.0.10"
   },

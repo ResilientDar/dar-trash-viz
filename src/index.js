@@ -6,8 +6,10 @@ import { setActiveOption } from './redux/action-creators'
 import { setActiveLegendOption } from './redux/action-creators'
 import Map from './components/map'
 import Toggle from './components/toggle'
-import Legend from './components/legend'
+import Info from './components/info'
 import Nav from './components/nav'
+import Legend from './components/legend'
+
 
 class Application extends React.Component {
   render() {
@@ -16,6 +18,7 @@ class Application extends React.Component {
         <div>
           <Map />
           <Toggle onChange={setActiveOption} />
+          <Info />
           <Nav />
           <Legend onChange={setActiveLegendOption}/>
         </div>

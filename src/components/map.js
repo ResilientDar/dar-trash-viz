@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import mapboxgl from 'mapbox-gl'
 import { connect } from 'react-redux'
+import setCurrentFeature from '../redux/features'
 import data from '../data.json'
 
 mapboxgl.accessToken = 'pk.eyJ1Ijoic2FtdHdlc2EiLCJhIjoiZTc1OTQ4ODE0ZmY2MzY0MGYwMDNjOWNlYTYxMjU4NDYifQ.F1zCcOYqpXWd4C9l9xqvEQ';
@@ -11,7 +12,8 @@ let Map = class Map extends React.Component {
 
   static propTypes = {
     active: PropTypes.object.isRequired,
-    selectedStops: PropTypes.array.isRequired
+    selectedStops: PropTypes.array.isRequired,
+    currentFeature: PropTypes.object
   };
 
   state = {
@@ -91,12 +93,16 @@ let Map = class Map extends React.Component {
       var features = this.map.queryRenderedFeatures(e.point,
        { layers: ['dar-trash', 'unclustered-point'] });
 
-      this.removePopUp();
+
+      // this.removePopUp();
 
       if (features.length) {
         var clickedPoint = features[0];
         // Close all other popups and display popup for clicked point
-        this.createPopUp(clickedPoint);
+        // this.createPopUp(clickedPoint);
+        console.log(clickedPoint);
+
+        setCurrentFeature(clickedPoint);
       }
     });
   }
@@ -331,7 +337,8 @@ function mapStateToProps(state) {
   return {
     data: state.data,
     active: state.active,
-    selectedStops: state.selectedStops
+    selectedStops: state.selectedStops,
+    currentFeature: state.currentFeature
   };
 }
 
