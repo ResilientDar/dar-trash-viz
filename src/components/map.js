@@ -2,11 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import mapboxgl from 'mapbox-gl'
 import { connect } from 'react-redux'
-<<<<<<< HEAD
 import setCurrentFeature from '../redux/features'
-=======
-import SetFeatures from '../redux/SetFeatures'
->>>>>>> eca7eb19c2e7bc2f07a0665abdd22df9630f275a
 import data from '../data.json'
 
 mapboxgl.accessToken = 'pk.eyJ1Ijoic2FtdHdlc2EiLCJhIjoiZTc1OTQ4ODE0ZmY2MzY0MGYwMDNjOWNlYTYxMjU4NDYifQ.F1zCcOYqpXWd4C9l9xqvEQ';
@@ -114,13 +110,7 @@ let Map = class Map extends React.Component {
       var features = this.map.queryRenderedFeatures(e.point,
        { layers: ['dar-trash', 'unclustered-point'] });
 
-<<<<<<< HEAD
-
       // this.removePopUp();
-=======
-      //  this.props.SetFeatures(features);
-      this.removePopUp();
->>>>>>> eca7eb19c2e7bc2f07a0665abdd22df9630f275a
 
       if (features.length) {
         var clickedPoint = features[0];
@@ -367,16 +357,11 @@ function mapStateToProps(state) {
   return {
     data: state.data,
     active: state.active,
-<<<<<<< HEAD
     selectedStops: state.selectedStops,
     currentFeature: state.currentFeature
-=======
-    features_: state.features_
-    selectedStops: state.selectedStops
->>>>>>> eca7eb19c2e7bc2f07a0665abdd22df9630f275a
   };
 }
 
-Map = connect(mapStateToProps,{SetFeatures})(Map);
+Map = connect(mapStateToProps)(Map);
 
 export default Map;

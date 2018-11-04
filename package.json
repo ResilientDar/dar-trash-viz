@@ -13,13 +13,9 @@
     "react": "^15.6.1",
     "react-dom": "^15.5.0",
     "react-redux": "^5.0.5",
-<<<<<<< HEAD
-=======
     "react-scripts": "^1.0.10",
->>>>>>> eca7eb19c2e7bc2f07a0665abdd22df9630f275a
     "react-text-ellipsis": "^1.5.1",
-    "redux": "^3.7.2",
-    "redux-thunk": "^2.3.0"
+    "redux": "^3.7.2"
   },
   "browserslist": [
     ">0.2%",
