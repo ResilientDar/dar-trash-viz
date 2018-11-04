@@ -44,22 +44,6 @@ let Map = class Map extends React.Component {
     // Add zoom and rotation controls to the map.
     this.map.addControl(new mapboxgl.NavigationControl());
 
-    // Change the cursor to a pointer when the mouse is over the places layer.
-    this.map.on('mouseenter', 'dartrash', () => {
-      this.map.getCanvas().style.cursor = 'pointer';
-    });
-
-    // Change it back to a pointer when it leaves.
-    this.map.on('mouseleave', 'dartrash',  () => {
-        this.map.getCanvas().style.cursor = '';
-    })
-
-    // Pass mouse click actions to overlay componetnt
-    this.map.on('click', (e) => {
-      const features_ = this.map.queryRenderedFeatures(e.point, {layers:['unclustered-point']});
-      this.props.SetFeatures(features_);
-    });
-
     //Main events
 
     this.map.on('load', () => {
