@@ -9,18 +9,28 @@ import Map from './components/map'
 import Toggle from './components/toggle'
 import Info from './components/info'
 import Nav from './components/nav'
+<<<<<<< HEAD
 import Legend from './components/legend'
 
+=======
+import Sidebar from './components/sidebar'
+import Info from './components/popup'
+>>>>>>> eca7eb19c2e7bc2f07a0665abdd22df9630f275a
 
 class Application extends React.Component {
   render() {
     return (
       <Provider store={store}>
         <div>
-          <Map />
+          <Map store = {store} />
           <Toggle onChange={setActiveOption} />
+<<<<<<< HEAD
           <Info onClick={setInfoActive}/>
+=======
+          <Sidebar />
+>>>>>>> eca7eb19c2e7bc2f07a0665abdd22df9630f275a
           <Nav />
+          <Info />
           <Legend onChange={setActiveLegendOption}/>
         </div>
       </Provider>

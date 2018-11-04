@@ -62,9 +62,14 @@ const options = [{
 const initialState: State = {
   options,
   active: options[0],
+<<<<<<< HEAD
   currentFeature: null,
   selectedStops: assignSelectedStops(options[0].stops),
   infoActive: false
+=======
+  features_: [],
+  selectedStops: assignSelectedStops(options[0].stops)
+>>>>>>> eca7eb19c2e7bc2f07a0665abdd22df9630f275a
 };
 
 function assignSelectedStops(stops){
@@ -106,11 +111,20 @@ function reducer(state = initialState, action) {
         active: action.option,
         selectedStops: assignSelectedStops(action.option.stops)
       });
+<<<<<<< HEAD
     case Constants.SET_FEATURES:
       return Object.assign({}, state, {
         currentFeature: action.currentFeature,
         infoActive: action.infoActive
       });
+=======
+
+    case Constants.SET_FEATURES:
+      return Object.assign({}, state, {
+        features_: action.features_
+      });
+
+>>>>>>> eca7eb19c2e7bc2f07a0665abdd22df9630f275a
     case Constants.SET_LEGEND_ACTIVE_OPTION:
       var stops;
       if(contains(state.selectedStops, action.option)){
