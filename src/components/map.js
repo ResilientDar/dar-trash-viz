@@ -69,6 +69,7 @@ let Map = class Map extends React.Component {
 
   setFilter() {
     const { property, stops } = this.props.active;
+    
     const selectedStops = this.props.selectedStops;
     const arr = this.buildFilter(selectedStops, property);
 
@@ -100,9 +101,8 @@ let Map = class Map extends React.Component {
         var clickedPoint = features[0];
         // Close all other popups and display popup for clicked point
         // this.createPopUp(clickedPoint);
-        console.log(clickedPoint);
 
-        setCurrentFeature(clickedPoint);
+        setCurrentFeature(clickedPoint, true);
       }
     });
   }

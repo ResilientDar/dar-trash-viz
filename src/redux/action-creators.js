@@ -9,7 +9,6 @@ export function setActiveOption(option) {
 }
 
 export function setCurrentFeatureParent(currentFeature){
-	console.log("called from actions");
 	store.dispatch({
 	    type: Constants.SET_FEATURES,
 	    currentFeature
@@ -22,3 +21,11 @@ export function setActiveLegendOption(option) {
     option
   });
 }
+
+export function setInfoActive(option) {
+  store.dispatch({
+    type: Constants.SET_INFO_ACTIVE,
+    option
+  });
+}
+

@@ -191,3 +191,101 @@ input:checked+.toggle {
     content: '✔';
     margin-left: 10px;
 }
+
+
+/*Style for Info Component*/
+
+th {
+  font-size: 45%;
+  text-align: left;
+}
+
+.info{
+  border-radius:4px;
+  padding: 1%;
+}
+
+.info-close-button {
+    position: absolute;
+    right: 0;
+    top: 0;
+    border: 0;
+    border-radius: 0 3px 0 0;
+    cursor: pointer;
+    background-color: transparent;
+    font-size: 150%;
+}
+
+.info-close-button:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.pic {
+  height: 90%;
+  width: 90%;
+  object-fit: contain;
+}
+
+.sidebar_ {
+  height: 100vh;
+  width: 250px;
+}
+
+.chagua {
+  display: flex;
+  flex-direction: column;
+}
+
+.btn-success {
+  margin-bottom: 3px;
+    background-color: #3887be;
+    border-radius: 0px;
+    width: 100%;
+    font-size: 12px;
+    height: 30px;
+}
+
+
+/* CSS for the Overlay top corner */
+.popup {
+    border: 2px solid #3887be;
+    
+}
+th {
+  font-size: 10px;
+  text-align: left;
+}
+
+td {
+    width: 20px;
+    padding-left: 5px;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+.pop {
+  max-height: 500px;
+  width: 500px;
+}
+.pop-table {
+    border-collapse: collapse;
+    table-layout: fixed;
+    overflow: hidden;
+}
+.popic {
+    padding: 1%;
+    padding-bottom: 0%;
+  width: 240px;
+  height: 100%;
+}
+
+#tx {
+    font-size: 10px;
+    overflow: hidden; 
+}
+
+.spanpop {
+  float: left;
+}

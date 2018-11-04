@@ -3,34 +3,34 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import TextEllipsis from 'react-text-ellipsis'
 
+
 let Info = class Info extends React.Component {
+
 
   static propTypes = {
     active: PropTypes.object.isRequired,
-    currentFeature: PropTypes.object
+    currentFeature: PropTypes.object,
+    infoActive: PropTypes.bool,
+    onClick: PropTypes.func
   };
-// this.props.active;
 
   render() {
-    const { name, description, stops } = this.props.active;
-
-    // const renderLegendKeys = (stop, i) => {
-    //   return (
-    //     <div key={i} className='txt-s'>
-    //       <span className='mr6 round-full w12 h12 inline-block align-middle' style={{ backgroundColor: stop[1] }} />
-    //       <span>{`${stop[0].toLocaleString()}`}</span>
-    //     </div>
-    //   );
-    // }
+    
     var vari = {
       fontSize: '10px'
     }
+    if(this.props.infoActive )
+        {
     return (
-      <div className="bg-white popup row absolute pop bottom left shadow-darken10~ z1 wmax500">
+    
+      <div className="bg-white popup row absolute pop bottom left shadow-darken10~ z1 wmax500 info ml12 mb36">
+        <div> 
+          <button className="info-close-button" onClick={() => this.props.onClick(false)}>&#215;</button>
+        </div>
         <div className='mb6 col popic spanpop'>
           <img src={this.props.currentFeature ? 
             this.props.currentFeature.properties.imp:''} 
-          className="picha img-left" />
+          className="pic img-left" alt="Trash pile"/>
         </div>        
         <div className="col">
         <font size="5" face="Courier New" text-align="left" padding="0" >
@@ -42,14 +42,14 @@ let Info = class Info extends React.Component {
                      <td id="wt tx" style={vari}>
                      <TextEllipsis lines={1}>
                      {this.props.currentFeature ? 
-                      this.props.currentFeature.properties.wst : ''}
+                      this.props.currentFeature.properties.ws : ''}
                      </TextEllipsis></td>
 
                  </tr>
                  <tr>
                       <th scope="row">Waste type:</th>
                       <td id="wt tx" style={vari}>
-                      <TextEllipsis lines={1}>
+                      <TextEllipsis lines={5}>
                       {this.props.currentFeature ?
                        this.props.currentFeature.properties.wt :''}
                       </TextEllipsis></td>
@@ -83,6 +83,8 @@ let Info = class Info extends React.Component {
                 
       </div>
     );
+  }else {return null;}
+
   }
 }
 
@@ -90,7 +92,8 @@ function mapStateToProps(state) {
   return {
     active: state.active,
     options: state.options,
-    currentFeature: state.currentFeature
+    currentFeature: state.currentFeature,
+    infoActive: state.infoActive
   };
 }
 
