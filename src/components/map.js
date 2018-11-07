@@ -13,7 +13,8 @@ let Map = class Map extends React.Component {
   static propTypes = {
     active: PropTypes.object.isRequired,
     selectedStops: PropTypes.array.isRequired,
-    currentFeature: PropTypes.object
+    currentFeature: PropTypes.object,
+    analysis_active: PropTypes.bool
   };
 
   state = {
@@ -60,11 +61,23 @@ let Map = class Map extends React.Component {
 
   setColor() {
     const { property, stops } = this.props.active;
-    this.map.setPaintProperty('dar-trash', 'circle-color', {
+
+    if(this.props.analysis_active === true){
+      this.map.setPaintProperty('wards', 'fill-color', {
+      property,
+      stops
+      });
+
+      this.map.setLayoutProperty('wards', 'visibility', 'visible');
+
+    }else{
+      this.map.setLayoutProperty('wards', 'visibility', 'none');
+      this.map.setPaintProperty('dar-trash', 'circle-color', {
       property,
       stops,
       type: "categorical"
-    });    
+      }); 
+    }
   }
 
   setFilter() {
@@ -133,6 +146,23 @@ let Map = class Map extends React.Component {
 
         }, id);
     // this.map.setLayoutProperty('dar-trash', 'visibility', 'none');
+  }
+
+  addPoints(){
+    var id = this.getLayerPosition('symbol');
+
+    // this.removeLayerFromMap('dar-trash');
+
+    this.map.addLayer({
+        id: 'wards',
+        type: 'fill',
+        source: 'wards',
+        layout: {
+          visibility :  'none'
+        }
+
+        }, id);
+    this.map.setLayoutProperty('wards', 'visibility', 'none');
   }
 
   clusters(){
@@ -226,6 +256,8 @@ let Map = class Map extends React.Component {
     this.map.setLayoutProperty("cluster-count", 'visibility', 'none');
     this.map.setLayoutProperty("unclustered-point", 'visibility', 'none');
   }
+
+  // Add wards layer into the map
 
   createLayerControl(mapInstance){
 
@@ -342,7 +374,8 @@ function mapStateToProps(state) {
     data: state.data,
     active: state.active,
     selectedStops: state.selectedStops,
-    currentFeature: state.currentFeature
+    currentFeature: state.currentFeature,
+    analysis_active: state.analysis_active
   };
 }
 

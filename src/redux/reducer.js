@@ -59,12 +59,30 @@ const options = [{
   ]
 }]
 
+const analysis_options = [{
+  name: 'Ward',
+  description: 'Trash pile count in Wards',
+  property: 'trash_coun',
+  stops: [
+    [0, '#f8d5cc'],
+    [40, '#f4bfb6'],
+    [100, '#f1a8a5'],
+    [300, '#ee8f9a'],
+    [700, '#18a6b9']
+    
+  ]
+}]
+
+
+
 const initialState: State = {
   options,
+  analysis_options,
   active: options[0],
   currentFeature: null,
   selectedStops: assignSelectedStops(options[0].stops),
-  infoActive: false
+  infoActive: false,
+  analysis_active: false
 };
 
 function assignSelectedStops(stops){
@@ -104,7 +122,15 @@ function reducer(state = initialState, action) {
 
       return Object.assign({}, state, {
         active: action.option,
-        selectedStops: assignSelectedStops(action.option.stops)
+        selectedStops: assignSelectedStops(action.option.stops),
+        analysis_active: false
+      });
+    case Constants.SET_ANALYSIS_ACTIVE_OPTION:
+
+      return Object.assign({}, state, {
+        active: action.option,
+        selectedStops: assignSelectedStops(action.option.stops),
+        analysis_active: true
       });
     case Constants.SET_FEATURES:
       return Object.assign({}, state, {

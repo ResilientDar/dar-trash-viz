@@ -289,3 +289,8 @@ table {
 .spanpop {
   float: left;
 }
+
+
+.analysis{
+  display: none;
+}
