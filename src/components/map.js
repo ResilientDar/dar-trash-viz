@@ -31,7 +31,8 @@ let Map = class Map extends React.Component {
       container: this.mapContainer,
       style: 'mapbox://styles/samtwesa/cjnrbl5zc1u6b2smsvrep1rqq',
       center: [39.182384, -6.783038],
-      zoom: 11
+      zoom: 11,
+      maxZoom: 20
     });
 
     // Make sure all children load after map finishing rendering
@@ -51,6 +52,7 @@ let Map = class Map extends React.Component {
       this.mouseEvents();
       this.clusters();
       this.addPoints();
+      this.addWards();
       // this.setFill();
     });
 
@@ -112,7 +114,7 @@ let Map = class Map extends React.Component {
       if (features.length) {
         var clickedPoint = features[0];
         // Close all other popups and display popup for clicked point
-        // this.createPopUp(clickedPoint);
+        
 
         setCurrentFeature(clickedPoint, true);
       }
@@ -148,7 +150,7 @@ let Map = class Map extends React.Component {
     // this.map.setLayoutProperty('dar-trash', 'visibility', 'none');
   }
 
-  addPoints(){
+  addWards(){
     var id = this.getLayerPosition('symbol');
 
     // this.removeLayerFromMap('dar-trash');
@@ -172,7 +174,7 @@ let Map = class Map extends React.Component {
         data: data,
         cluster: true, // Enable clustering
         clusterRadius: 50, // Radius of each cluster when clustering points
-        clusterMaxZoom: 23 // Max zoom to cluster points on
+        clusterMaxZoom: 20 // Max zoom to cluster points on
     });
 
      this.map.addLayer({
@@ -235,12 +237,13 @@ let Map = class Map extends React.Component {
     // inspect a cluster on click
     this.map.on('click', 'clusters', (e) => {
         var features = this.map.queryRenderedFeatures(e.point,
-         { layers: ['clusters'] });
-
-          
+         { layers: ['clusters'] }); 
 
         var clusterId = features[0].properties.cluster_id;
         this.map.getSource('trash').getClusterExpansionZoom(clusterId, (err, zoom) => {
+          console.log('Error is ' + err);
+          console.log('Zoom is ' + zoom);
+
             if (err)
                 return;
 
@@ -310,15 +313,6 @@ let Map = class Map extends React.Component {
   getLayerTextContent(id){
     if (id === "points") return "dar-trash";
     else if (id === "clusters") return "clusters";
-  }
-
-  createPopUp(currentFeature) {
-
-    var popup = new mapboxgl.Popup({closeOnClick: false})
-      .setLngLat(currentFeature.geometry.coordinates)
-      .setHTML('<div><a href="#exampleModal" data-toggle="modal" class="img1" id="meta3">'+
-        '<img src="'+ currentFeature.properties.imp +'" class="image_path"/></a></div>')
-      .addTo(this.map);
   }
 
   //Helpers

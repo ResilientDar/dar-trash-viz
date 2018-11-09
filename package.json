@@ -5,7 +5,10 @@
     "start": "react-scripts start"
   },
   "devDependencies": {
-    "react-scripts": "^2.0.5"
+    "react-scripts": "^2.0.5",
+    "prettier": "^1.15.1",
+    "eslint": "^3.14.1",
+    "eslint-config-prettier": "^3.1.0"
   },
   "dependencies": {
     "mapbox-gl": "^0.50.0",
@@ -13,7 +16,7 @@
     "react": "^15.6.1",
     "react-dom": "^15.5.0",
     "react-redux": "^5.0.5",
-    "react-scripts": "^1.0.10",
+    "react-scripts": "^2.0.5",
     "react-text-ellipsis": "^1.5.1",
     "redux": "^3.7.2"
   },
