@@ -15,7 +15,6 @@ let Legend = class Legend extends React.Component {
     onChange: PropTypes.func.isRequired
   };
 
-
   // handleChange (evt) {
   //   // check it out: we get the evt.target.name
   //   // and use it to target the key on our `state` object with the same name, using bracket syntax
