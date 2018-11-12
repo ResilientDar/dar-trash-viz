@@ -4,11 +4,14 @@ import mapboxgl from 'mapbox-gl'
 import { connect } from 'react-redux'
 import setCurrentFeature from '../redux/features'
 import data from '../data.json'
+import Tooltip from './tooltip'
+import ReactDOM from 'react-dom'
 
 mapboxgl.accessToken = 'pk.eyJ1Ijoic2FtdHdlc2EiLCJhIjoiZTc1OTQ4ODE0ZmY2MzY0MGYwMDNjOWNlYTYxMjU4NDYifQ.F1zCcOYqpXWd4C9l9xqvEQ';
 
 let Map = class Map extends React.Component {
   map;
+  tooltipContainer;
 
   static propTypes = {
     active: PropTypes.object.isRequired,
@@ -19,7 +22,8 @@ let Map = class Map extends React.Component {
 
   state = {
             pointsActive: false,
-            clustersActive: true};
+            clustersActive: true
+          };
 
   componentDidUpdate() {
      this.setColor();
@@ -27,6 +31,7 @@ let Map = class Map extends React.Component {
   }
 
   componentDidMount() {
+
     this.map = new mapboxgl.Map({
       container: this.mapContainer,
       style: 'mapbox://styles/samtwesa/cjnrbl5zc1u6b2smsvrep1rqq',
@@ -53,6 +58,7 @@ let Map = class Map extends React.Component {
       this.clusters();
       this.addPoints();
       this.addWards();
+      this.setToolTipDiv();
       // this.setFill();
     });
 
@@ -65,6 +71,7 @@ let Map = class Map extends React.Component {
     const { property, stops } = this.props.active;
 
     if(this.props.analysis_active === true){
+
       this.map.setPaintProperty('wards', 'fill-color', {
       property,
       stops
@@ -73,7 +80,9 @@ let Map = class Map extends React.Component {
       this.map.setLayoutProperty('wards', 'visibility', 'visible');
 
     }else{
+
       this.map.setLayoutProperty('wards', 'visibility', 'none');
+
       this.map.setPaintProperty('dar-trash', 'circle-color', {
       property,
       stops,
@@ -104,6 +113,26 @@ let Map = class Map extends React.Component {
    
   }
 
+  setTooltip(features) {
+    if (features.length) {
+      ReactDOM.render(
+        React.createElement(
+          Tooltip, {
+            features
+          }
+        ),
+        this.tooltipContainer
+      );
+    } else {
+      this.tooltipContainer.innerHTML = '';
+    }
+  }
+
+  setToolTipDiv(){
+    this.tooltipContainer = document.createElement('div');
+
+  }
+
   clickEventsOnPoints(){
     this.map.on('click', (e) => {
       var features = this.map.queryRenderedFeatures(e.point,
@@ -130,6 +159,25 @@ let Map = class Map extends React.Component {
     // Change it back to a pointer when it leaves.
     this.map.on('mouseleave', 'dar-trash', (e) => {
         this.map.getCanvas().style.cursor = '';
+    });
+
+    this.map.on('mousemove','wards', (e) => {
+      var features = this.map.queryRenderedFeatures(e.point,
+       { layers: ['wards'] });
+
+      const tooltip = new mapboxgl.Marker(this.tooltipContainer, {
+        offset: [-120, 0]
+      }).setLngLat([0,0]).addTo(this.map);
+
+      tooltip.setLngLat(e.lngLat);
+      this.map.getCanvas().style.cursor = features.length ? 'pointer' : '';
+
+      this.setTooltip(features);
+    });
+
+    this.map.on('mouseleave', 'wards', (e) => {
+        this.map.getCanvas().style.cursor = '';
+        this.tooltipContainer.innerHTML = '';
     });
   }
 
@@ -159,11 +207,12 @@ let Map = class Map extends React.Component {
         id: 'wards',
         type: 'fill',
         source: 'wards',
-        layout: {
-          visibility :  'none'
-        }
+        }, 'dar-trash');
 
-        }, id);
+    this.map.setPaintProperty('wards', 'fill-opacity', 0.6);
+    this.map.setPaintProperty('wards', 'fill-outline-color', '#18a6b9');
+    
+
     this.map.setLayoutProperty('wards', 'visibility', 'none');
   }
 
@@ -241,8 +290,6 @@ let Map = class Map extends React.Component {
 
         var clusterId = features[0].properties.cluster_id;
         this.map.getSource('trash').getClusterExpansionZoom(clusterId, (err, zoom) => {
-          console.log('Error is ' + err);
-          console.log('Zoom is ' + zoom);
 
             if (err)
                 return;

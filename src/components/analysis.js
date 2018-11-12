@@ -7,6 +7,7 @@ let Analysis = class Analysis extends React.Component {
   static propTypes = {
     analysis_options: PropTypes.array.isRequired,
     active: PropTypes.object.isRequired,
+    analysis_active: PropTypes.bool,
     onChange: PropTypes.func.isRequired
   };
 
@@ -23,7 +24,7 @@ let Analysis = class Analysis extends React.Component {
     }
 
     return (
-      <div className="listing-group absolute top left ml12 mt12 border border--2 border--white bg-white shadow-darken10 z1 analysis">
+      <div className="listing-group absolute left ml12 mt180 border border--2 border--white bg-white shadow-darken10 z1 analysis">
         Analysis
         {analysis_options.map(renderOptions)}
       </div>
@@ -34,7 +35,8 @@ let Analysis = class Analysis extends React.Component {
 function mapStateToProps(state) {
   return {
     analysis_options: state.analysis_options,
-    active: state.active
+    active: state.active,
+    analysis_active: state.analysis_active
   };
 }
 
