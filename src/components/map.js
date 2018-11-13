@@ -84,11 +84,11 @@ let Map = class Map extends React.Component {
 
       else if( property === 'dist_cm'){
 
-        this.map.setPaintProperty('drains-piles', 'circle-color', {
-          property,
-          stops,
-          type: "categorical"
-        }); 
+        // this.map.setPaintProperty('drains-piles', 'circle-color', {
+        //   property,
+        //   stops,
+        //   type: "categorical"
+        // }); 
 
         this.map.setLayoutProperty('drains-piles', 'visibility', 'visible');
         this.map.setLayoutProperty('wards', 'visibility', 'none');
@@ -97,11 +97,11 @@ let Map = class Map extends React.Component {
       }
       else if( property === 'distance'){
 
-        this.map.setPaintProperty('brt-piles', 'circle-color', {
-          property,
-          stops,
-          type: "categorical"
-        }); 
+        // this.map.setPaintProperty('brt-piles', 'circle-color', {
+        //   property,
+        //   stops,
+        //   type: "categorical"
+        // }); 
 
         this.map.setLayoutProperty('brt-piles', 'visibility', 'visible');
         this.map.setLayoutProperty('drains-piles', 'visibility', 'none');
@@ -117,6 +117,8 @@ let Map = class Map extends React.Component {
 
         this.map.setLayoutProperty('wards', 'visibility', 'visible');
         this.map.setLayoutProperty('houses', 'visibility', 'none');
+        this.map.setLayoutProperty('houses', 'visibility', 'none');
+        this.map.setLayoutProperty('brt-piles', 'visibility', 'none');
       }
     }
     else{
@@ -287,6 +289,9 @@ let Map = class Map extends React.Component {
         source: 'drains-piles',
         }, 'dar-trash');
 
+    this.map.setPaintProperty('drains-piles', 'circle-color', '#869202'); 
+    
+
     // this.map.setLayoutProperty('household', 'visibility', 'none');
   }
 
@@ -300,6 +305,8 @@ let Map = class Map extends React.Component {
         type: 'circle',
         source: 'brt-piles',
         }, 'dar-trash');
+
+    this.map.setPaintProperty('brt-piles', 'circle-color', '#0876dd'); 
 
     // this.map.setLayoutProperty('household', 'visibility', 'none');
   }
