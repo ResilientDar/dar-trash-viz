@@ -60,7 +60,7 @@ const options = [{
 }]
 
 const analysis_options = [{
-  name: 'Ward',
+  name: 'Wards',
   description: 'Trash pile count in Wards',
   property: 'trash_pile',
   stops: [
@@ -69,9 +69,44 @@ const analysis_options = [{
     [100, '#f1a8a5'],
     [300, '#ee8f9a'],
     [700, '#18a6b9'],
-    [1100,'#FF0000'] 
+    [1100,'#ff0000'] 
   ]
-}]
+},
+
+{
+  name: 'Households',
+  description: 'Households with trash piles within 1 meter',
+  property: 'experience',
+  stops: [
+    ['yes', '#ff0000'],
+    ['no', '#008000']
+  ]
+},
+
+{
+  name: 'Trash near Drains',
+  description: 'Trash piles within 1 meter from drains',
+  property: 'dist_cm',
+  stops: [
+    [0, '#ff0000'],
+    [30, '#f1a8a5'],
+    [100, '#f8d5cc']
+  ]
+},
+
+{
+  name: 'Trash near BRT',
+  description: 'Trash piles within 20 meters from BRT Public Transit',
+  property: 'distance',
+  stops: [
+    [0, '#ff0000'],
+    [10, '#f1a8a5'],
+    [20, '#f8d5cc']
+  ]
+}
+
+
+]
 
 
 

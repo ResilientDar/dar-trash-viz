@@ -58,6 +58,9 @@ let Map = class Map extends React.Component {
       this.clusters();
       this.addPoints();
       this.addWards();
+      this.addHouses();
+      this.addDrainPiles();
+      this.addBRTPiles();
       this.setToolTipDiv();
       // this.setFill();
     });
@@ -67,19 +70,56 @@ let Map = class Map extends React.Component {
     
   }
 
+  // Customize (add/remove) layers when options are toggled
   setColor() {
     const { property, stops } = this.props.active;
 
     if(this.props.analysis_active === true){
+      if( property === 'experience'){
+        this.map.setLayoutProperty('houses', 'visibility', 'visible');
+        this.map.setLayoutProperty('wards', 'visibility', 'none');
+        this.map.setLayoutProperty('brt-piles', 'visibility', 'none');
+        this.map.setLayoutProperty('drains-piles', 'visibility', 'none');
+      }
 
-      this.map.setPaintProperty('wards', 'fill-color', {
-      property,
-      stops
-      });
+      else if( property === 'dist_cm'){
 
-      this.map.setLayoutProperty('wards', 'visibility', 'visible');
+        this.map.setPaintProperty('drains-piles', 'circle-color', {
+          property,
+          stops,
+          type: "categorical"
+        }); 
 
-    }else{
+        this.map.setLayoutProperty('drains-piles', 'visibility', 'visible');
+        this.map.setLayoutProperty('wards', 'visibility', 'none');
+        this.map.setLayoutProperty('houses', 'visibility', 'none');
+        this.map.setLayoutProperty('brt-piles', 'visibility', 'none');
+      }
+      else if( property === 'distance'){
+
+        this.map.setPaintProperty('brt-piles', 'circle-color', {
+          property,
+          stops,
+          type: "categorical"
+        }); 
+
+        this.map.setLayoutProperty('brt-piles', 'visibility', 'visible');
+        this.map.setLayoutProperty('drains-piles', 'visibility', 'none');
+        this.map.setLayoutProperty('wards', 'visibility', 'none');
+        this.map.setLayoutProperty('houses', 'visibility', 'none');
+      }
+
+      else{
+        this.map.setPaintProperty('wards', 'fill-color', {
+          property,
+          stops
+        });
+
+        this.map.setLayoutProperty('wards', 'visibility', 'visible');
+        this.map.setLayoutProperty('houses', 'visibility', 'none');
+      }
+    }
+    else{
 
       this.map.setLayoutProperty('wards', 'visibility', 'none');
 
@@ -97,7 +137,7 @@ let Map = class Map extends React.Component {
     const selectedStops = this.props.selectedStops;
     const arr = this.buildFilter(selectedStops, property);
 
-    if(selectedStops != null){
+    if(selectedStops != null & (property !== 'experience'|| property !== 'trash_pile') ){
        this.map.setFilter('dar-trash', arr);
        // Apply filter to clusters layers also
        // try {
@@ -179,6 +219,13 @@ let Map = class Map extends React.Component {
         this.map.getCanvas().style.cursor = '';
         this.tooltipContainer.innerHTML = '';
     });
+
+    this.map.on('mouseenter','drains-piles', (e) => {
+      var features = this.map.queryRenderedFeatures(e.point,
+       { layers: ['drains-piles'] });
+
+      console.log(features);
+    });
   }
 
   addPoints(){
@@ -211,10 +258,52 @@ let Map = class Map extends React.Component {
 
     this.map.setPaintProperty('wards', 'fill-opacity', 0.6);
     this.map.setPaintProperty('wards', 'fill-outline-color', '#18a6b9');
-    
 
     this.map.setLayoutProperty('wards', 'visibility', 'none');
   }
+
+  addHouses(){
+    var id = this.getLayerPosition('symbol');
+
+    // this.removeLayerFromMap('dar-trash');
+
+    this.map.addLayer({
+        id: 'houses',
+        type: 'symbol',
+        source: 'houses',
+        }, 'dar-trash');
+
+    // this.map.setLayoutProperty('household', 'visibility', 'none');
+  }
+
+  addDrainPiles(){
+    var id = this.getLayerPosition('symbol');
+
+    // this.removeLayerFromMap('dar-trash');
+
+    this.map.addLayer({
+        id: 'drains-piles',
+        type: 'circle',
+        source: 'drains-piles',
+        }, 'dar-trash');
+
+    // this.map.setLayoutProperty('household', 'visibility', 'none');
+  }
+
+  addBRTPiles(){
+    var id = this.getLayerPosition('symbol');
+
+    // this.removeLayerFromMap('dar-trash');
+
+    this.map.addLayer({
+        id: 'brt-piles',
+        type: 'circle',
+        source: 'brt-piles',
+        }, 'dar-trash');
+
+    // this.map.setLayoutProperty('household', 'visibility', 'none');
+  }
+
 
   clusters(){
 
@@ -353,16 +442,15 @@ let Map = class Map extends React.Component {
       }
   }
 
-  addFilterItemEvent(){
 
-  }
+  /* Helpers
+   */
 
   getLayerTextContent(id){
     if (id === "points") return "dar-trash";
     else if (id === "clusters") return "clusters";
   }
 
-  //Helpers
 
   getLayerPosition(name){
     var layers = this.map.getStyle().layers;
