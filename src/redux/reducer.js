@@ -64,11 +64,11 @@ const analysis_options = [{
   description: 'Trash pile count in Wards',
   property: 'trash_pile',
   stops: [
-    [0, '#f8d5cc'],
+    [0, '#18a6b9'],
     [40, '#f4bfb6'],
     [100, '#f1a8a5'],
     [300, '#ee8f9a'],
-    [700, '#18a6b9'],
+    [700, '#ef4040'],
     [1100,'#ff0000'] 
   ]
 },

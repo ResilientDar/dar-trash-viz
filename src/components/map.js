@@ -117,7 +117,7 @@ let Map = class Map extends React.Component {
 
         this.map.setLayoutProperty('wards', 'visibility', 'visible');
         this.map.setLayoutProperty('houses', 'visibility', 'none');
-        this.map.setLayoutProperty('houses', 'visibility', 'none');
+        this.map.setLayoutProperty('drains-piles', 'visibility', 'none');
         this.map.setLayoutProperty('brt-piles', 'visibility', 'none');
       }
     }
@@ -139,9 +139,11 @@ let Map = class Map extends React.Component {
     const selectedStops = this.props.selectedStops;
     const arr = this.buildFilter(selectedStops, property);
 
-    if(selectedStops != null & (property !== 'experience'|| property !== 'trash_pile') ){
+    if(selectedStops != null & (this.props.analysis_active !== true) ){
        this.map.setFilter('dar-trash', arr);
+       console.log("called filter");
        // Apply filter to clusters layers also
+
        // try {
        //      if(this.map.getLayer('clusters') != null){
        //        this.map.setFilter('clusters', arr);
