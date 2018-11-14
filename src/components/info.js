@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import TextEllipsis from 'react-text-ellipsis'
+import { Modal, Button } from 'react-bootstrap'
 
 
 let Info = class Info extends React.Component {
@@ -13,6 +14,26 @@ let Info = class Info extends React.Component {
     infoActive: PropTypes.bool,
     onClick: PropTypes.func
   };
+
+  constructor(props, context) {
+    super(props, context);
+
+    this.handleShow = this.handleShow.bind(this);
+    this.handleClose = this.handleClose.bind(this);
+
+    this.state = {
+      show: false
+    };
+  }
+
+
+  handleClose() {
+    this.setState({ show: false });
+  }
+
+  handleShow() {
+    this.setState({ show: true });
+  }
 
   render() {
     
@@ -30,7 +51,7 @@ let Info = class Info extends React.Component {
         <div className='mb6 col popic spanpop'>
           <img src={this.props.currentFeature ? 
             this.props.currentFeature.properties.imp:''} 
-          className="pic img-left" alt="Trash pile"/>
+          className="pic img-left" alt="Trash pile" onClick={this.handleShow} />
         </div>        
         <div className="col">
         <font size="5" face="Courier New" text-align="left" padding="0" >
@@ -80,7 +101,18 @@ let Info = class Info extends React.Component {
           </table>
           </font>
       </div>
-                
+      <Modal className="img-modal" show={this.state.show} onHide={this.handleClose}>
+        <Modal.Body className="modal-body">
+          {/* <div className='mb10 mr10 modal-img1'> */}
+          <img src={this.props.currentFeature ? 
+            this.props.currentFeature.properties.imp:''} 
+          className="modal-content" 
+          alt="Trash pile"
+          onClick={this.handleShow}
+          />
+        {/* </div>    */}
+        </Modal.Body>
+      </Modal>
       </div>
     );
   }else {return null;}
