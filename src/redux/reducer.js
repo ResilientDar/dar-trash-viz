@@ -104,11 +104,7 @@ const analysis_options = [{
     [20, '#f8d5cc']
   ]
 }
-
-
 ]
-
-
 
 const initialState: State = {
   options,
