@@ -95,7 +95,6 @@
 #menu {
     background: #fff;
     position: absolute;
-    z-index: 1;
     top: 120px;
     right: 10px;
     width: 120px;
@@ -297,19 +296,19 @@ table {
 .modal-content {
   margin: auto;
   display: block;
-  width: 80%;
+  width:80%;
   /* max-width: 700px; */
 }
 
-.img-modal {
-  display: none; /* Hidden by default */
+.img-modal {/* Hidden by default */
   position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
+  z-index: 3; /* Sit on top */
   padding-top: 10px; /* Location of the box */
+  padding-bottom: 10px;
   left: 0;
   top: 0;
   width: 100%; /* Full width */
-  height: 100%; /* Full height */
+  height: 100%;
   overflow: auto; /* Enable scroll if needed */
   background-color: rgb(0,0,0); /* Fallback color */
   background-color: rgba(0,0,0,0.9); /* Black w/ opacity */

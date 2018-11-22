@@ -41,7 +41,7 @@ let Legend = class Legend extends React.Component {
     }
 
     return (
-      <div className="bg-white absolute bottom right mr12 mb24 py12 px12 shadow-darken10 round z1 wmax180"
+      <div className="bg-white absolute bottom right mr12 mb24 py12 px12 shadow-darken10 round wmax180"
       title="Click the list items to filter the map">
         <div className='mb6'>
           <h2 className="txt-bold txt-s block">{name}</h2>

@@ -11,6 +11,7 @@ let Info = class Info extends React.Component {
     active: PropTypes.object.isRequired,
     currentFeature: PropTypes.object,
     infoActive: PropTypes.bool,
+    showModalImg:  PropTypes.bool,
     onClick: PropTypes.func
   };
 
@@ -39,18 +40,23 @@ let Info = class Info extends React.Component {
     var vari = {
       fontSize: '10px'
     }
-    if(this.props.infoActive )
-        {
+    if(this.props.infoActive){
+      
+
     return (
     
       <div className="bg-white popup row absolute pop bottom left shadow-darken10~ z1 wmax500 info ml12 mb36">
         <div> 
-          <button className="info-close-button" onClick={() => this.props.onClick(false)}>&#215;</button>
+          <button className="info-close-button" onClick={() => 
+            this.props.onClick(false, this.props.showModalImg)}>&#215;</button>
         </div>
         <div className='mb6 col popic spanpop'>
           <img src={this.props.currentFeature ? 
             this.props.currentFeature.properties.imp:''} 
-          className="pic img-left" alt="Trash pile" onClick={this.handleShow} />
+
+          className="pic img-left" alt="Trash pile" onClick={() =>
+           this.props.onClick(this.props.infoActive, true)} />
+
         </div>        
         <div className="col">
         <font size="5" face="Courier New" text-align="left" padding="0" >
@@ -58,7 +64,9 @@ let Info = class Info extends React.Component {
              <tbody>
                  <tr>
                      <th scope="row">Waste site type:</th>
-                     {/* <td id="wst tx" style={vari}>{this.props.currentFeature?this.props.currentFeature.properties.waste_site_type:''}</td> */}
+                     {/* <td id="wst tx" style={vari}> {this.props.currentFeature?
+                     this.props.currentFeature.properties.waste_site_type:''}</td> */}
+
                      <td id="wt tx" style={vari}>
                      <TextEllipsis lines={1}>
                      {this.props.currentFeature ? 
@@ -100,18 +108,20 @@ let Info = class Info extends React.Component {
           </table>
           </font>
       </div>
-      <Modal className="img-modal" show={this.state.show} onHide={this.handleClose}>
-        <Modal.Body className="modal-body">
-          {/* <div className='mb10 mr10 modal-img1'> */}
+
+      {this.props.showModalImg &&
+        <div className="img-modal" onClick={() => 
+           this.props.onClick(this.props.infoActive, false)}>
+        <div className="modal-body">
           <img src={this.props.currentFeature ? 
             this.props.currentFeature.properties.imp:''} 
           className="modal-content" 
           alt="Trash pile"
-          onClick={this.handleShow}
           />
-        {/* </div>    */}
-        </Modal.Body>
-      </Modal>
+        </div>
+      </div>
+      }
+      
       </div>
     );
   }else {return null;}
@@ -124,7 +134,8 @@ function mapStateToProps(state) {
     active: state.active,
     options: state.options,
     currentFeature: state.currentFeature,
-    infoActive: state.infoActive
+    infoActive: state.infoActive,
+    showModalImg: state.showModalImg
   };
 }
 

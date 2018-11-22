@@ -22,10 +22,11 @@ export function setActiveLegendOption(option) {
   });
 }
 
-export function setInfoActive(option) {
+export function setInfoActive(infoActive, showModalImg) {
   store.dispatch({
     type: Constants.SET_INFO_ACTIVE,
-    option
+    infoActive,
+    showModalImg
   });
 }
 

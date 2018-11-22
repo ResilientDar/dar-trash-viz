@@ -5,14 +5,14 @@ import { connect } from 'react-redux'
 let Analysis = class Analysis extends React.Component {
 
   static propTypes = {
-    analysis_options: PropTypes.array.isRequired,
+    analysisOptions: PropTypes.array.isRequired,
     active: PropTypes.object.isRequired,
-    analysis_active: PropTypes.bool,
+    analysisActive: PropTypes.bool,
     onChange: PropTypes.func.isRequired
   };
 
   render() {
-    const { analysis_options, active } = this.props;
+    const { analysisOptions, active } = this.props;
 
     const renderOptions = (option, i) => {
       return (
@@ -26,7 +26,7 @@ let Analysis = class Analysis extends React.Component {
     return (
       <div className="listing-group absolute left ml12 mt180 border border--2 border--white bg-white shadow-darken10 z1 analysis">
         Analysis
-        {analysis_options.map(renderOptions)}
+        {analysisOptions.map(renderOptions)}
       </div>
     );
   }
@@ -34,9 +34,9 @@ let Analysis = class Analysis extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    analysis_options: state.analysis_options,
+    analysisOptions: state.analysisOptions,
     active: state.active,
-    analysis_active: state.analysis_active
+    analysisActive: state.analysisActive
   };
 }
 

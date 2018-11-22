@@ -17,7 +17,7 @@ let Map = class Map extends React.Component {
     active: PropTypes.object.isRequired,
     selectedStops: PropTypes.array.isRequired,
     currentFeature: PropTypes.object,
-    analysis_active: PropTypes.bool
+    analysisActive: PropTypes.bool
   };
 
   state = {
@@ -74,7 +74,7 @@ let Map = class Map extends React.Component {
   setColor() {
     const { property, stops } = this.props.active;
 
-    if(this.props.analysis_active === true){
+    if(this.props.analysisActive === true){
       if( property === 'experience'){
         this.map.setLayoutProperty('houses', 'visibility', 'visible');
         this.map.setLayoutProperty('wards', 'visibility', 'none');
@@ -139,7 +139,7 @@ let Map = class Map extends React.Component {
     const selectedStops = this.props.selectedStops;
     const arr = this.buildFilter(selectedStops, property);
 
-    if(selectedStops != null & (this.props.analysis_active !== true) ){
+    if(selectedStops != null & (this.props.analysisActive !== true) ){
        this.map.setFilter('dar-trash', arr);
        console.log("called filter");
        // Apply filter to clusters layers also
@@ -513,7 +513,7 @@ function mapStateToProps(state) {
     active: state.active,
     selectedStops: state.selectedStops,
     currentFeature: state.currentFeature,
-    analysis_active: state.analysis_active
+    analysisActive: state.analysisActive
   };
 }
 
