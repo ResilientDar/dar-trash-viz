@@ -114,7 +114,8 @@ const initialState: State = {
   selectedStops: assignSelectedStops(options[0].stops),
   infoActive: false,
   showModalImg: false,
-  analysisActive: false
+  analysisActive: false,
+  zoomToFeature: false
 };
 
 function assignSelectedStops(stops){
@@ -190,7 +191,8 @@ function reducer(state = initialState, action) {
 
       return Object.assign({}, state, {
         infoActive: action.infoActive,
-        showModalImg: action.showModalImg
+        showModalImg: action.showModalImg,
+        zoomToFeature: action.zoomToFeature
       });
     default:
       return state;

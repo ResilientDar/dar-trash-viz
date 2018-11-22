@@ -22,11 +22,16 @@ export function setActiveLegendOption(option) {
   });
 }
 
-export function setInfoActive(infoActive, showModalImg) {
+export function setInfoActive(
+  infoActive, 
+  showModalImg,
+  zoomToFeature) {
+
   store.dispatch({
     type: Constants.SET_INFO_ACTIVE,
     infoActive,
-    showModalImg
+    showModalImg,
+    zoomToFeature
   });
 }
 

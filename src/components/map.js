@@ -17,7 +17,8 @@ let Map = class Map extends React.Component {
     active: PropTypes.object.isRequired,
     selectedStops: PropTypes.array.isRequired,
     currentFeature: PropTypes.object,
-    analysisActive: PropTypes.bool
+    analysisActive: PropTypes.bool,
+    zoomToFeature:  PropTypes.bool,
   };
 
   state = {
@@ -28,6 +29,7 @@ let Map = class Map extends React.Component {
   componentDidUpdate() {
      this.setColor();
      this.setFilter();
+     this.zoomToFeature();
   }
 
   componentDidMount() {
@@ -451,6 +453,18 @@ let Map = class Map extends React.Component {
       }
   }
 
+  zoomToFeature(){
+    if(this.props.zoomToFeature && this.props.currentFeature){
+      this.map.easeTo({
+                  center: this.props.currentFeature.geometry.coordinates,
+                  zoom: 20
+      });
+      
+      this.setState({zoomToFeature: false});
+    }
+    
+  }
+
 
   /* Helpers
    */
@@ -513,7 +527,8 @@ function mapStateToProps(state) {
     active: state.active,
     selectedStops: state.selectedStops,
     currentFeature: state.currentFeature,
-    analysisActive: state.analysisActive
+    analysisActive: state.analysisActive,
+    zoomToFeature:  state.zoomToFeature,
   };
 }
 

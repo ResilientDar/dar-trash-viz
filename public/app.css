@@ -274,8 +274,8 @@ table {
     overflow: hidden;
 }
 .popic {
-    padding: 1%;
-    padding-bottom: 0%;
+  padding: 1%;
+  padding-bottom: 0%;
   width: 240px;
   height: 100%;
 }
@@ -316,4 +316,11 @@ table {
 
 .modal-body {
   background-color: none;
+}
+
+.zoom-point{
+  cursor: pointer;
+  color:#3887be;
+  float: left;
+  font-size: 100%;
 }

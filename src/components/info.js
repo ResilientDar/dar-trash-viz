@@ -12,28 +12,9 @@ let Info = class Info extends React.Component {
     currentFeature: PropTypes.object,
     infoActive: PropTypes.bool,
     showModalImg:  PropTypes.bool,
+    zoomToFeature:  PropTypes.bool,
     onClick: PropTypes.func
   };
-
-  constructor(props, context) {
-    super(props, context);
-
-    this.handleShow = this.handleShow.bind(this);
-    this.handleClose = this.handleClose.bind(this);
-
-    this.state = {
-      show: false
-    };
-  }
-
-
-  handleClose() {
-    this.setState({ show: false });
-  }
-
-  handleShow() {
-    this.setState({ show: true });
-  }
 
   render() {
     
@@ -103,6 +84,14 @@ let Info = class Info extends React.Component {
                         this.props.currentFeature.properties.at :''}
                       </td>
                   </tr>
+                  <tr>
+                      <th id="at tx" style={vari} onClick={() => 
+                      this.props.onClick(this.props.infoActive,
+                       this.props.showModalImg,
+                       true)}>
+                      <span className="zoom-point">Zoom to point</span>
+                      </th>
+                  </tr>
                
           </tbody> 
           </table>
@@ -135,7 +124,8 @@ function mapStateToProps(state) {
     options: state.options,
     currentFeature: state.currentFeature,
     infoActive: state.infoActive,
-    showModalImg: state.showModalImg
+    showModalImg: state.showModalImg,
+    zoomToFeature: state.zoomToFeature
   };
 }
 
