@@ -2,6 +2,8 @@ import * as actions from '../action-creators'
 import * as Constants from '../../constants'
 import configureStore from 'redux-mock-store'
 
+import reducer from '../reducer'
+
 
 const middlewares = []
 const mockStore = configureStore(middlewares)

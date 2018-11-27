@@ -15,13 +15,6 @@ let Legend = class Legend extends React.Component {
     onChange: PropTypes.func.isRequired
   };
 
-  // handleChange (evt) {
-  //   // check it out: we get the evt.target.name
-  //   // and use it to target the key on our `state` object with the same name, using bracket syntax
-  //   this.setState({ activeLegend: evt.target.id });
-  //   this.props.onChange(this.state.activeLegend);
-  // }
-
   render() {
     const { name, description, stops } = this.props.active;
 

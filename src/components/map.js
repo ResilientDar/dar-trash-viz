@@ -135,6 +135,7 @@ let Map = class Map extends React.Component {
     }
   }
 
+  //Filter function for the layer in the map
   setFilter() {
     const { property, stops } = this.props.active;
     
@@ -182,7 +183,7 @@ let Map = class Map extends React.Component {
   clickEventsOnPoints(){
     this.map.on('click', (e) => {
       var features = this.map.queryRenderedFeatures(e.point,
-       { layers: ['dar-trash', 'unclustered-point'] });
+       { layers: ['dar-trash', 'unclustered-point', 'brt-piles', 'drains-piles'] });
 
       // this.removePopUp();
 
@@ -459,8 +460,8 @@ let Map = class Map extends React.Component {
                   center: this.props.currentFeature.geometry.coordinates,
                   zoom: 20
       });
-      
-      this.setState({zoomToFeature: false});
+
+      // this.setState({zoomToFeature: false});
     }
     
   }
