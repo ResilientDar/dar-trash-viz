@@ -455,8 +455,10 @@ let Map = class Map extends React.Component {
 
         var link = document.createElement('a');
         link.href = '#';
-        link.className = (id === 'points') ? 'active' : '';        
+        link.className = (id === 'points') ? 'active' : '';
+        link.style = (id === 'drainage' || id === 'BRT')  ? 'display: none;': '';
         link.textContent = id;
+        link.id = id;
 
         link.onclick = function(e) {
             var clickedLayer = mapInstance.getLayerTextContent(e.target.textContent);
@@ -489,6 +491,32 @@ let Map = class Map extends React.Component {
         layers.appendChild(link);
 
       }
+
+      // Adding a control span for showing and adding extra layers
+
+        var span = document.createElement('span');
+        span.className = 'more-list fr';
+        span.textContent = 'more';
+
+        span.onclick = function(e) {
+          if(this.textContent === 'more') {
+            var drainage = document.getElementById('drainage');
+            drainage.style = 'display: block;';
+            var brt = document.getElementById('BRT');
+            brt.style = 'display: block;';
+
+            this.textContent = 'less';
+          }else{
+            var drainage = document.getElementById('drainage');
+            drainage.style = 'display: none;';
+            var brt = document.getElementById('BRT');
+            brt.style = 'display: none;';
+            
+            this.textContent = 'more';
+          }
+        };
+       var layers = document.getElementById('menu');
+       layers.appendChild(span);
   }
 
   zoomToFeature(){

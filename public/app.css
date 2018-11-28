@@ -98,7 +98,7 @@
     top: 120px;
     right: 10px;
     width: 120px;
-    padding: 0.7%;
+    padding: 0.7% 0.7% 0 0.7%;
     border-radius: 4px;
     font-family: Arial;
 }
@@ -323,4 +323,20 @@ table {
   color:#3887be;
   float: left;
   font-size: 100%;
+}
+
+/* classes for hiding and showing list menus*/
+
+.hide{
+  display: none;
+}
+
+.show{
+  display: block;
+}
+
+.more-list{
+  color: #3887be;
+  font-size: 70%;
+  cursor: pointer;
 }
