@@ -63,6 +63,8 @@ let Map = class Map extends React.Component {
       this.addHouses();
       this.addDrainPiles();
       this.addBRTPiles();
+      this.addDrainageNetwork();
+      this.addBRTNetwork();
       this.setToolTipDiv();
       // this.setFill();
     });
@@ -126,6 +128,9 @@ let Map = class Map extends React.Component {
     else{
 
       this.map.setLayoutProperty('wards', 'visibility', 'none');
+      this.map.setLayoutProperty('houses', 'visibility', 'none');
+      this.map.setLayoutProperty('drains-piles', 'visibility', 'none');
+      this.map.setLayoutProperty('brt-piles', 'visibility', 'none');
 
       this.map.setPaintProperty('dar-trash', 'circle-color', {
       property,
@@ -144,7 +149,6 @@ let Map = class Map extends React.Component {
 
     if(selectedStops != null & (this.props.analysisActive !== true) ){
        this.map.setFilter('dar-trash', arr);
-       console.log("called filter");
        // Apply filter to clusters layers also
 
        // try {
@@ -230,8 +234,6 @@ let Map = class Map extends React.Component {
     this.map.on('mouseenter','drains-piles', (e) => {
       var features = this.map.queryRenderedFeatures(e.point,
        { layers: ['drains-piles'] });
-
-      console.log(features);
     });
   }
 
@@ -314,6 +316,40 @@ let Map = class Map extends React.Component {
     this.map.setPaintProperty('brt-piles', 'circle-color', '#0876dd'); 
 
     // this.map.setLayoutProperty('household', 'visibility', 'none');
+  }
+
+  addDrainageNetwork(){
+    var id = this.getLayerPosition('symbol');
+
+    this.map.addLayer({
+        id: 'drainage',
+        type: 'line',
+        source: 'drainage',
+        layout: {
+          visibility :  'none'
+        }
+
+        }, id);
+    this.map.setPaintProperty('drainage', 'line-color', '#efbc15');
+    this.map.setPaintProperty('drainage', 'line-width', 3);
+    this.map.setLayoutProperty('drainage', 'visibility', 'none');
+  }
+
+  addBRTNetwork(){
+    var id = this.getLayerPosition('symbol');
+
+    this.map.addLayer({
+        id: 'BRT',
+        type: 'line',
+        source: 'BRT',
+        layout: {
+          visibility :  'none'
+        }
+
+        }, id);
+    this.map.setPaintProperty('BRT', 'line-color', '#1d81a5');
+    this.map.setPaintProperty('BRT', 'line-width', 3);
+    this.map.setLayoutProperty('BRT', 'visibility', 'none');
   }
 
 
@@ -412,7 +448,7 @@ let Map = class Map extends React.Component {
 
   createLayerControl(mapInstance){
 
-    var toggleableLayerIds = [ 'points', 'clusters' ];
+    var toggleableLayerIds = [ 'points', 'clusters', 'drainage', 'BRT' ];
 
     for (var i = 0; i < toggleableLayerIds.length; i++) {
         var id = toggleableLayerIds[i];
@@ -451,6 +487,7 @@ let Map = class Map extends React.Component {
 
         var layers = document.getElementById('menu');
         layers.appendChild(link);
+
       }
   }
 
@@ -473,6 +510,7 @@ let Map = class Map extends React.Component {
   getLayerTextContent(id){
     if (id === "points") return "dar-trash";
     else if (id === "clusters") return "clusters";
+    else return id;
   }
 
 
