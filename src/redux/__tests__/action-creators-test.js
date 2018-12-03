@@ -16,7 +16,7 @@ describe('actions', () => {
     const setInfoActive = () => (
       { type: Constants.SET_INFO_ACTIVE });
 
-  it('should create an action to set active option', () => {
+  it('should dispatch an action to set active option', () => {
 
     const initialState = {}
     const store = mockStore(initialState)
@@ -32,7 +32,7 @@ describe('actions', () => {
     expect(actions).toEqual([expectedAction])
   })
 
-  it('should create an action to set analysis active option', () => {
+  it('should dispatch an action to set analysis active option', () => {
 
     const initialState = {}
     const store = mockStore(initialState)
@@ -47,7 +47,7 @@ describe('actions', () => {
     expect(actions).toEqual([expectedAction])
   })
 
-  it('should create an action to set legend active option', () => {
+  it('should dispatch an action to set legend active option', () => {
 
     const initialState = {}
     const store = mockStore(initialState)
@@ -62,8 +62,8 @@ describe('actions', () => {
     expect(actions).toEqual([expectedAction])
   })
 
-  it('should create an action to set info active option', () => {
-    
+  it('should dispatch an action to set info active option', () => {
+
     const initialState = {}
     const store = mockStore(initialState)
     store.dispatch(setInfoActive());
