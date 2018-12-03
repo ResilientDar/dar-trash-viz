@@ -106,7 +106,7 @@ const analysisOptions = [{
 }
 ]
 
-const initialState: State = {
+const initialState = {
   options,
   analysisOptions,
   active: options[0],
@@ -120,6 +120,8 @@ const initialState: State = {
 
 function assignSelectedStops(stops){
   var selectedStops = [];
+  if(stops === undefined) return selectedStops;
+
   for (var i = 0; i < stops.length; i++) {
       selectedStops[i] = stops[i][0];
   }

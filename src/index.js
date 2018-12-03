@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux';
 import { store } from './redux/store'
 import { setActiveOption } from './redux/action-creators'
-import { setActiveLegendOption } from './redux/action-creators'
+import { setLegendActiveOption } from './redux/action-creators'
 import { setAnalysisActiveOption } from './redux/action-creators'
 import { setInfoActive } from './redux/action-creators'
 import Map from './components/map'
@@ -24,7 +24,7 @@ class Application extends React.Component {
 
           <Info onClick={setInfoActive}/>
           <Nav />
-          <Legend onChange={setActiveLegendOption}/>
+          <Legend onChange={setLegendActiveOption}/>
         </div>
       </Provider>
     );

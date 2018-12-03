@@ -232,8 +232,7 @@ let Map = class Map extends React.Component {
     });
 
     this.map.on('mouseenter','drains-piles', (e) => {
-      var features = this.map.queryRenderedFeatures(e.point,
-       { layers: ['drains-piles'] });
+      this.map.getCanvas().style.cursor = 'pointer';
     });
   }
 
@@ -255,7 +254,6 @@ let Map = class Map extends React.Component {
   }
 
   addWards(){
-    var id = this.getLayerPosition('symbol');
 
     // this.removeLayerFromMap('dar-trash');
 
@@ -272,8 +270,6 @@ let Map = class Map extends React.Component {
   }
 
   addHouses(){
-    var id = this.getLayerPosition('symbol');
-
     // this.removeLayerFromMap('dar-trash');
 
     this.map.addLayer({
@@ -286,8 +282,6 @@ let Map = class Map extends React.Component {
   }
 
   addDrainPiles(){
-    var id = this.getLayerPosition('symbol');
-
     // this.removeLayerFromMap('dar-trash');
 
     this.map.addLayer({
@@ -297,14 +291,11 @@ let Map = class Map extends React.Component {
         }, 'dar-trash');
 
     this.map.setPaintProperty('drains-piles', 'circle-color', '#869202'); 
-    
 
     // this.map.setLayoutProperty('household', 'visibility', 'none');
   }
 
   addBRTPiles(){
-    var id = this.getLayerPosition('symbol');
-
     // this.removeLayerFromMap('dar-trash');
 
     this.map.addLayer({
@@ -498,25 +489,24 @@ let Map = class Map extends React.Component {
         span.className = 'more-list fr';
         span.textContent = 'more';
 
+        var drainage = document.getElementById('drainage');
+        var brt = document.getElementById('BRT');
+
         span.onclick = function(e) {
           if(this.textContent === 'more') {
-            var drainage = document.getElementById('drainage');
             drainage.style = 'display: block;';
-            var brt = document.getElementById('BRT');
             brt.style = 'display: block;';
 
             this.textContent = 'less';
           }else{
-            var drainage = document.getElementById('drainage');
             drainage.style = 'display: none;';
-            var brt = document.getElementById('BRT');
             brt.style = 'display: none;';
             
             this.textContent = 'more';
           }
         };
-       var layers = document.getElementById('menu');
-       layers.appendChild(span);
+       var menu = document.getElementById('menu');
+       menu.appendChild(span);
   }
 
   zoomToFeature(){

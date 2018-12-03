@@ -15,7 +15,7 @@ export function setAnalysisActiveOption(option) {
   });
 }
 
-export function setActiveLegendOption(option) {
+export function setLegendActiveOption(option) {
   store.dispatch({
     type: Constants.SET_LEGEND_ACTIVE_OPTION,
     option
