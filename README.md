@@ -1,4 +1,4 @@
-Dar es salaam Trash pile visualization (with [redux](https://www.npmjs.com/package/redux))
+Dar es salaam Trash pile visualization (with [redux](https://www.npmjs.com/package/redux)) [![Build Status](https://travis-ci.com/ResilientDar/dar-trash-viz.svg?branch=master)](https://travis-ci.com/ResilientDar/dar-trash-viz)
 ---
 
 
