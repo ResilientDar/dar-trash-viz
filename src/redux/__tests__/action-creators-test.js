@@ -7,20 +7,20 @@ const middlewares = []
 const mockStore = configureStore(middlewares)
 
 describe('actions', () => {
+  const initialState = {}
+  const store = mockStore(initialState)
 
-    const setActiveOption = () => ({ type: Constants.SET_ACTIVE_OPTION });
-    const setAnalysisActiveOption = () => (
-      { type: Constants.SET_ANALYSIS_ACTIVE_OPTION });
-    const setLegendActiveOption = () => (
-      { type: Constants.SET_LEGEND_ACTIVE_OPTION });
-    const setInfoActive = () => (
-      { type: Constants.SET_INFO_ACTIVE });
+  const setActiveOption = () => ({ type: Constants.SET_ACTIVE_OPTION });
+  const setAnalysisActiveOption = () => (
+    { type: Constants.SET_ANALYSIS_ACTIVE_OPTION });
+  const setLegendActiveOption = () => (
+    { type: Constants.SET_LEGEND_ACTIVE_OPTION });
+  const setInfoActive = () => (
+    { type: Constants.SET_INFO_ACTIVE });
 
   it('should dispatch an action to set active option', () => {
 
-    const initialState = {}
-    const store = mockStore(initialState)
-
+    store.clearActions();
     store.dispatch(setActiveOption());
 
     const actions = store.getActions();
@@ -34,8 +34,7 @@ describe('actions', () => {
 
   it('should dispatch an action to set analysis active option', () => {
 
-    const initialState = {}
-    const store = mockStore(initialState)
+    store.clearActions();
     store.dispatch(setAnalysisActiveOption());
 
     const actions = store.getActions();
@@ -49,8 +48,7 @@ describe('actions', () => {
 
   it('should dispatch an action to set legend active option', () => {
 
-    const initialState = {}
-    const store = mockStore(initialState)
+    store.clearActions();
     store.dispatch(setLegendActiveOption());
 
     const actions = store.getActions();
@@ -64,8 +62,7 @@ describe('actions', () => {
 
   it('should dispatch an action to set info active option', () => {
 
-    const initialState = {}
-    const store = mockStore(initialState)
+    store.clearActions();
     store.dispatch(setInfoActive());
 
     const actions = store.getActions();
