@@ -118,38 +118,6 @@ const initialState = {
   zoomToFeature: false
 };
 
-function assignSelectedStops(stops){
-  var selectedStops = [];
-  if(stops === undefined) return selectedStops;
-
-  for (var i = 0; i < stops.length; i++) {
-      selectedStops[i] = stops[i][0];
-  }
-  return selectedStops;
-}
-
-function contains(selectedStops, stop){
-  return selectedStops.includes(stop);
-}
-
-function addStop(selectedStops, stop){
-  // make a separate array copy
-  var slicedStops = selectedStops.slice();
-  slicedStops.push(stop);
-
-  return slicedStops;
-}
-
-function removeStop(selectedStops, stop){
-  // make a separate array copy
-  var slicedStops = selectedStops.slice();
-
-  var index = selectedStops.indexOf(stop);
-  slicedStops.splice(index, 1);
-
-  return slicedStops;
-}
-
 function reducer(state = initialState, action) {
 
   switch (action.type) {
@@ -189,7 +157,6 @@ function reducer(state = initialState, action) {
           });
       }
     case Constants.SET_INFO_ACTIVE:
-    console.log(action);
 
       return Object.assign({}, state, {
         infoActive: action.infoActive,
@@ -199,6 +166,43 @@ function reducer(state = initialState, action) {
     default:
       return state;
   }
+}
+
+// Helpers
+
+function assignSelectedStops(stops){
+  var selectedStops = [];
+  if(stops === undefined) return selectedStops;
+
+  for (var i = 0; i < stops.length; i++) {
+      selectedStops[i] = stops[i][0];
+  }
+  return selectedStops;
+}
+
+function contains(selectedStops, stop){
+  return selectedStops.includes(stop);
+}
+
+function addStop(selectedStops, stop){
+  // make a separate array copy
+  var slicedStops = selectedStops.slice();
+
+  if( stop === undefined) return slicedStops;
+
+  slicedStops.push(stop);
+
+  return slicedStops;
+}
+
+function removeStop(selectedStops, stop){
+  // make a separate array copy
+  var slicedStops = selectedStops.slice();
+
+  var index = selectedStops.indexOf(stop);
+  slicedStops.splice(index, 1);
+
+  return slicedStops;
 }
 
 export { reducer, initialState };
