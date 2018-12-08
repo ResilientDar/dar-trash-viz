@@ -102,7 +102,7 @@ describe('reducer', () => {
         const zoomToFeature = false;
 
   		const action = {
-  			type: Constants.SET_ANALYSIS_ACTIVE_OPTION,
+  			type: Constants.SET_INFO_ACTIVE,
   			infoActive,
 			showModalImg,
 			zoomToFeature
@@ -116,6 +116,24 @@ describe('reducer', () => {
   			showModalImg);
   		expect(output.zoomToFeature).toEqual(
   			zoomToFeature);
+  	})
+
+  	it('should handle SET_FEATURES action', () => {
+  		const currentFeature =  {};
+  		const infoActive = true;
+
+  		const action = {
+  			type: Constants.SET_FEATURES,
+  			currentFeature,
+  			infoActive
+  		}
+
+		const output = reducer(undefined, action);
+					  		
+  		expect(output.currentFeature).toEqual(
+  			currentFeature);
+  		expect(output.infoActive).toEqual(
+  			infoActive);
   	})
 
 })
