@@ -16,7 +16,7 @@ export default class Tooltip extends React.Component {
           <strong className='mr3 center'>WARD DETAILS</strong> <br></br>
           <span className='color-gray-light'>Ward name : {feature.properties.ward_name}</span> <br></br>
           <span className='color-gray-light'>District name: {feature.properties.district_n}</span> <br></br>
-          <span className='color-gray-light'>Total trash count: {feature.properties.trash_pile}</span>
+          <span className='color-gray-light'>Total waste piles count: {feature.properties.trash_pile}</span>
         </div>
       )
     };
