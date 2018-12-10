@@ -10,20 +10,25 @@ describe('features', () => {
   const initialState = {}
   const store = mockStore(initialState)
 
-  const setFeatures = () => ({ type: Constants.SET_FEATURES });
-
   it('should dispatch an action to set features', () => {
 
     store.clearActions();
-    store.dispatch(setFeatures());
 
-    const actions = store.getActions();
+    const currentFeature = {};
+    const infoActive = true;
+
+    store.dispatch(actions.setCurrentFeatureAction(
+      currentFeature,
+      infoActive));
+
 
     const expectedAction = {
-      type: Constants.SET_FEATURES
+      type: Constants.SET_FEATURES,
+      currentFeature,
+      infoActive
     }
 
-    expect(actions).toEqual([expectedAction])
+    expect(store.getActions()).toEqual([expectedAction])
   })
 
 })

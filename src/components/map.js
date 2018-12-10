@@ -18,7 +18,7 @@ let Map = class Map extends React.Component {
     selectedStops: PropTypes.array.isRequired,
     currentFeature: PropTypes.object,
     analysisActive: PropTypes.bool,
-    zoomToFeature:  PropTypes.bool,
+    zoomToFeature:  PropTypes.bool
   };
 
   state = {

@@ -16,14 +16,6 @@ describe('actions', () => {
    store.clearActions();
   });
 
-  // const setActiveOption = () => ({ type: Constants.SET_ACTIVE_OPTION });
-  // const setAnalysisActiveOption = () => (
-  //   { type: Constants.SET_ANALYSIS_ACTIVE_OPTION });
-  // const setLegendActiveOption = () => (
-  //   { type: Constants.SET_LEGEND_ACTIVE_OPTION });
-  // const setInfoActive = () => (
-  //   { type: Constants.SET_INFO_ACTIVE });
-
   const option = {
             name: 'Trash by size',
             description: 'Size of trash pile',
@@ -54,10 +46,11 @@ describe('actions', () => {
 
   it('should dispatch an action to set analysis active option', () => {
 
-    store.dispatch(actions.setAnalysisActiveOptionAction());
+    store.dispatch(actions.setAnalysisActiveOptionAction(option));
 
     const expectedAction = {
-      type: Constants.SET_ANALYSIS_ACTIVE_OPTION
+      type: Constants.SET_ANALYSIS_ACTIVE_OPTION,
+      option: option
     }
     
     expect(store.getActions()).toEqual([expectedAction])
@@ -65,21 +58,31 @@ describe('actions', () => {
 
   it('should dispatch an action to set legend active option', () => {
 
-    store.dispatch(actions.setLegendActiveOptionAction());
+    store.dispatch(actions.setLegendActiveOptionAction(option));
 
     const expectedAction = {
-      type: Constants.SET_LEGEND_ACTIVE_OPTION
+      type: Constants.SET_LEGEND_ACTIVE_OPTION,
+      option: option
     }
     
     expect(store.getActions()).toEqual([expectedAction])
   })
 
   it('should dispatch an action to set info active option', () => {
+    const infoActive = true;
+    const showModalImg = true;
+    const zoomToFeature = true;
 
-    store.dispatch(actions.setInfoActiveAction());
+    store.dispatch(actions.setInfoActiveAction(
+      infoActive,
+      showModalImg,
+      zoomToFeature));
 
     const expectedAction = {
-      type: Constants.SET_INFO_ACTIVE
+      type: Constants.SET_INFO_ACTIVE,
+      infoActive,
+      showModalImg,
+      zoomToFeature
     }
     
     expect(store.getActions()).toEqual([expectedAction])
