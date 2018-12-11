@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "scripts": {
     "start": "react-scripts start",
-    "test": "jest --coverage",
+    "test": "jest --coverage --silent",
     "test:watch": "npm run test -- --watch"
   },
   "devDependencies": {
