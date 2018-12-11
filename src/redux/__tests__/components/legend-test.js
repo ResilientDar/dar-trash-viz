@@ -2,7 +2,7 @@ import React from 'react'
 import { configure } from 'enzyme';
 import { shallow, mount, render } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-15'
-import ConnectedToggle, { Toggle } from '../../../components/toggle'
+import { Legend } from '../../../components/legend'
 
 import configureStore from 'redux-mock-store'
 import thunk from 'redux-thunk';
@@ -31,15 +31,25 @@ function setup() {
           ]
         }]
 
-  const active = options[0];
+  const active = options[0]
+
+  const selectedStops = [
+            "Bagful",
+            "Handful",
+            "Cartload",
+            "Truckload",
+            "Other",
+            "Unidentified"
+          ]
+
   const props = {
-    options,
     active,
+    selectedStops,
     onChange: jest.fn(),
     store
   }
   const enzymeWrapper = shallow(
-    <Toggle {...props} />)
+    <Legend {...props} />)
 
   return {
     props,
@@ -47,11 +57,14 @@ function setup() {
   }
 }
 
-describe('Toggle', () => {
+describe('Legend', () => {
   it('should render self and subcomponents', () => {
     const { props, enzymeWrapper } = setup();
 
-    expect(enzymeWrapper.dive().find('div').hasClass('listing-group')).toBe(true)
+    expect(enzymeWrapper.dive().find('div').first().hasClass('bg-white')).toBe(true);
+    expect(enzymeWrapper.dive().find('div').at(1).hasClass('mb6')).toBe(true);
+    expect(enzymeWrapper.dive().find('nav').hasClass('filter-group')).toBe(true);
+
   })
 
 })

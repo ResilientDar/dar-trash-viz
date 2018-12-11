@@ -2,7 +2,7 @@ import React from 'react'
 import { configure } from 'enzyme';
 import { shallow, mount, render } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-15'
-import  { Nav }  from '../../../components/nav'
+import  { Info }  from '../../../components/info'
 
 import configureStore from 'redux-mock-store'
 import thunk from 'redux-thunk';
@@ -17,21 +17,23 @@ configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
+    infoActive: true,
     store: store
   }
-  const enzymeWrapper = shallow(<Nav {...props} />)
+  const enzymeWrapper = shallow(<Info {...props} />)
   return {
     props,
     enzymeWrapper
   }
 }
 
-describe('Nav', () => {
+describe('Info', () => {
 
   it('should render self and subcomponents', () => {
     const { props, enzymeWrapper } = setup();
 
-    expect(enzymeWrapper.find('nav').hasClass('menu')).toBe(true)
+    //TODO pass infoActive as prop into Info 
+    expect(enzymeWrapper.dive().get(0)).toBe(null)
   })
 
 })

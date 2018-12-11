@@ -24,6 +24,7 @@ export class Toggle extends React.Component {
 
     return (
       <div className="listing-group absolute top left ml12 mt12 border border--2 border--white bg-white shadow-darken10 z1">
+        {/*Check if options are defined then map them */}
         {options && options.map(renderOptions)}
       </div>
     );

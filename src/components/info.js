@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import TextEllipsis from 'react-text-ellipsis'
 
 
-let Info = class Info extends React.Component {
+export class Info extends React.Component {
 
 
   static propTypes = {
@@ -23,7 +23,6 @@ let Info = class Info extends React.Component {
     }
     if(this.props.infoActive){
       
-
     return (
     
       <div className="bg-white popup row absolute pop bottom left shadow-darken10~ z1 wmax500 info ml12 mb36">

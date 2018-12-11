@@ -2,12 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-let Legend = class Legend extends React.Component {
-
-  // constructor () {
-  //   super();
-  //   this.handleChange = this.handleChange.bind(this);
-  // }
+export class Legend extends React.Component {
 
   static propTypes = {
     active: PropTypes.object.isRequired,
@@ -16,7 +11,7 @@ let Legend = class Legend extends React.Component {
   };
 
   render() {
-    const { name, description, stops } = this.props.active;
+    const { name, description, stops } = this.props.active || {};
 
     const renderLegendKeys = (stop, i) => {
       return (
@@ -41,7 +36,8 @@ let Legend = class Legend extends React.Component {
           <p className='txt-s color-gray'>{description}</p>
         </div>
          <nav id="filter-group" className="filter-group">
-        {stops.map(renderLegendKeys)}
+       {/*Check if stops are defined then map them*/}
+        {stops && stops.map(renderLegendKeys)}
         </nav>
       </div>
     );
