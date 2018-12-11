@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-let Toggle = class Toggle extends React.Component {
+export class Toggle extends React.Component {
 
   static propTypes = {
     options: PropTypes.array.isRequired,
@@ -24,7 +24,7 @@ let Toggle = class Toggle extends React.Component {
 
     return (
       <div className="listing-group absolute top left ml12 mt12 border border--2 border--white bg-white shadow-darken10 z1">
-        {options.map(renderOptions)}
+        {options && options.map(renderOptions)}
       </div>
     );
   }

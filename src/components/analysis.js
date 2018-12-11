@@ -26,7 +26,8 @@ let Analysis = class Analysis extends React.Component {
     return (
       <div className="listing-group absolute left ml12 mt180 border border--2 border--white bg-white shadow-darken10 z1 analysis">
         Analysis
-        {analysisOptions.map(renderOptions)}
+        //Check if analysis options are defined then map them
+        {analysisOptions && analysisOptions.map(renderOptions)}
       </div>
     );
   }
