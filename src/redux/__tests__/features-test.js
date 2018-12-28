@@ -6,7 +6,7 @@ import configureStore from 'redux-mock-store'
 const middlewares = []
 const mockStore = configureStore(middlewares)
 
-describe('features', () => {
+describe('Features', () => {
   const initialState = {}
   const store = mockStore(initialState)
 

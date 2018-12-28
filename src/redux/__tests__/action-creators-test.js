@@ -1,10 +1,8 @@
 import * as actions from '../action-creators'
 import * as Constants from '../../constants'
 import configureStore from 'redux-mock-store'
-import thunk from 'redux-thunk';
 
-
-const middlewares = [thunk]
+const middlewares = []
 const mockStore = configureStore(middlewares)
 
 describe('actions', () => {

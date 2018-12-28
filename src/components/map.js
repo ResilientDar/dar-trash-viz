@@ -9,7 +9,7 @@ import ReactDOM from 'react-dom'
 
 mapboxgl.accessToken = 'pk.eyJ1Ijoic2FtdHdlc2EiLCJhIjoiZTc1OTQ4ODE0ZmY2MzY0MGYwMDNjOWNlYTYxMjU4NDYifQ.F1zCcOYqpXWd4C9l9xqvEQ';
 
-let Map = class Map extends React.Component {
+export class Map extends React.Component {
   map;
   tooltipContainer;
 
