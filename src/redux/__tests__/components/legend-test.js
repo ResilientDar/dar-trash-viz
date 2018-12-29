@@ -19,12 +19,8 @@ function setup() {
           description: 'Size of trash pile',
           property: 'ts',
           stops: [
-            ["Bagful", '#f8d5cc'],
-            ["Handful", '#f4bfb6'],
-            ["Cartload", '#f1a8a5'],
-            ["Truckload", '#ee8f9a'],
-            ["Other", '#18a6b9'],
-            ["Unidentified", '#008000']
+             ["Cartload", '#f4bfb6'],
+             ["Truckload", '#ee8f9a']
             
           ]
         }]
@@ -32,12 +28,8 @@ function setup() {
   const active = options[0]
 
   const selectedStops = [
-            "Bagful",
-            "Handful",
             "Cartload",
-            "Truckload",
-            "Other",
-            "Unidentified"
+            "Truckload"
           ]
 
   const props = {

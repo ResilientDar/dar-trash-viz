@@ -5,7 +5,7 @@ const options = [{
   description: 'Size of trash pile',
   property: 'ts',
   stops: [
-    ["Cartload", '#f8d5cc'],
+    ["Cartload", '#f4bfb6'],
     ["Truckload", '#ee8f9a']
     
   ]

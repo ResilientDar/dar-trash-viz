@@ -12,27 +12,19 @@ describe('reducer', () => {
 					  description: 'Size of trash pile',
 					  property: 'ts',
 					  stops: [
-					    ["Bagful", '#f8d5cc'],
-					    ["Handful", '#f4bfb6'],
-					    ["Cartload", '#f1a8a5'],
-					    ["Truckload", '#ee8f9a'],
-					    ["Other", '#18a6b9'],
-					    ["Unidentified", '#008000']
+					     ["Cartload", '#f4bfb6'],
+               ["Truckload", '#ee8f9a']
 					    
 					  ]
 					}
 
   	const expectedSelectedStops = [
-							  		"Bagful",
-							  		"Handful",
 							  		"Cartload",
-							  		"Truckload", 
-							  		"Other",
-							  		"Unidentified"
+							  		"Truckload"
 							  		];
 
 	it('should return initial state', () => {
-	    const expectedInitialState = {"active": {"description": "Size of trash pile", "name": "Trash by size", "property": "ts", "stops": [["Bagful", "#f8d5cc"], ["Handful", "#f4bfb6"], ["Cartload", "#f1a8a5"], ["Truckload", "#ee8f9a"], ["Other", "#18a6b9"], ["Unidentified", "#008000"]]}, "analysisActive": false, "analysisOptions": [{"description": "Trash pile count in Wards", "name": "Wards", "property": "trash_pile", "stops": [[0, "#18a6b9"], [40, "#f4bfb6"], [100, "#f1a8a5"], [300, "#ee8f9a"], [700, "#ef4040"], [1100, "#ff0000"]]}, {"description": "Households with trash piles within 1 meter", "name": "Households", "property": "experience", "stops": [["yes", "#ff0000"], ["no", "#008000"]]}, {"description": "Trash piles within 1 meter from drains", "name": "Trash near Drains", "property": "dist_cm", "stops": [[0, "#ff0000"], [30, "#f1a8a5"], [100, "#f8d5cc"]]}, {"description": "Trash piles within 20 meters from BRT Public Transit", "name": "Trash near BRT", "property": "distance", "stops": [[0, "#ff0000"], [10, "#f1a8a5"], [20, "#f8d5cc"]]}], "currentFeature": null, "infoActive": false, "options": [{"description": "Size of trash pile", "name": "Trash by size", "property": "ts", "stops": [["Bagful", "#f8d5cc"], ["Handful", "#f4bfb6"], ["Cartload", "#f1a8a5"], ["Truckload", "#ee8f9a"], ["Other", "#18a6b9"], ["Unidentified", "#008000"]]}, {"description": "Type of the trash pile", "name": "Waste site type", "property": "ws", "stops": [["Blown_by_Wind", "#f8d5cc"], ["Dump", "#f4bfb6"], ["Washed_into_Drain", "#f1a8a5"], ["Liquid_Waste", "#ee8f9a"], ["Other", "#18a6b9"], ["Unidentified", "#008000"]]}, {"description": "Trash near bus stations", "name": "Near bus station", "property": "nbs", "stops": [["Yes", "#ee8f9a"], ["No", "#f4bfb6"], ["Unidentified", "#18a6b9"]]}, {"description": "Trash clean up method", "name": "Clean up method", "property": "clm", "stops": [["By_Hand", "#ee8f9a"], ["By_Machine_Only", "#f1a8a5"], ["impossible", "#f4bfb6"], ["Unidentified", "#18a6b9"]]}, {"description": "Can be access by", "name": "Accessibility", "property": "at", "stops": [["Cart", "#ee8f9a"], ["Truck", "#f1a8a5"], ["Foot only", "#f4bfb6"], ["Unidentified", "#18a6b9"]]}], "selectedStops": ["Bagful", "Handful", "Cartload", "Truckload", "Other", "Unidentified"], "showModalImg": false, "zoomToFeature": false};
+  	  const expectedInitialState = {"active": {"description": "Size of trash pile", "name": "Trash by size", "property": "ts", "stops": [["Cartload", '#f4bfb6'],["Truckload", '#ee8f9a']]}, "analysisActive": false, "analysisOptions": [{"description": "Trash pile count in Wards", "name": "Wards", "property": "trash_pile", "stops": [[0, "#18a6b9"], [40, "#f4bfb6"], [100, "#f1a8a5"], [300, "#ee8f9a"], [700, "#ef4040"], [1100, "#ff0000"]]}, {"description": "Households with trash piles within 1 meter", "name": "Households", "property": "experience", "stops": [["yes", "#ff0000"], ["no", "#008000"]]}, {"description": "Trash piles within 1 meter from drains", "name": "Trash near Drains", "property": "dist_cm", "stops": [[0, "#ff0000"], [30, "#f1a8a5"], [100, "#f8d5cc"]]}, {"description": "Trash piles within 20 meters from BRT Public Transit", "name": "Trash near BRT", "property": "distance", "stops": [[0, "#ff0000"], [10, "#f1a8a5"], [20, "#f8d5cc"]]}], "currentFeature": null, "infoActive": false, "options": [{"description": "Size of trash pile", "name": "Trash by size", "property": "ts", "stops": [["Cartload", "#f4bfb6"],["Truckload", "#ee8f9a"]]}, {"description": "Type of the trash pile", "name": "Waste site type", "property": "ws", "stops": [["Blown_by_Wind", "#f8d5cc"], ["Dump", "#f4bfb6"], ["Washed_into_Drain", "#f1a8a5"], ["Liquid_Waste", "#ee8f9a"], ["Other", "#18a6b9"], ["Unidentified", "#008000"]]}, {"description": "Trash near bus stations", "name": "Near bus station", "property": "nbs", "stops": [["Yes", "#ee8f9a"], ["No", "#f4bfb6"], ["Unidentified", "#18a6b9"]]}, {"description": "Trash clean up method", "name": "Clean up method", "property": "clm", "stops": [["By_Hand", "#ee8f9a"], ["By_Machine_Only", "#f1a8a5"], ["impossible", "#f4bfb6"], ["Unidentified", "#18a6b9"]]}, {"description": "Can be access by", "name": "Accessibility", "property": "at", "stops": [["Cart", "#ee8f9a"], ["Truck", "#f1a8a5"], ["Foot only", "#f4bfb6"], ["Unidentified", "#18a6b9"]]}], "selectedStops": ["Cartload", "Truckload"], "showModalImg": false, "zoomToFeature": false};
 
 	    expect(reducer(undefined, {})).toEqual(expectedInitialState)
   	})
@@ -76,19 +68,15 @@ describe('reducer', () => {
 
   		const action = {
   			type: Constants.SET_LEGEND_ACTIVE_OPTION,
-  			option: "Bagful"
+  			option: "Cartload"
   		}
 
   		const editedSelectedStops = [
-							  		"Handful",
-							  		"Cartload",
-							  		"Truckload", 
-							  		"Other",
-							  		"Unidentified"
+							  		"Truckload"
 							  		];
 
   		const expectedActiveOption = option;
-		const output = reducer(undefined, action);
+		  const output = reducer(undefined, action);
 					  		
   		expect(output.active).toEqual(
   			expectedActiveOption);
@@ -98,14 +86,14 @@ describe('reducer', () => {
 
   	it('should handle SET_INFO_ACTIVE action', () => {
   		const infoActive =  false;
-        const showModalImg = false;
-        const zoomToFeature = false;
+      const showModalImg = false;
+      const zoomToFeature = false;
 
   		const action = {
   			type: Constants.SET_INFO_ACTIVE,
   			infoActive,
-			showModalImg,
-			zoomToFeature
+			  showModalImg,
+			  zoomToFeature
   		}
 
 		const output = reducer(undefined, action);
