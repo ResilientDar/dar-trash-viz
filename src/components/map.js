@@ -136,7 +136,10 @@ export class Map extends React.Component {
       property,
       stops,
       type: "categorical"
-      }); 
+      });
+
+      this.map.setPaintProperty('dar-trash', 'circle-stroke-color', "white"); 
+      this.map.setPaintProperty('dar-trash', 'circle-stroke-width', 0.3); 
     }
   }
 
@@ -194,9 +197,8 @@ export class Map extends React.Component {
       if (features.length) {
         var clickedPoint = features[0];
         // Close all other popups and display popup for clicked point
-        
-
         setCurrentFeature(clickedPoint, true);
+        this.highlightSelectedFeature(clickedPoint);
       }
 
     
@@ -520,6 +522,31 @@ export class Map extends React.Component {
     }
     
   }
+
+  highlightSelectedFeature(feature){
+
+    if(this.map.getLayer("selectedFeature") !== undefined){
+      this.map.removeLayer("selectedFeature");
+      this.map.removeSource("selectedFeature");
+    }
+    
+
+    this.map.addSource('selectedFeature', {
+        "type":"geojson",
+        "data": feature.toJSON()
+    });
+    this.map.addLayer({
+        "id": "selectedFeature",
+        "type": "circle",
+        "source": "selectedFeature",
+        "paint": {
+            "circle-color": "#3887be",
+            "circle-radius": 7,
+            "circle-stroke-color": "white",
+            "circle-stroke-width": 1
+        }
+    });
+}
 
 
   /* Helpers
