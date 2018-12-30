@@ -2,7 +2,7 @@ import React from 'react'
 import { configure } from 'enzyme';
 import { shallow, mount, render } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-15'
-import  { Info }  from '../../../components/info'
+import  { Info }  from '../../components/info'
 
 import configureStore from 'redux-mock-store'
 

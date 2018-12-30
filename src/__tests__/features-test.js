@@ -1,5 +1,5 @@
-import * as actions from '../features'
-import * as Constants from '../../constants'
+import * as actions from '../redux/features'
+import * as Constants from '../constants'
 import configureStore from 'redux-mock-store'
 
 

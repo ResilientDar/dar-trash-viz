@@ -1,5 +1,5 @@
-import * as actions from '../action-creators'
-import * as Constants from '../../constants'
+import * as actions from '../redux/action-creators'
+import * as Constants from '../constants'
 import configureStore from 'redux-mock-store'
 
 const middlewares = []
