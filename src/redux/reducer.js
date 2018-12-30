@@ -111,7 +111,8 @@ const initialState = {
   infoActive: false,
   showModalImg: false,
   analysisActive: false,
-  zoomToFeature: false
+  zoomToFeature: false,
+  showNotification: false
 };
 
 function reducer(state = initialState, action) {
