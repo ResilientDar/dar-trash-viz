@@ -541,7 +541,7 @@ export class Map extends React.Component {
         "source": "selectedFeature",
         "paint": {
             "circle-color": "#3887be",
-            "circle-radius": 7,
+            "circle-radius": 6,
             "circle-stroke-color": "white",
             "circle-stroke-width": 1
         }
