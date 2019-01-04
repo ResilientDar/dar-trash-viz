@@ -70,6 +70,34 @@ const analysisOptions = [{
 },
 
 {
+  name: 'Subwards',
+  description: 'Trash pile count in subwards',
+  property: 'trash_pile',
+  stops: [
+    [0, '#18a6b9'],
+    [40, '#f4bfb6'],
+    [100, '#f1a8a5'],
+    [300, '#ee8f9a'],
+    [700, '#ef4040'],
+    [1100,'#ff0000'] 
+  ]
+},
+
+{
+  name: 'Shina',
+  description: 'Trash pile count in shina',
+  property: 'trash_pile',
+  stops: [
+    [0, '#18a6b9'],
+    [40, '#f4bfb6'],
+    [100, '#f1a8a5'],
+    [300, '#ee8f9a'],
+    [700, '#ef4040'],
+    [1100,'#ff0000'] 
+  ]
+},
+
+{
   name: 'Households',
   description: 'Households with trash piles within 1 meter',
   property: 'experience',
@@ -112,7 +140,8 @@ const initialState = {
   showModalImg: false,
   analysisActive: false,
   zoomToFeature: false,
-  showNotification: false
+  showNotification: false,
+  moreAnalysis: false
 };
 
 function reducer(state = initialState, action) {
@@ -159,6 +188,11 @@ function reducer(state = initialState, action) {
         infoActive: action.infoActive,
         showModalImg: action.showModalImg,
         zoomToFeature: action.zoomToFeature
+      });
+    case Constants.CHANGE_MORE_ANALYSIS:
+
+      return Object.assign({}, state, {
+        moreAnalysis: action.moreAnalysis
       });
     default:
       return state;

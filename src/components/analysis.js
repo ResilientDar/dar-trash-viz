@@ -8,19 +8,37 @@ export class Analysis extends React.Component {
     analysisOptions: PropTypes.array.isRequired,
     active: PropTypes.object.isRequired,
     analysisActive: PropTypes.bool,
-    onChange: PropTypes.func.isRequired
+    moreAnalysis: PropTypes.bool,
+    onChange: PropTypes.func.isRequired,
+    onClick: PropTypes.func.isRequired
   };
 
   render() {
     const { analysisOptions, active } = this.props;
 
     const renderOptions = (option, i) => {
-      return (
+      if(i < 3){
+        return (
         <label key={i} className="toggle-container">
           <input onChange={() => this.props.onChange(option)} checked={option.property === active.property} name="toggle" type="radio" />
           <div className="toggle txt-s py3 toggle--active-white">{option.name}</div>
         </label>
-      );
+      ); 
+      }else{
+       return (
+        <div>
+        
+
+        <div className={this.props.moreAnalysis? "": "hide"} id="analysis-more">
+        <label key={i} className="toggle-container">
+          <input onChange={() => this.props.onChange(option)} checked={option.property === active.property} name="toggle" type="radio" />
+          <div className="toggle txt-s py3 toggle--active-white">{option.name}</div>
+        </label>
+        </div>
+        </div>
+      ); 
+      }
+
     }
 
     return (
@@ -28,6 +46,8 @@ export class Analysis extends React.Component {
         Analysis
         {/*Check if analysis options are defined then map them */}
         {analysisOptions && analysisOptions.map(renderOptions)}
+        <span className="more-list fr" onClick={() => this.props.onClick(!this.props.moreAnalysis)} >
+        {this.props.moreAnalysis? "less": "more"}</span>
       </div>
     );
   }
@@ -37,7 +57,8 @@ function mapStateToProps(state) {
   return {
     analysisOptions: state.analysisOptions,
     active: state.active,
-    analysisActive: state.analysisActive
+    analysisActive: state.analysisActive,
+    moreAnalysis: state.moreAnalysis
   };
 }
 

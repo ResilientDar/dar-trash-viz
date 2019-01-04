@@ -81,4 +81,18 @@ describe('actions', () => {
     
     expect(store.getActions()).toEqual([expectedAction])
   })
+
+  it('should dispatch an action to change more analysis option', () => {
+    const moreAnalysis = true;
+
+    store.dispatch(actions.changeMoreAnalysisAction(
+      moreAnalysis));
+
+    const expectedAction = {
+      type: Constants.CHANGE_MORE_ANALYSIS,
+      moreAnalysis
+    }
+    
+    expect(store.getActions()).toEqual([expectedAction])
+  })
 })

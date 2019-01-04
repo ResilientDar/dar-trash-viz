@@ -413,7 +413,7 @@ export class Map extends React.Component {
         }
     });
 
-    // inspect a cluster on click
+    // Inspect a cluster on click
     this.map.on('click', 'clusters', (e) => {
         var features = this.map.queryRenderedFeatures(e.point,
          { layers: ['clusters'] }); 
@@ -525,12 +525,8 @@ export class Map extends React.Component {
 
   highlightSelectedFeature(feature){
 
-    if(this.map.getLayer("selectedFeature") !== undefined){
-      this.map.removeLayer("selectedFeature");
-      this.map.removeSource("selectedFeature");
-    }
+    this.removeSelectedFeatureLayer();
     
-
     this.map.addSource('selectedFeature', {
         "type":"geojson",
         "data": feature.toJSON()
@@ -546,7 +542,14 @@ export class Map extends React.Component {
             "circle-stroke-width": 1
         }
     });
-}
+  }
+
+  removeSelectedFeatureLayer(){
+    if(this.map.getLayer("selectedFeature") !== undefined){
+      this.map.removeLayer("selectedFeature");
+      this.map.removeSource("selectedFeature");
+    }
+  }
 
 
   /* Helpers

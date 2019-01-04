@@ -5,6 +5,7 @@ import { store } from './redux/store'
 import { setActiveOption } from './redux/action-creators'
 import { setLegendActiveOption } from './redux/action-creators'
 import { setAnalysisActiveOption } from './redux/action-creators'
+import { changeMoreAnalysis } from './redux/action-creators'
 import { setInfoActive } from './redux/action-creators'
 import Map from './components/map'
 import Toggle from './components/toggle'
@@ -22,7 +23,7 @@ class Application extends React.Component {
           <Map store = {store} />
           <Toggle onChange={setActiveOption} />
           <Notification onChange={setActiveOption} />
-          <Analysis onChange={setAnalysisActiveOption} />
+          <Analysis onChange={setAnalysisActiveOption} onClick={changeMoreAnalysis}/>
 
           <Info onClick={setInfoActive}/>
           <Nav />

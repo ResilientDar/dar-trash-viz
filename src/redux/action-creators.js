@@ -24,6 +24,10 @@ export function setInfoActive(
   zoomToFeature));
 }
 
+export function changeMoreAnalysis(option) {
+  store.dispatch(changeMoreAnalysisAction(option));
+}
+
 export function setActiveOptionAction(option){
   return {
     type: Constants.SET_ACTIVE_OPTION,
@@ -54,5 +58,12 @@ export function setInfoActiveAction(
     infoActive,
     showModalImg,
     zoomToFeature
+  }
+}
+
+export function changeMoreAnalysisAction(moreAnalysis){
+  return {
+    type: Constants.CHANGE_MORE_ANALYSIS,
+    moreAnalysis
   }
 }
