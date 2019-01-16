@@ -28,7 +28,6 @@ export class Analysis extends React.Component {
        return (
         <div>
         
-
         <div className={this.props.moreAnalysis? "": "hide"} id="analysis-more">
         <label key={i} className="toggle-container">
           <input onChange={() => this.props.onChange(option)} checked={option.property === active.property} name="toggle" type="radio" />

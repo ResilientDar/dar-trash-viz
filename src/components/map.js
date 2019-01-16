@@ -60,6 +60,7 @@ export class Map extends React.Component {
       this.clusters();
       this.addPoints();
       this.addWards();
+      this.addSubWards();
       this.addHouses();
       this.addDrainPiles();
       this.addBRTPiles();
@@ -84,6 +85,7 @@ export class Map extends React.Component {
         this.map.setLayoutProperty('wards', 'visibility', 'none');
         this.map.setLayoutProperty('brt-piles', 'visibility', 'none');
         this.map.setLayoutProperty('drains-piles', 'visibility', 'none');
+        this.map.setLayoutProperty('sub-wards', 'visibility', 'none');
       }
 
       else if( property === 'dist_cm'){
@@ -98,6 +100,7 @@ export class Map extends React.Component {
         this.map.setLayoutProperty('wards', 'visibility', 'none');
         this.map.setLayoutProperty('houses', 'visibility', 'none');
         this.map.setLayoutProperty('brt-piles', 'visibility', 'none');
+        this.map.setLayoutProperty('sub-wards', 'visibility', 'none');
       }
       else if( property === 'distance'){
 
@@ -111,6 +114,22 @@ export class Map extends React.Component {
         this.map.setLayoutProperty('drains-piles', 'visibility', 'none');
         this.map.setLayoutProperty('wards', 'visibility', 'none');
         this.map.setLayoutProperty('houses', 'visibility', 'none');
+        this.map.setLayoutProperty('sub-wards', 'visibility', 'none');
+      }
+
+      else if( property === 'trash_subward_pile'){
+
+        // this.map.setPaintProperty('brt-piles', 'circle-color', {
+        //   property,
+        //   stops,
+        //   type: "categorical"
+        // }); 
+
+        this.map.setLayoutProperty('sub-wards', 'visibility', 'visible');
+        this.map.setLayoutProperty('wards', 'visibility', 'none');
+        this.map.setLayoutProperty('houses', 'visibility', 'none');
+        this.map.setLayoutProperty('drains-piles', 'visibility', 'none');
+        this.map.setLayoutProperty('brt-piles', 'visibility', 'none');
       }
 
       else{
@@ -123,6 +142,7 @@ export class Map extends React.Component {
         this.map.setLayoutProperty('houses', 'visibility', 'none');
         this.map.setLayoutProperty('drains-piles', 'visibility', 'none');
         this.map.setLayoutProperty('brt-piles', 'visibility', 'none');
+        this.map.setLayoutProperty('sub-wards', 'visibility', 'none');
       }
     }
     else{
@@ -169,6 +189,7 @@ export class Map extends React.Component {
 
   setTooltip(features) {
     if (features.length) {
+      console.log(features);
       ReactDOM.render(
         React.createElement(
           Tooltip, {
@@ -269,6 +290,21 @@ export class Map extends React.Component {
     this.map.setPaintProperty('wards', 'fill-outline-color', '#18a6b9');
 
     this.map.setLayoutProperty('wards', 'visibility', 'none');
+  }
+
+  addSubWards(){
+
+    // this.removeLayerFromMap('dar-trash');
+
+    this.map.addLayer({
+        id: 'sub-wards',
+        type: 'fill',
+        source: 'sub-wards',
+        }, 'dar-trash');
+    this.map.setPaintProperty('sub-wards', 'fill-color', '#ccc');
+    this.map.setPaintProperty('sub-wards', 'fill-outline-color', '#18a6b9');
+
+    this.map.setLayoutProperty('sub-wards', 'visibility', 'none');
   }
 
   addHouses(){

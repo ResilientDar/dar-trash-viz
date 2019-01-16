@@ -14,10 +14,10 @@ export default class Tooltip extends React.Component {
       return (
         <div key={i}>
           <strong className='mr3 center'>WARD DETAILS</strong> <br></br>
-          <span className='color-gray-light'>Ward name :
+          <span className='color-gray-light'>Ward name: 
            {feature && feature.properties && feature.properties.ward_name}
            </span> <br></br>
-          <span className='color-gray-light'>District name:
+          <span className='color-gray-light'>District name: 
            {feature && feature.properties && feature.properties.district_n}
            </span> <br></br>
           <span className='color-gray-light'>Total waste piles count: 
@@ -27,11 +27,38 @@ export default class Tooltip extends React.Component {
       )
     };
 
+    const renderFeatureSub = (feature, i) => {
+      return (
+        <div key={i}>
+          <strong className='mr3 center'>SUBWARD DETAILS</strong> <br></br>
+          <span className='color-gray-light'>Subward name: 
+           {feature && feature.properties && feature.properties.adm4_vil_m}
+           </span> <br></br>
+           <span className='color-gray-light'>Ward name: 
+           {feature && feature.properties && feature.properties.adm3_ward}
+           </span> <br></br>
+          <span className='color-gray-light'>District name: 
+           {feature && feature.properties && feature.properties.adm2_distr}
+           </span> <br></br>
+          <span className='color-gray-light'>Total waste piles count: 
+          {feature &&  feature.properties && feature.properties.trash_subward_pile}
+          </span>
+        </div>
+      )
+    };
+
     return (
       <div className="flex-parent-inline flex-parent--center-cross flex-parent--column absolute bottom">
         <div className="flex-child px12 py12 bg-gray-dark color-white shadow-darken10 round txt-s w240 clip txt-truncate">
           {/*Check if features are defined then map them*/}
-          {features && features.map(renderFeature)}
+
+          if(features & features.layer.id === 'wards'){
+              features.map(renderFeature)
+            }
+          else if(features & features.layer.id === 'sub-wards'){
+              features.map(renderFeatureSub)
+          }
+          
         </div>
         <span className="flex-child color-gray-dark triangle triangle--d"></span>
       </div>
