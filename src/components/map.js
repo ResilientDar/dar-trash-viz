@@ -117,13 +117,12 @@ export class Map extends React.Component {
         this.map.setLayoutProperty('sub-wards', 'visibility', 'none');
       }
 
-      else if( property === 'trash_subward_pile'){
+      else if( property === 'trash_sub'){
 
-        // this.map.setPaintProperty('brt-piles', 'circle-color', {
-        //   property,
-        //   stops,
-        //   type: "categorical"
-        // }); 
+        this.map.setPaintProperty('sub-wards', 'fill-color', {
+          property,
+          stops
+        }); 
 
         this.map.setLayoutProperty('sub-wards', 'visibility', 'visible');
         this.map.setLayoutProperty('wards', 'visibility', 'none');
@@ -220,9 +219,7 @@ export class Map extends React.Component {
         // Close all other popups and display popup for clicked point
         setCurrentFeature(clickedPoint, true);
         this.highlightSelectedFeature(clickedPoint);
-      }
-
-    
+      }    
     });
   }
 
@@ -235,9 +232,18 @@ export class Map extends React.Component {
         this.map.getCanvas().style.cursor = '';
     });
 
-    this.map.on('mousemove','wards', (e) => {
+    var analysisLayers = ['wards', 'sub-wards'];
+
+    for (var i = 0; i < analysisLayers.length; i++) {
+
+      var layer = analysisLayers[i];
+
+      console.log(layer);
+
+      this.map.on('mousemove', layer, (e) => {
+
       var features = this.map.queryRenderedFeatures(e.point,
-       { layers: ['wards'] });
+       { layers: [layer] });
 
       const tooltip = new mapboxgl.Marker(this.tooltipContainer, {
         offset: [-120, 0]
@@ -247,13 +253,16 @@ export class Map extends React.Component {
       this.map.getCanvas().style.cursor = features.length ? 'pointer' : '';
 
       this.setTooltip(features);
-    });
 
-    this.map.on('mouseleave', 'wards', (e) => {
-        this.map.getCanvas().style.cursor = '';
-        this.tooltipContainer.innerHTML = '';
-    });
+      });
 
+      this.map.on('mouseleave', layer, (e) => {
+          this.map.getCanvas().style.cursor = '';
+          this.tooltipContainer.innerHTML = '';
+      });
+    }
+
+  
     this.map.on('mouseenter','drains-piles', (e) => {
       this.map.getCanvas().style.cursor = 'pointer';
     });
@@ -301,7 +310,9 @@ export class Map extends React.Component {
         type: 'fill',
         source: 'sub-wards',
         }, 'dar-trash');
-    this.map.setPaintProperty('sub-wards', 'fill-color', '#ccc');
+
+    // this.map.setPaintProperty('sub-wards', 'fill-color', '#ccc');
+    this.map.setPaintProperty('sub-wards', 'fill-opacity', 0.6);
     this.map.setPaintProperty('sub-wards', 'fill-outline-color', '#18a6b9');
 
     this.map.setLayoutProperty('sub-wards', 'visibility', 'none');

@@ -11,40 +11,41 @@ export default class Tooltip extends React.Component {
     const { features } = this.props;
 
     const renderFeature = (feature, i) => {
-      return (
+      if(feature.layer.id === 'wards'){
+        return (
         <div key={i}>
           <strong className='mr3 center'>WARD DETAILS</strong> <br></br>
-          <span className='color-gray-light'>Ward name: 
+          <span className='color-gray-light'>Ward name:  
            {feature && feature.properties && feature.properties.ward_name}
            </span> <br></br>
           <span className='color-gray-light'>District name: 
            {feature && feature.properties && feature.properties.district_n}
            </span> <br></br>
-          <span className='color-gray-light'>Total waste piles count: 
+          <span className='color-gray-light'>Total waste piles count:  
           {feature &&  feature.properties && feature.properties.trash_pile}
           </span>
         </div>
       )
-    };
-
-    const renderFeatureSub = (feature, i) => {
-      return (
+      }else if(feature.layer.id === 'sub-wards') {
+        return (
         <div key={i}>
           <strong className='mr3 center'>SUBWARD DETAILS</strong> <br></br>
-          <span className='color-gray-light'>Subward name: 
+          <span className='color-gray-light'>Subward name:  
            {feature && feature.properties && feature.properties.adm4_vil_m}
            </span> <br></br>
-           <span className='color-gray-light'>Ward name: 
+           <span className='color-gray-light'>Ward name:  
            {feature && feature.properties && feature.properties.adm3_ward}
            </span> <br></br>
           <span className='color-gray-light'>District name: 
            {feature && feature.properties && feature.properties.adm2_distr}
            </span> <br></br>
-          <span className='color-gray-light'>Total waste piles count: 
-          {feature &&  feature.properties && feature.properties.trash_subward_pile}
+          <span className='color-gray-light'>Total waste piles count:  
+          {feature &&  feature.properties && feature.properties.trash_sub}
           </span>
         </div>
       )
+      }
+      
     };
 
     return (
@@ -52,12 +53,7 @@ export default class Tooltip extends React.Component {
         <div className="flex-child px12 py12 bg-gray-dark color-white shadow-darken10 round txt-s w240 clip txt-truncate">
           {/*Check if features are defined then map them*/}
 
-          if(features & features.layer.id === 'wards'){
-              features.map(renderFeature)
-            }
-          else if(features & features.layer.id === 'sub-wards'){
-              features.map(renderFeatureSub)
-          }
+          {features && features.map(renderFeature)}
           
         </div>
         <span className="flex-child color-gray-dark triangle triangle--d"></span>

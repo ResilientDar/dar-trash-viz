@@ -71,8 +71,8 @@ const analysisOptions = [{
 
 {
   name: 'Subwards',
-  description: 'Dar es salaam subwards',
-  property: 'trash_subward_pile',
+  description: 'Trash pile count in Subwards',
+  property: 'trash_sub',
   stops: [
     [0, '#18a6b9'],
     [40, '#f4bfb6'],
@@ -84,9 +84,9 @@ const analysisOptions = [{
 },
 
 {
-  name: 'Shina',
-  description: 'Trash pile count in shina',
-  property: 'trash_shina_pile',
+  name: 'Shinas',
+  description: 'Trash pile count in Shinas',
+  property: 'trash_sh',
   stops: [
     [0, '#18a6b9'],
     [40, '#f4bfb6'],
