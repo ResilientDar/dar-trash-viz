@@ -5,7 +5,6 @@ import { connect } from 'react-redux'
 import setCurrentFeature from '../redux/features'
 import data from '../data.json'
 import Tooltip from './tooltip'
-import TooltipSub from './tooltipsub'
 import ReactDOM from 'react-dom'
 
 mapboxgl.accessToken = 'pk.eyJ1Ijoic2FtdHdlc2EiLCJhIjoiZTc1OTQ4ODE0ZmY2MzY0MGYwMDNjOWNlYTYxMjU4NDYifQ.F1zCcOYqpXWd4C9l9xqvEQ';

@@ -19,29 +19,35 @@ export class Analysis extends React.Component {
     const renderOptions = (option, i) => {
       if(i < 3){
         return (
+        <div>
+        <div className={option.new ? "": "hide"}><button className=' btn--s fr glow txt-bold'>new </button></div>
         <label key={i} className="toggle-container">
           <input onChange={() => this.props.onChange(option)} checked={option.property === active.property} name="toggle" type="radio" />
           <div className="toggle txt-s py3 toggle--active-white">{option.name}</div>
         </label>
+        </div>
       ); 
       }else{
        return (
         <div>
-        
         <div className={this.props.moreAnalysis? "": "hide"} id="analysis-more">
+        <div className={option.new ? "": "hide"}><button className=' btn--s fr glow txt-bold'>new </button></div>
         <label key={i} className="toggle-container">
           <input onChange={() => this.props.onChange(option)} checked={option.property === active.property} name="toggle" type="radio" />
           <div className="toggle txt-s py3 toggle--active-white">{option.name}</div>
+          
         </label>
         </div>
+
         </div>
       ); 
       }
 
+
     }
 
     return (
-      <div className="listing-group absolute left ml12 mt180 border border--2 border--white bg-white shadow-darken10 z1 analysis">
+      <div className="listing-group absolute left ml12 mt180 w180 border border--2 border--white bg-white shadow-darken10 z1 analysis">
         Analysis
         {/*Check if analysis options are defined then map them */}
         {analysisOptions && analysisOptions.map(renderOptions)}

@@ -340,3 +340,21 @@ table {
   font-size: 70%;
   cursor: pointer;
 }
+
+.glow {
+  color: #fff;
+  text-align: center;
+  -webkit-animation: glow 0.6s ease-in-out infinite alternate;
+  -moz-animation: glow 0.6s ease-in-out infinite alternate;
+  animation: glow 0.6s ease-in-out infinite alternate;
+}
+
+@-webkit-keyframes glow {
+  from {
+    text-shadow: 0 0 5px #3887be, 0 0 5px #3887be, 0 0 5px #3887be, 0 0 5px #3887be, 0 0 6px #3887be, 0 0 7px #3887be, 0 0 8px #3887be;
+  }
+  
+  to {
+    text-shadow: 0 0 5px #ffffff, 0 0 5px #ffffff, 0 0 5px #ffffff, 0 0 5px #ffffff, 0 0 6px #ffffff, 0 0 7px #ffffff, 0 0 8px #ffffff;
+  }
+}
