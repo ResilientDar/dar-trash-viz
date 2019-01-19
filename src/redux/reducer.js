@@ -87,7 +87,7 @@ const analysisOptions = [{
     [700, '#ef4040'],
     [1100,'#ff0000'] 
   ],
-  new: (new Date() < new Date("2019-02-02"))
+  new: (new Date() < new Date("2019-02-12"))
 },
 
 {
@@ -102,7 +102,7 @@ const analysisOptions = [{
     [50, '#ef4040'],
     [100,'#ff0000'] 
   ],
-  new: (new Date() < new Date("2019-02-22"))
+  new: (new Date() < new Date("2019-02-12"))
 },
 
 // {
