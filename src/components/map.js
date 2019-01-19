@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import setCurrentFeature from '../redux/features'
 import data from '../data.json'
 import Tooltip from './tooltip'
+import TooltipSub from './tooltipsub'
 import ReactDOM from 'react-dom'
 
 mapboxgl.accessToken = 'pk.eyJ1Ijoic2FtdHdlc2EiLCJhIjoiZTc1OTQ4ODE0ZmY2MzY0MGYwMDNjOWNlYTYxMjU4NDYifQ.F1zCcOYqpXWd4C9l9xqvEQ';
@@ -12,6 +13,8 @@ mapboxgl.accessToken = 'pk.eyJ1Ijoic2FtdHdlc2EiLCJhIjoiZTc1OTQ4ODE0ZmY2MzY0MGYwM
 export class Map extends React.Component {
   map;
   tooltipContainer;
+  tooltipContainerSub;
+  tooltipContainerShina;
 
   static propTypes = {
     active: PropTypes.object.isRequired,
@@ -61,9 +64,10 @@ export class Map extends React.Component {
       this.addPoints();
       this.addWards();
       this.addSubWards();
-      this.addHouses();
+      this.addShinas();
+      // this.addHouses();
       this.addDrainPiles();
-      this.addBRTPiles();
+      // this.addBRTPiles();
       this.addDrainageNetwork();
       this.addBRTNetwork();
       this.setToolTipDiv();
@@ -86,6 +90,7 @@ export class Map extends React.Component {
         this.map.setLayoutProperty('brt-piles', 'visibility', 'none');
         this.map.setLayoutProperty('drains-piles', 'visibility', 'none');
         this.map.setLayoutProperty('sub-wards', 'visibility', 'none');
+        this.map.setLayoutProperty('shinas', 'visibility', 'none');
       }
 
       else if( property === 'dist_cm'){
@@ -101,6 +106,7 @@ export class Map extends React.Component {
         this.map.setLayoutProperty('houses', 'visibility', 'none');
         this.map.setLayoutProperty('brt-piles', 'visibility', 'none');
         this.map.setLayoutProperty('sub-wards', 'visibility', 'none');
+        this.map.setLayoutProperty('shinas', 'visibility', 'none');
       }
       else if( property === 'distance'){
 
@@ -115,6 +121,7 @@ export class Map extends React.Component {
         this.map.setLayoutProperty('wards', 'visibility', 'none');
         this.map.setLayoutProperty('houses', 'visibility', 'none');
         this.map.setLayoutProperty('sub-wards', 'visibility', 'none');
+        this.map.setLayoutProperty('shinas', 'visibility', 'none');
       }
 
       else if( property === 'trash_sub'){
@@ -125,6 +132,22 @@ export class Map extends React.Component {
         }); 
 
         this.map.setLayoutProperty('sub-wards', 'visibility', 'visible');
+        this.map.setLayoutProperty('wards', 'visibility', 'none');
+        this.map.setLayoutProperty('shinas', 'visibility', 'none');
+        this.map.setLayoutProperty('houses', 'visibility', 'none');
+        this.map.setLayoutProperty('drains-piles', 'visibility', 'none');
+        this.map.setLayoutProperty('brt-piles', 'visibility', 'none');
+      }
+
+      else if( property === 'trash_sh'){
+
+        this.map.setPaintProperty('shinas', 'fill-color', {
+          property,
+          stops
+        }); 
+        
+        this.map.setLayoutProperty('shinas', 'visibility', 'visible');
+        this.map.setLayoutProperty('sub-wards', 'visibility', 'none');
         this.map.setLayoutProperty('wards', 'visibility', 'none');
         this.map.setLayoutProperty('houses', 'visibility', 'none');
         this.map.setLayoutProperty('drains-piles', 'visibility', 'none');
@@ -142,11 +165,14 @@ export class Map extends React.Component {
         this.map.setLayoutProperty('drains-piles', 'visibility', 'none');
         this.map.setLayoutProperty('brt-piles', 'visibility', 'none');
         this.map.setLayoutProperty('sub-wards', 'visibility', 'none');
+        this.map.setLayoutProperty('shinas', 'visibility', 'none');
       }
     }
     else{
 
       this.map.setLayoutProperty('wards', 'visibility', 'none');
+      this.map.setLayoutProperty('shinas', 'visibility', 'none');
+      this.map.setLayoutProperty('sub-wards', 'visibility', 'none');
       this.map.setLayoutProperty('houses', 'visibility', 'none');
       this.map.setLayoutProperty('drains-piles', 'visibility', 'none');
       this.map.setLayoutProperty('brt-piles', 'visibility', 'none');
@@ -186,10 +212,10 @@ export class Map extends React.Component {
    
   }
 
-  setTooltip(features) {
+  setTooltip(features, layer) {
     if (features.length) {
-      console.log(features);
-      ReactDOM.render(
+      if (layer === 'wards'){
+        ReactDOM.render(
         React.createElement(
           Tooltip, {
             features
@@ -197,15 +223,40 @@ export class Map extends React.Component {
         ),
         this.tooltipContainer
       );
+      }else if(layer === 'sub-wards'){
+         ReactDOM.render(
+        React.createElement(
+          Tooltip, {
+            features
+          }
+        ),
+        this.tooltipContainerSub
+      );
+      }
+      else if(layer === 'shinas'){
+         ReactDOM.render(
+        React.createElement(
+          Tooltip, {
+            features
+          }
+        ),
+        this.tooltipContainerShina
+      );
+      }
+      
     } else {
       this.tooltipContainer.innerHTML = '';
+      this.tooltipContainerSub.innerHTML = '';
+      this.tooltipContainerShina.innerHTML = '';
     }
   }
 
   setToolTipDiv(){
     this.tooltipContainer = document.createElement('div');
-
+    this.tooltipContainerSub = document.createElement('div');
+    this.tooltipContainerShina = document.createElement('div');
   }
+
 
   clickEventsOnPoints(){
     this.map.on('click', (e) => {
@@ -232,39 +283,95 @@ export class Map extends React.Component {
         this.map.getCanvas().style.cursor = '';
     });
 
-    var analysisLayers = ['wards', 'sub-wards'];
+    this.mouseEventsAnalysis();
 
-    for (var i = 0; i < analysisLayers.length; i++) {
+    this.map.on('mouseenter','drains-piles', (e) => {
+      this.map.getCanvas().style.cursor = 'pointer';
+    });
+  }
 
-      var layer = analysisLayers[i];
+  mouseEventsAnalysis(){
+    // TODO refactor method of assign events use loop
+    // var analysisLayers = ['sub-wards', 'wards' ];
 
-      console.log(layer);
-
-      this.map.on('mousemove', layer, (e) => {
+    this.map.on('mousemove', 'wards', (e) => {
 
       var features = this.map.queryRenderedFeatures(e.point,
-       { layers: [layer] });
+       { layers: ['wards'] });
 
-      const tooltip = new mapboxgl.Marker(this.tooltipContainer, {
+      //Show only one feature details, log as error
+      if(features.length > 1) {
+        features = [features[0]];
+        console.error("Layer has overlapping polygons");
+      }
+
+      var tooltip = new mapboxgl.Marker(this.tooltipContainer, {
         offset: [-120, 0]
-      }).setLngLat([0,0]).addTo(this.map);
+        }).setLngLat([0,0]).addTo(this.map);
 
       tooltip.setLngLat(e.lngLat);
       this.map.getCanvas().style.cursor = features.length ? 'pointer' : '';
 
-      this.setTooltip(features);
+      this.setTooltip(features, 'wards');
 
-      });
+    });
 
-      this.map.on('mouseleave', layer, (e) => {
-          this.map.getCanvas().style.cursor = '';
-          this.tooltipContainer.innerHTML = '';
-      });
-    }
+    this.map.on('mouseleave', 'wards', (e) => {
+        this.map.getCanvas().style.cursor = '';
+        this.tooltipContainer.innerHTML = '';
+    });
 
-  
-    this.map.on('mouseenter','drains-piles', (e) => {
-      this.map.getCanvas().style.cursor = 'pointer';
+    this.map.on('mousemove', 'sub-wards', (e) => {
+      var features = this.map.queryRenderedFeatures(e.point,
+       { layers: ['sub-wards'] });
+      
+      //Show only one feature details, log as error
+      if(features.length > 1) {
+        features = [features[0]];
+        console.error("Layer has overlapping polygons");
+      }
+
+      var tooltipSub = new mapboxgl.Marker(this.tooltipContainerSub, {
+        offset: [-120, 0]
+        }).setLngLat([0,0]).addTo(this.map);
+
+      tooltipSub.setLngLat(e.lngLat);
+      this.map.getCanvas().style.cursor = features.length ? 'pointer' : '';
+
+      this.setTooltip(features, 'sub-wards');
+
+    });
+
+    this.map.on('mouseleave', 'sub-wards', (e) => {
+      this.map.getCanvas().style.cursor = '';
+      this.tooltipContainerSub.innerHTML = '';
+    });
+
+    this.map.on('mousemove', 'shinas', (e) => {
+      var features = this.map.queryRenderedFeatures(e.point,
+       { layers: ['shinas'] });
+
+      //Show only one feature details, log as error
+      if(features.length > 1) {
+        features = [features[0]];
+        console.error("Layer has overlapping polygons");
+      }
+
+      var tooltipShina = new mapboxgl.Marker(this.tooltipContainerShina, {
+        offset: [-120, 0]
+        }).setLngLat([0,0]).addTo(this.map);
+
+      tooltipShina.setLngLat(e.lngLat);
+      this.map.getCanvas().style.cursor = features.length ? 'pointer' : '';
+
+
+      this.setTooltip(features, 'shinas');
+
+    });
+
+    this.map.on('mouseleave', 'shinas', (e) => {
+      this.map.getCanvas().style.cursor = '';
+      this.tooltipContainerShina.innerHTML = '';
     });
   }
 
@@ -316,6 +423,23 @@ export class Map extends React.Component {
     this.map.setPaintProperty('sub-wards', 'fill-outline-color', '#18a6b9');
 
     this.map.setLayoutProperty('sub-wards', 'visibility', 'none');
+  }
+
+  addShinas(){
+
+    // this.removeLayerFromMap('dar-trash');
+
+    this.map.addLayer({
+        id: 'shinas',
+        type: 'fill',
+        source: 'shinas',
+        }, 'dar-trash');
+
+    // this.map.setPaintProperty('sub-wards', 'fill-color', '#ccc');
+    this.map.setPaintProperty('shinas', 'fill-opacity', 0.6);
+    this.map.setPaintProperty('shinas', 'fill-outline-color', '#18a6b9');
+
+    this.map.setLayoutProperty('shinas', 'visibility', 'none');
   }
 
   addHouses(){

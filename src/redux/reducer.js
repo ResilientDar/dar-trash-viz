@@ -89,23 +89,23 @@ const analysisOptions = [{
   property: 'trash_sh',
   stops: [
     [0, '#18a6b9'],
-    [40, '#f4bfb6'],
-    [100, '#f1a8a5'],
-    [300, '#ee8f9a'],
-    [700, '#ef4040'],
-    [1100,'#ff0000'] 
+    [5, '#f4bfb6'],
+    [10, '#f1a8a5'],
+    [20, '#ee8f9a'],
+    [50, '#ef4040'],
+    [100,'#ff0000'] 
   ]
 },
 
-{
-  name: 'Households',
-  description: 'Households with trash piles within 1 meter',
-  property: 'experience',
-  stops: [
-    ['yes', '#ff0000'],
-    ['no', '#008000']
-  ]
-},
+// {
+//   name: 'Households',
+//   description: 'Households with trash piles within 1 meter',
+//   property: 'experience',
+//   stops: [
+//     ['yes', '#ff0000'],
+//     ['no', '#008000']
+//   ]
+// },
 
 {
   name: 'Trash near Drains',
@@ -118,16 +118,16 @@ const analysisOptions = [{
   ]
 },
 
-{
-  name: 'Trash near BRT',
-  description: 'Trash piles within 20 meters from BRT Public Transit',
-  property: 'distance',
-  stops: [
-    [0, '#ff0000'],
-    [10, '#f1a8a5'],
-    [20, '#f8d5cc']
-  ]
-}
+// {
+//   name: 'Trash near BRT',
+//   description: 'Trash piles within 20 meters from BRT Public Transit',
+//   property: 'distance',
+//   stops: [
+//     [0, '#ff0000'],
+//     [10, '#f1a8a5'],
+//     [20, '#f8d5cc']
+//   ]
+// }
 ]
 
 const initialState = {
