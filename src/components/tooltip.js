@@ -11,7 +11,7 @@ export default class Tooltip extends React.Component {
     const { features } = this.props;
 
     const renderFeature = (feature, i) => {
-      if(feature.layer.id === 'wards'){
+      if(feature.layer && feature.layer.id === 'wards'){
         return (
         <div key={i}>
           <strong className='mr3 center'>WARD DETAILS</strong> <br></br>
@@ -29,7 +29,7 @@ export default class Tooltip extends React.Component {
           </span>
         </div>
       )
-      }else if(feature.layer.id === 'sub-wards') {
+      }else if(feature.layer && feature.layer.id === 'sub-wards') {
         return (
         <div key={i}>
           <strong className='mr3 center'>SUBWARD DETAILS</strong> <br></br>
@@ -52,7 +52,7 @@ export default class Tooltip extends React.Component {
         </div>
       )
       }
-      else if(feature.layer.id === 'shinas') {
+      else if(feature.layer && feature.layer.id === 'shinas') {
         return (
         <div key={i}>
           <strong className='mr3 center'>SHINA DETAILS</strong> <br></br>

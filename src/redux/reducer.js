@@ -8,8 +8,7 @@ const options = [{
     ["Cartload", '#f4bfb6'],
     ["Truckload", '#ee8f9a']
     
-  ],
-  new: false
+  ]
 }, {
   name: 'Waste site type',
   description: 'Type of the trash pile',
@@ -21,8 +20,7 @@ const options = [{
     ["Liquid_Waste", '#ee8f9a'],
     ["Other", '#18a6b9'],
     ["Unidentified", '#008000']
-  ],
-  new: false
+  ]
 },
 {
   name: 'Near bus station',
@@ -32,8 +30,7 @@ const options = [{
     ["Yes", '#ee8f9a'],
     ["No", '#f4bfb6'],
     ["Unidentified", '#18a6b9']
-  ],
-  new: false
+  ]
 },
 {
   name: 'Clean up method',
@@ -44,8 +41,7 @@ const options = [{
     ["By_Machine_Only", '#f1a8a5'],
     ["impossible", '#f4bfb6'],
     ["Unidentified", '#18a6b9']
-  ],
-  new: false
+  ]
 },
 {
   name: 'Accessibility',
@@ -56,8 +52,7 @@ const options = [{
     ["Truck", '#f1a8a5'],
     ["Foot only", '#f4bfb6'],
     ["Unidentified", '#18a6b9']
-  ],
-  new: false
+  ]
 }]
 
 const analysisOptions = [{

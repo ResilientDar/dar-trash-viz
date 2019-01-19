@@ -27,7 +27,7 @@ describe('Tooltip', () => {
 
     expect(enzymeWrapper.find('div').first().hasClass('flex-parent-inline')).toBe(true)
     expect(enzymeWrapper.find('div').at(1).hasClass('flex-child')).toBe(true)
-    expect(enzymeWrapper.find('span').at(3).hasClass('flex-child')).toBe(true)
+    expect(enzymeWrapper.find('span').hasClass('flex-child')).toBe(true)
   })
 
 })
