@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { createFilter } from '../util/filters';
+import Draggable from 'react-draggable'
 
 export class Stats extends React.Component {
 
@@ -43,6 +44,7 @@ export class Stats extends React.Component {
     }
 
     return (
+        <Draggable>
         <div className="absolute top left mt12 ml240 border--dash">
 
           {this.props.moreStats && this.props.features &&
@@ -62,20 +64,20 @@ export class Stats extends React.Component {
               <nav id="filter-group" className="filter-group">
                 <div className="txt-s" >
                     <span className="mr6 round-full w12 h12 inline-block align-middle txt-h4" style={{ backgroundColor: "#51bbd6" }} /> 
-                    <label htmlFor="0 - 100" >
-                      0 - 100
+                    <label htmlFor="0 - 99" >
+                      0 - 99
                     </label>
                 </div>
                  <div className="txt-s" >
                      <span className="mr6 round-full w12 h12 inline-block align-middle txt-h4" style={{ backgroundColor: "#f1f075" }} /> 
-                    <label htmlFor="101 - 750" >
-                      101 - 750
+                    <label htmlFor="100 - 750" >
+                      101 - 749
                     </label>
                   </div>
                   <div className="txt-s" >
                     <span className="mr6 round-full w12 h12 inline-block align-middle txt-h4" style={{ backgroundColor: "#f28cb1" }} /> 
                     <label htmlFor="> 750" >
-                      > 751
+                      > 750
                     </label>
                   </div>
               </nav>
@@ -88,6 +90,7 @@ export class Stats extends React.Component {
 
            
         </div>
+        </Draggable>
      
     );
   }

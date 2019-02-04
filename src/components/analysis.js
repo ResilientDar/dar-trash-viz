@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import Draggable from 'react-draggable'
 
 export class Analysis extends React.Component {
 
@@ -44,11 +45,10 @@ export class Analysis extends React.Component {
         </div>
       ); 
       }
-
-
     }
 
     return (
+      <Draggable>
       <div className="listing-group absolute left ml12 mt264 w180 border border--2 border--white bg-white shadow-darken10 z1 analysis">
         Analysis
         {/*Check if analysis options are defined then map them */}
@@ -56,6 +56,7 @@ export class Analysis extends React.Component {
         <span className="more-list fr" onClick={() => this.props.onClick(!this.props.moreAnalysis)} >
         {this.props.moreAnalysis? "less": "more"}</span>
       </div>
+      </Draggable>
     );
   }
 }

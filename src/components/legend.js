@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import Draggable from 'react-draggable'
 
 export class Legend extends React.Component {
 
@@ -29,6 +30,7 @@ export class Legend extends React.Component {
     }
 
     return (
+      <Draggable>
       <div className="bg-white absolute bottom right mr12 mb24 py12 px12 shadow-darken10 round wmax180"
       title="Click the list items to filter the map">
         <div className='mb6'>
@@ -40,6 +42,7 @@ export class Legend extends React.Component {
         {stops && stops.map(renderLegendKeys)}
         </nav>
       </div>
+      </Draggable>
     );
   }
 }

@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import Draggable from 'react-draggable'
 
 export class Toggle extends React.Component {
 
@@ -23,10 +24,12 @@ export class Toggle extends React.Component {
     }
 
     return (
+      <Draggable>
       <div className="listing-group absolute top left ml12 mt92 border border--2 border--white bg-white shadow-darken10 z1">
         {/*Check if options are defined then map them */}
         {options && options.map(renderOptions)}
       </div>
+      </Draggable>
     );
   }
 }

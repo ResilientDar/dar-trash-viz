@@ -72,6 +72,9 @@ export class Map extends React.Component {
       this.addWards();
       this.addSubWards();
       this.addShinas();
+      this.addDroneImagery();
+      this.addRivers();
+      this.addStreams();
       // this.addHouses();
       this.addDrainPiles();
       // this.addBRTPiles();
@@ -461,6 +464,50 @@ export class Map extends React.Component {
     this.map.setLayoutProperty('shinas', 'visibility', 'none');
   }
 
+  addDroneImagery(){
+
+    // this.removeLayerFromMap('dar-trash');
+
+    this.map.addLayer({
+        id: 'drone-imagery',
+        type: 'fill',
+        source: 'drone-imagery',
+        }, 'dar-trash');
+
+    this.map.setLayoutProperty('shinas', 'visibility', 'none');
+  }
+
+  addRivers(){
+
+    // this.removeLayerFromMap('dar-trash');
+
+    this.map.addLayer({
+        id: 'rivers',
+        type: 'line',
+        source: 'rivers',
+        }, 'dar-trash');
+
+    this.map.setPaintProperty('rivers', 'line-color', '#7eb8e0');
+    this.map.setPaintProperty('rivers', 'line-width', 3);
+    this.map.setLayoutProperty('rivers', 'visibility', 'none');
+  }
+
+  addStreams(){
+
+    // this.removeLayerFromMap('dar-trash');
+
+    this.map.addLayer({
+        id: 'streams',
+        type: 'line',
+        source: 'streams',
+        }, 'dar-trash');
+    
+
+    this.map.setPaintProperty('streams', 'line-color', '#06a294');
+    this.map.setPaintProperty('streams', 'line-width', 2);
+    this.map.setLayoutProperty('streams', 'visibility', 'none');
+  }
+
   addHouses(){
     // this.removeLayerFromMap('dar-trash');
 
@@ -631,7 +678,8 @@ export class Map extends React.Component {
 
   createLayerControl(mapInstance){
 
-    var toggleableLayerIds = [ 'points', 'clusters', 'drainage', 'BRT' ];
+    var toggleableLayerIds = [ 'points', 'drone imagery', 'clusters',
+    'rivers', 'streams', 'drainage', 'BRT' ];
 
     for (var i = 0; i < toggleableLayerIds.length; i++) {
         var id = toggleableLayerIds[i];
@@ -639,7 +687,7 @@ export class Map extends React.Component {
         var link = document.createElement('a');
         link.href = '#';
         link.className = (id === 'points') ? 'active' : '';
-        link.style = (id === 'drainage' || id === 'BRT')  ? 'display: none;': '';
+        link.style = ((id === 'drainage' || id === 'BRT' ) || ( id === 'streams' )) ? 'display: none;': '';
         link.textContent = id;
         link.id = id;
 
@@ -669,6 +717,7 @@ export class Map extends React.Component {
                   mapInstance.map.setLayoutProperty("unclustered-point", 'visibility', 'visible');
                   setClusterActive(true);
                 }
+                
             }
         };
 
@@ -685,16 +734,19 @@ export class Map extends React.Component {
 
         var drainage = document.getElementById('drainage');
         var brt = document.getElementById('BRT');
+        var streams = document.getElementById('streams');
 
         span.onclick = function(e) {
           if(this.textContent === 'more') {
             drainage.style = 'display: block;';
             brt.style = 'display: block;';
+            streams.style = 'display: block;';
 
             this.textContent = 'less';
           }else{
             drainage.style = 'display: none;';
             brt.style = 'display: none;';
+            streams.style = 'display: none;';
             
             this.textContent = 'more';
           }
@@ -750,6 +802,7 @@ export class Map extends React.Component {
   getLayerTextContent(id){
     if (id === "points") return "dar-trash";
     else if (id === "clusters") return "clusters";
+    else if (id === "drone imagery") return "drone-imagery";
     else return id;
   }
 

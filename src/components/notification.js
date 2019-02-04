@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { setFeatures } from '../redux/features'
 import data from '../data.json'
+import Draggable from 'react-draggable'
 
 export class Notification extends React.Component {
 
@@ -31,6 +32,7 @@ export class Notification extends React.Component {
     const { options, active } = this.props;
     
     return (
+      <Draggable>
       <div>
         <div className="absolute top left mt12">
         </div>
@@ -61,6 +63,7 @@ export class Notification extends React.Component {
         </div>
         }
       </div>
+      </Draggable>
     );
   }
 }
