@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import TextEllipsis from 'react-text-ellipsis'
-import Draggable from 'react-draggable'
 
 
 export class Info extends React.Component {
