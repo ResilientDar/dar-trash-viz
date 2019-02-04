@@ -28,6 +28,10 @@ export function changeMoreAnalysis(option) {
   store.dispatch(changeMoreAnalysisAction(option));
 }
 
+export function setMoreStats(option) {
+  store.dispatch(moreStatsAction(option));
+}
+
 export function setActiveOptionAction(option){
   return {
     type: Constants.SET_ACTIVE_OPTION,
@@ -65,5 +69,12 @@ export function changeMoreAnalysisAction(moreAnalysis){
   return {
     type: Constants.CHANGE_MORE_ANALYSIS,
     moreAnalysis
+  }
+}
+
+export function moreStatsAction(moreStats){
+  return {
+    type: Constants.SET_MORE_STATS_OPTION,
+    moreStats
   }
 }

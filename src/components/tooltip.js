@@ -3,10 +3,6 @@ import PropTypes from 'prop-types'
 
 export default class Tooltip extends React.Component {
 
-  static propTypes = {
-    features: PropTypes.array.isRequired
-  };
-
   render() {
     const { features } = this.props;
 

@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import TextEllipsis from 'react-text-ellipsis'
+import Draggable from 'react-draggable'
 
 
 export class Info extends React.Component {
@@ -24,7 +25,7 @@ export class Info extends React.Component {
     if(this.props.infoActive){
       
     return (
-    
+      <Draggable>
       <div className="bg-white popup row absolute pop bottom left shadow-darken10~ z1 wmax500 info ml12 mb36">
         <div> 
           <button className="info-close-button" onClick={() => 
@@ -111,6 +112,7 @@ export class Info extends React.Component {
       }
       
       </div>
+      </Draggable>
     );
   }else {return null;}
 

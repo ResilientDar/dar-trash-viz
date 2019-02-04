@@ -358,3 +358,44 @@ table {
     text-shadow: 0 0 5px #ffffff, 0 0 5px #ffffff, 0 0 5px #ffffff, 0 0 5px #ffffff, 0 0 6px #ffffff, 0 0 7px #ffffff, 0 0 8px #ffffff;
   }
 }
+
+.mt48 {
+    margin-top: 48px!important;
+}
+.mt70 {
+    margin-top: 70px!important;
+}
+.mt92 {
+    margin-top: 92px!important;
+}
+.mt192 {
+    margin-top: 192px!important;
+}
+
+.mt204 {
+    margin-top: 204px!important;
+}
+.mt216 {
+    margin-top: 216px!important;
+}
+.mt228 {
+    margin-top: 228px!important;
+}
+.mt240 {
+    margin-top: 240px!important;
+}
+.mt252 {
+    margin-top: 252px!important;
+}
+
+.icon-notify{
+  display: inline-block;
+  position: relative;
+  top: 10px;
+  cursor: pointer;
+}
+
+.notification{
+  padding: 0.3% 0% 0.4% 0.9%;
+}
+

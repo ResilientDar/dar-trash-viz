@@ -23,7 +23,7 @@ describe('Features', () => {
 
 
     const expectedAction = {
-      type: Constants.SET_FEATURES,
+      type: Constants.SET_CURRENT_FEATURE,
       currentFeature,
       infoActive
     }

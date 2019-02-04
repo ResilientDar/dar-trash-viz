@@ -10,10 +10,20 @@ export function setCurrentFeature(currentFeature, infoActive){
 
 export function setCurrentFeatureAction(currentFeature, infoActive){
 	return {
-	    type: Constants.SET_FEATURES,
+	    type: Constants.SET_CURRENT_FEATURE,
 	    currentFeature,
 	    infoActive
 	  }
 }
 
-export default setCurrentFeature;
+export function setFeatures(features){
+	store.dispatch(setFeatureAction(
+		features));
+}
+
+export function setFeatureAction(features){
+	return {
+	    type: Constants.SET_FEATURES,
+	    features
+	  }
+}

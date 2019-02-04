@@ -1,4 +1,4 @@
-import * as Constants from '../constants'
+import * as Constants from '../../constants'
 
 const options = [{
   name: 'Trash by size',
@@ -144,8 +144,13 @@ const initialState = {
   showModalImg: false,
   analysisActive: false,
   zoomToFeature: false,
-  showNotification: false,
-  moreAnalysis: false
+  showNotification: true,
+  moreAnalysis: false,
+  moreStats: false,
+  features: null,
+  layers: [],
+  activeLayers: [],
+  analysisActiveLayers: []
 };
 
 function reducer(state = initialState, action) {
@@ -165,7 +170,7 @@ function reducer(state = initialState, action) {
         selectedStops: assignSelectedStops(action.option.stops),
         analysisActive: true
       });
-    case Constants.SET_FEATURES:
+    case Constants.SET_CURRENT_FEATURE:
       return Object.assign({}, state, {
         currentFeature: action.currentFeature,
         infoActive: action.infoActive
@@ -197,6 +202,15 @@ function reducer(state = initialState, action) {
 
       return Object.assign({}, state, {
         moreAnalysis: action.moreAnalysis
+      });
+    case Constants.SET_MORE_STATS_OPTION:
+
+      return Object.assign({}, state, {
+        moreStats: action.moreStats,
+      });
+    case Constants.SET_FEATURES:
+      return Object.assign({}, state, {
+        features: action.features,
       });
     default:
       return state;
