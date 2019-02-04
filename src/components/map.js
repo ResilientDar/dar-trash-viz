@@ -3,6 +3,9 @@ import PropTypes from 'prop-types'
 import mapboxgl from 'mapbox-gl'
 import { connect } from 'react-redux'
 import { setCurrentFeature } from '../redux/features'
+import { addActiveLayer } from '../redux/layers'
+import { removeActiveLayer } from '../redux/layers'
+import { setClusterActive } from '../redux/layers'
 import data from '../data.json'
 import Tooltip from './tooltip'
 import ReactDOM from 'react-dom'
@@ -20,7 +23,8 @@ export class Map extends React.Component {
     selectedStops: PropTypes.array.isRequired,
     currentFeature: PropTypes.object,
     analysisActive: PropTypes.bool,
-    zoomToFeature:  PropTypes.bool
+    zoomToFeature:  PropTypes.bool,
+    activeLayers: PropTypes.array
   };
 
   state = {
@@ -86,19 +90,36 @@ export class Map extends React.Component {
     this.clickEventsOnPoints();
     
   }
+  setVisibility(all_layers, selected){
+
+    for (var i = 0; i < all_layers.length; i++) {
+      if(all_layers[i] == selected){
+        this.map.setLayoutProperty(
+          all_layers[i],
+           'visibility',
+            'visible');
+         addActiveLayer(all_layers[i])
+      }else{
+        this.map.setLayoutProperty(
+          all_layers[i],
+           'visibility',
+            'none');
+        // removeActiveLayer(all_layers[i])
+      }
+    }
+  }
 
   // Customize (add/remove) layers when options are toggled
   setColor() {
     const { property, stops } = this.props.active;
 
+    const all_layers = ['wards', 'sub-wards', 
+    'shinas', 'drains-piles', 'houses']
+    var selected = ''
+
     if(this.props.analysisActive === true){
       if( property === 'experience'){
-        this.map.setLayoutProperty('houses', 'visibility', 'visible');
-        this.map.setLayoutProperty('wards', 'visibility', 'none');
-        this.map.setLayoutProperty('brt-piles', 'visibility', 'none');
-        this.map.setLayoutProperty('drains-piles', 'visibility', 'none');
-        this.map.setLayoutProperty('sub-wards', 'visibility', 'none');
-        this.map.setLayoutProperty('shinas', 'visibility', 'none');
+        selected = 'houses'
       }
 
       else if( property === 'dist_cm'){
@@ -108,28 +129,7 @@ export class Map extends React.Component {
         //   stops,
         //   type: "categorical"
         // }); 
-
-        this.map.setLayoutProperty('drains-piles', 'visibility', 'visible');
-        this.map.setLayoutProperty('wards', 'visibility', 'none');
-        this.map.setLayoutProperty('houses', 'visibility', 'none');
-        this.map.setLayoutProperty('brt-piles', 'visibility', 'none');
-        this.map.setLayoutProperty('sub-wards', 'visibility', 'none');
-        this.map.setLayoutProperty('shinas', 'visibility', 'none');
-      }
-      else if( property === 'distance'){
-
-        // this.map.setPaintProperty('brt-piles', 'circle-color', {
-        //   property,
-        //   stops,
-        //   type: "categorical"
-        // }); 
-
-        this.map.setLayoutProperty('brt-piles', 'visibility', 'visible');
-        this.map.setLayoutProperty('drains-piles', 'visibility', 'none');
-        this.map.setLayoutProperty('wards', 'visibility', 'none');
-        this.map.setLayoutProperty('houses', 'visibility', 'none');
-        this.map.setLayoutProperty('sub-wards', 'visibility', 'none');
-        this.map.setLayoutProperty('shinas', 'visibility', 'none');
+        selected = 'drains-piles'
       }
 
       else if( property === 'trash_sub'){
@@ -139,12 +139,7 @@ export class Map extends React.Component {
           stops
         }); 
 
-        this.map.setLayoutProperty('sub-wards', 'visibility', 'visible');
-        this.map.setLayoutProperty('wards', 'visibility', 'none');
-        this.map.setLayoutProperty('shinas', 'visibility', 'none');
-        this.map.setLayoutProperty('houses', 'visibility', 'none');
-        this.map.setLayoutProperty('drains-piles', 'visibility', 'none');
-        this.map.setLayoutProperty('brt-piles', 'visibility', 'none');
+        selected = 'sub-wards'
       }
 
       else if( property === 'trash_sh'){
@@ -153,13 +148,8 @@ export class Map extends React.Component {
           property,
           stops
         }); 
-        
-        this.map.setLayoutProperty('shinas', 'visibility', 'visible');
-        this.map.setLayoutProperty('sub-wards', 'visibility', 'none');
-        this.map.setLayoutProperty('wards', 'visibility', 'none');
-        this.map.setLayoutProperty('houses', 'visibility', 'none');
-        this.map.setLayoutProperty('drains-piles', 'visibility', 'none');
-        this.map.setLayoutProperty('brt-piles', 'visibility', 'none');
+
+        selected = 'shinas'
       }
 
       else{
@@ -168,22 +158,10 @@ export class Map extends React.Component {
           stops
         });
 
-        this.map.setLayoutProperty('wards', 'visibility', 'visible');
-        this.map.setLayoutProperty('houses', 'visibility', 'none');
-        this.map.setLayoutProperty('drains-piles', 'visibility', 'none');
-        this.map.setLayoutProperty('brt-piles', 'visibility', 'none');
-        this.map.setLayoutProperty('sub-wards', 'visibility', 'none');
-        this.map.setLayoutProperty('shinas', 'visibility', 'none');
+        selected = 'wards'
       }
     }
     else{
-
-      this.map.setLayoutProperty('wards', 'visibility', 'none');
-      this.map.setLayoutProperty('shinas', 'visibility', 'none');
-      this.map.setLayoutProperty('sub-wards', 'visibility', 'none');
-      this.map.setLayoutProperty('houses', 'visibility', 'none');
-      this.map.setLayoutProperty('drains-piles', 'visibility', 'none');
-      this.map.setLayoutProperty('brt-piles', 'visibility', 'none');
 
       this.map.setPaintProperty('dar-trash', 'circle-color', {
       property,
@@ -194,6 +172,9 @@ export class Map extends React.Component {
       this.map.setPaintProperty('dar-trash', 'circle-stroke-color', "white"); 
       this.map.setPaintProperty('dar-trash', 'circle-stroke-width', 0.3); 
     }
+
+
+    this.setVisibility(all_layers, selected)
   }
 
   //Filter function for the layer in the map
@@ -647,6 +628,7 @@ export class Map extends React.Component {
                 this.className = '';
 
                 if(clickedLayer === 'clusters'){
+                  setClusterActive(false);
                   mapInstance.map.setLayoutProperty("cluster-count", 'visibility', 'none');
                   mapInstance.map.setLayoutProperty("unclustered-point", 'visibility', 'none');
                 }
@@ -656,6 +638,7 @@ export class Map extends React.Component {
                  if(clickedLayer === 'clusters'){
                   mapInstance.map.setLayoutProperty("cluster-count", 'visibility', 'visible');
                   mapInstance.map.setLayoutProperty("unclustered-point", 'visibility', 'visible');
+                  setClusterActive(true);
                 }
             }
         };
@@ -794,7 +777,8 @@ function mapStateToProps(state) {
     selectedStops: state.selectedStops,
     currentFeature: state.currentFeature,
     analysisActive: state.analysisActive,
-    zoomToFeature:  state.zoomToFeature
+    zoomToFeature:  state.zoomToFeature,
+    activeLayers: state.activeLayers
   };
 }
 

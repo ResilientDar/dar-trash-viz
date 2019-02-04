@@ -150,7 +150,8 @@ const initialState = {
   features: [],
   layers: [],
   activeLayers: [],
-  analysisActiveLayers: []
+  analysisActiveLayers: [],
+  clusterActive: false
 };
 
 function reducer(state = initialState, action) {
@@ -212,6 +213,24 @@ function reducer(state = initialState, action) {
       return Object.assign({}, state, {
         features: action.features,
       });
+    case Constants.ADD_LAYER:
+      return Object.assign({}, state, {
+        activeLayers: addLayer(
+          state.activeLayers, 
+          action.layer)
+      });
+    case Constants.REMOVE_LAYER:
+      return Object.assign({}, state, {
+        activeLayers: removeLayer(
+          state.activeLayers, 
+          action.layer)
+      });
+
+    case Constants.SET_CLUSTER_ACTIVE:
+      return Object.assign({}, state, {
+        clusterActive: action.clusterActive
+      });
+
     default:
       return state;
   }
@@ -252,6 +271,27 @@ function removeStop(selectedStops, stop){
   slicedStops.splice(index, 1);
 
   return slicedStops;
+}
+
+function addLayer(layers, layer){
+  // make a separate array copy
+  var slicedLayers = layers.slice();
+
+  if( layer === undefined) return slicedLayers;
+
+  slicedLayers.push(layer);
+
+  return slicedLayers;
+}
+
+function removeLayer(layers, layer){
+  // make a separate array copy
+  var slicedLayers = layers.slice();
+
+  var index = layers.indexOf(layer);
+  slicedLayers.splice(index, 1);
+
+  return slicedLayers;
 }
 
 export { reducer, initialState };
