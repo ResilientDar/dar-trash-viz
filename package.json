@@ -30,7 +30,8 @@
     "react-dom": "^15.5.0",
     "react-redux": "^5.0.5",
     "react-text-ellipsis": "^1.5.1",
-    "redux": "^3.7.2"
+    "redux": "^3.7.2",
+    "react-scripts": "^2.1.3"
   },
   "jest": {
     "verbose": true,
