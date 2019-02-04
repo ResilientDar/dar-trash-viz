@@ -49,7 +49,7 @@ export class Analysis extends React.Component {
     }
 
     return (
-      <div className="listing-group absolute left ml12 mt252 w180 border border--2 border--white bg-white shadow-darken10 z1 analysis">
+      <div className="listing-group absolute left ml12 mt264 w180 border border--2 border--white bg-white shadow-darken10 z1 analysis">
         Analysis
         {/*Check if analysis options are defined then map them */}
         {analysisOptions && analysisOptions.map(renderOptions)}
