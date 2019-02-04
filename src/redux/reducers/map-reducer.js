@@ -147,7 +147,7 @@ const initialState = {
   showNotification: true,
   moreAnalysis: false,
   moreStats: false,
-  features: null,
+  features: [],
   layers: [],
   activeLayers: [],
   analysisActiveLayers: []

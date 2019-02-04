@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import mapboxgl from 'mapbox-gl'
 import { connect } from 'react-redux'
 import { setCurrentFeature } from '../redux/features'
-import { setFeatures } from '../redux/features'
 import data from '../data.json'
 import Tooltip from './tooltip'
 import ReactDOM from 'react-dom'
@@ -21,8 +20,7 @@ export class Map extends React.Component {
     selectedStops: PropTypes.array.isRequired,
     currentFeature: PropTypes.object,
     analysisActive: PropTypes.bool,
-    zoomToFeature:  PropTypes.bool,
-    features: PropTypes.object
+    zoomToFeature:  PropTypes.bool
   };
 
   state = {
@@ -31,9 +29,13 @@ export class Map extends React.Component {
           };
 
   componentDidUpdate() {
-     this.setColor();
-     this.setFilter();
-     this.zoomToFeature();
+
+    // if(this.map.loaded()){
+
+      this.setColor();
+      this.setFilter();
+      this.zoomToFeature();
+    // }
   }
 
   componentDidMount() {
@@ -60,7 +62,6 @@ export class Map extends React.Component {
     //Main events
 
     this.map.on('load', () => {
-      this.getStats();
       this.mouseEvents();
       this.clusters();
       this.addPoints();
@@ -74,6 +75,10 @@ export class Map extends React.Component {
       this.addBRTNetwork();
       this.setToolTipDiv();
       // this.setFill();
+
+      this.setColor();
+      this.setFilter();
+      this.zoomToFeature();
 
     });
 
@@ -394,11 +399,6 @@ export class Map extends React.Component {
         }, id);
 
     // this.map.setLayoutProperty('dar-trash', 'visibility', 'none');
-  }
-
-  getStats(){
-
-    setFeatures(data.features)
   }
 
   addWards(){
@@ -794,8 +794,7 @@ function mapStateToProps(state) {
     selectedStops: state.selectedStops,
     currentFeature: state.currentFeature,
     analysisActive: state.analysisActive,
-    zoomToFeature:  state.zoomToFeature,
-    features: state.features
+    zoomToFeature:  state.zoomToFeature
   };
 }
 

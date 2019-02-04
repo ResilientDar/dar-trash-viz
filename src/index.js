@@ -14,7 +14,8 @@ import Info from './components/info'
 import Nav from './components/nav'
 import Legend from './components/legend'
 import Analysis from './components/analysis'
-import Notification from './components/notification'
+import Notification from './components/notification' 
+import Stats from './components/stats'
 
 class Application extends React.Component {
   render() {
@@ -23,6 +24,7 @@ class Application extends React.Component {
         <div>
           <Map store = {store} />
           <Notification onClick={setMoreStats} />
+          <Stats/>
           <Toggle onChange={setActiveOption} />
           <Analysis onChange={setAnalysisActiveOption} onClick={changeMoreAnalysis}/>
 
