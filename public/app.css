@@ -393,9 +393,28 @@ table {
   position: relative;
   top: 10px;
   cursor: pointer;
+
+}
+
+.icon-animate{
+  -webkit-animation: notify 1s infinite; /* Safari 4.0 - 8.0 */
+  -webkit-animation-direction: alternate; /* Safari 4.0 - 8.0 */
+  animation: notify 1s infinite;
+  animation-direction: alternate;
+  animation-delay: 8s;
 }
 
 .notification{
   padding: 0.3% 0% 0.4% 0.9%;
+}
+
+@-webkit-keyframes notify {
+  0%   {left: 0px; top: 10px;}
+  100%  {left: 1px; top: 10px;}
+}
+
+@keyframes notify {
+  0%   {left: 0px; top: 10px;}
+  100%  {left: 1px; top: 10px;}
 }
 

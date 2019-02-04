@@ -47,7 +47,7 @@ export class Notification extends React.Component {
               <span className="txt-h4">   Waste Piles </span>
 
               {!this.props.moreStats && 
-                <svg className='icon icon-notify txt-h2' onClick = {() => this.props.onClick(true)} >
+                <svg className='icon icon-notify icon-animate txt-h2' onClick = {() => this.props.onClick(true)} >
                 <use xlinkHref='#icon-chevron-right'/>
                 </svg>
               }
