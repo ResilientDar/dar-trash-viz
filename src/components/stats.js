@@ -13,7 +13,8 @@ export class Stats extends React.Component {
     features: PropTypes.array,
     moreStats: PropTypes.bool,
     selectedStops: PropTypes.array,
-    clusterActive: PropTypes.bool
+    clusterActive: PropTypes.bool,
+    analysisActive: PropTypes.bool
   };
 
   render() {
@@ -45,9 +46,9 @@ export class Stats extends React.Component {
 
     return (
         <Draggable>
-        <div className="absolute top left mt12 ml240 border--dash">
+        <div className="absolute top left mt12 ml240 ">
 
-          {this.props.moreStats && this.props.features &&
+          {this.props.moreStats && this.props.features && !this.props.analysisActive  &&
           <div className="bg-white py12 px12 shadow-darken10 round wmax180">
             {/*Check if features are defined then map them*/}
             <div className='mb6'>
@@ -104,7 +105,8 @@ function mapStateToProps(state) {
     features: state.features,
     moreStats: state.moreStats,
     selectedStops: state.selectedStops,
-    clusterActive: state.clusterActive
+    clusterActive: state.clusterActive,
+    analysisActive: state.analysisActive
 
   };
 }

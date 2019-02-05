@@ -13,7 +13,8 @@ export class Notification extends React.Component {
     onClick: PropTypes.func.isRequired,
     showNotification: PropTypes.bool,
     features: PropTypes.array,
-    moreStats: PropTypes.bool
+    moreStats: PropTypes.bool,
+    analysisActive: PropTypes.bool
   };
 
   componentDidMount(){
@@ -62,6 +63,7 @@ export class Notification extends React.Component {
           </div>
         </div>
         }
+        
       </div>
       </Draggable>
     );
@@ -74,7 +76,8 @@ function mapStateToProps(state) {
     active: state.active,
     showNotification: state.showNotification,
     features: state.features,
-    moreStats: state.moreStats
+    moreStats: state.moreStats,
+    analysisActive: state.analysisActive
   };
 }
 
