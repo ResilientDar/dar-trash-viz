@@ -53,6 +53,16 @@ const options = [{
     ["Foot only", '#f4bfb6'],
     ["Unidentified", '#18a6b9']
   ]
+},
+{
+  name: 'Image Analysis',
+  description: 'AI analysis identifying trash on images',
+  property: 'ga',
+  stops: [
+    ["Contains trash", '#ee8f9a'],
+    ["Does not contain trash", '#cccccc'],
+    ["No image", '#18a6b9']
+  ]
 }]
 
 const analysisOptions = [{

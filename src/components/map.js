@@ -96,7 +96,7 @@ export class Map extends React.Component {
   setVisibility(all_layers, selected){
 
     for (var i = 0; i < all_layers.length; i++) {
-      if(all_layers[i] == selected){
+      if(all_layers[i] === selected){
         this.map.setLayoutProperty(
           all_layers[i],
            'visibility',
@@ -281,14 +281,30 @@ export class Map extends React.Component {
 
   clickEventsOnPoints(){
     this.map.on('click', (e) => {
+
       var features = this.map.queryRenderedFeatures(e.point,
-       { layers: ['dar-trash', 'unclustered-point', 'brt-piles', 'drains-piles'] });
+       { layers: ['dar-trash', 'brt-piles', 'drains-piles'] });
 
       // this.removePopUp();
 
       if (features.length) {
         var clickedPoint = features[0];
         // Close all other popups and display popup for clicked point
+        setCurrentFeature(clickedPoint, true);
+        this.highlightSelectedFeature(clickedPoint);
+      }    
+    });
+
+    // Get feature data from the dar-trash layer instead
+    // from the cluster source, this improves perfomance
+    
+    this.map.on('click', 'unclustered-point', (e) => {
+      
+      var features = this.map.queryRenderedFeatures(e.point,
+       { layers: ['dar-trash'] });
+
+      if (features.length) {
+        var clickedPoint = features[0];
         setCurrentFeature(clickedPoint, true);
         this.highlightSelectedFeature(clickedPoint);
       }    
