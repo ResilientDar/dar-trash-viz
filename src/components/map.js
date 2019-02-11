@@ -6,6 +6,7 @@ import { setCurrentFeature } from '../redux/features'
 import { addActiveLayer } from '../redux/layers'
 import { removeActiveLayer } from '../redux/layers'
 import { setClusterActive } from '../redux/layers'
+import { setFeatures } from '../redux/features'
 import data from '../data.json'
 import Tooltip from './tooltip'
 import ReactDOM from 'react-dom'
@@ -17,6 +18,7 @@ export class Map extends React.Component {
   tooltipContainer;
   tooltipContainerSub;
   tooltipContainerShina;
+  activeAnalysisLayer;
 
   static propTypes = {
     active: PropTypes.object.isRequired,
@@ -24,7 +26,8 @@ export class Map extends React.Component {
     currentFeature: PropTypes.object,
     analysisActive: PropTypes.bool,
     zoomToFeature:  PropTypes.bool,
-    activeLayers: PropTypes.array
+    activeLayers: PropTypes.array,
+    analysisOptions: PropTypes.array,
   };
 
   state = {
@@ -117,39 +120,23 @@ export class Map extends React.Component {
     const { property, stops } = this.props.active;
 
     if(this.props.analysisActive === true){
-      if( property === 'experience'){
-        this.map.setLayoutProperty('houses', 'visibility', 'visible');
-        this.map.setLayoutProperty('wards', 'visibility', 'none');
-        this.map.setLayoutProperty('drains-piles', 'visibility', 'none');
-        this.map.setLayoutProperty('sub-wards', 'visibility', 'none');
-        this.map.setLayoutProperty('shinas', 'visibility', 'none');
-      }
-
-      else if( property === 'dist_cm'){
+      if( property === 'dist_cm'){
 
         // this.map.setPaintProperty('drains-piles', 'circle-color', {
         //   property,
         //   stops,
         //   type: "categorical"
         // }); 
+        this.activeAnalysisLayer = 'drains-piles'
 
         this.map.setLayoutProperty('drains-piles', 'visibility', 'visible');
         this.map.setLayoutProperty('wards', 'visibility', 'none');
-        this.map.setLayoutProperty('houses', 'visibility', 'none');
         this.map.setLayoutProperty('sub-wards', 'visibility', 'none');
         this.map.setLayoutProperty('shinas', 'visibility', 'none');
       }
-      else if( property === 'distance'){
-
-        // this.map.setPaintProperty('brt-piles', 'circle-color', {
-        //   property,
-        //   stops,
-        //   type: "categorical"
-        // }); 
-
-      }
-
       else if( property === 'trash_sub'){
+
+        this.activeAnalysisLayer = 'sub-wards'
 
         this.map.setPaintProperty('sub-wards', 'fill-color', {
           property,
@@ -159,11 +146,12 @@ export class Map extends React.Component {
         this.map.setLayoutProperty('sub-wards', 'visibility', 'visible');
         this.map.setLayoutProperty('wards', 'visibility', 'none');
         this.map.setLayoutProperty('shinas', 'visibility', 'none');
-        this.map.setLayoutProperty('houses', 'visibility', 'none');
         this.map.setLayoutProperty('drains-piles', 'visibility', 'none');
       }
 
       else if( property === 'trash_sh'){
+
+        this.activeAnalysisLayer = 'shinas'
 
         this.map.setPaintProperty('shinas', 'fill-color', {
           property,
@@ -173,18 +161,18 @@ export class Map extends React.Component {
         this.map.setLayoutProperty('shinas', 'visibility', 'visible');
         this.map.setLayoutProperty('sub-wards', 'visibility', 'none');
         this.map.setLayoutProperty('wards', 'visibility', 'none');
-        this.map.setLayoutProperty('houses', 'visibility', 'none');
         this.map.setLayoutProperty('drains-piles', 'visibility', 'none');
       }
 
       else{
+        this.activeAnalysisLayer = 'wards'
+
         this.map.setPaintProperty('wards', 'fill-color', {
           property,
           stops
         });
 
         this.map.setLayoutProperty('wards', 'visibility', 'visible');
-        this.map.setLayoutProperty('houses', 'visibility', 'none');
         this.map.setLayoutProperty('drains-piles', 'visibility', 'none');
         this.map.setLayoutProperty('sub-wards', 'visibility', 'none');
         this.map.setLayoutProperty('shinas', 'visibility', 'none');
@@ -195,8 +183,9 @@ export class Map extends React.Component {
       this.map.setLayoutProperty('wards', 'visibility', 'none');
       this.map.setLayoutProperty('shinas', 'visibility', 'none');
       this.map.setLayoutProperty('sub-wards', 'visibility', 'none');
-      this.map.setLayoutProperty('houses', 'visibility', 'none');
       this.map.setLayoutProperty('drains-piles', 'visibility', 'none');
+
+      this.activeAnalysisLayer = ''
 
       this.map.setPaintProperty('dar-trash', 'circle-color', {
       property,
@@ -229,6 +218,17 @@ export class Map extends React.Component {
        //     console.log('Error');
        // }
    
+    }else{
+       console.log("inside else");
+       if(this.activeAnalysisLayer !== undefined &
+          this.activeAnalysisLayer !== '' ){
+          console.log("filter executed");
+          var activeFilter = this.buildBoundaryFilter(
+            selectedStops,
+             property) 
+          console.log(activeFilter)
+          this.map.setFilter(this.activeAnalysisLayer, activeFilter);
+       }
     }
    
   }
@@ -282,6 +282,8 @@ export class Map extends React.Component {
   clickEventsOnPoints(){
     this.map.on('click', (e) => {
 
+      console.log(e.point);
+
       var features = this.map.queryRenderedFeatures(e.point,
        { layers: ['dar-trash', 'brt-piles', 'drains-piles'] });
 
@@ -297,7 +299,7 @@ export class Map extends React.Component {
 
     // Get feature data from the dar-trash layer instead
     // from the cluster source, this improves perfomance
-    
+
     this.map.on('click', 'unclustered-point', (e) => {
       
       var features = this.map.queryRenderedFeatures(e.point,
@@ -427,6 +429,7 @@ export class Map extends React.Component {
 
         }, id);
 
+
     // this.map.setLayoutProperty('dar-trash', 'visibility', 'none');
   }
 
@@ -522,18 +525,6 @@ export class Map extends React.Component {
     this.map.setPaintProperty('streams', 'line-color', '#06a294');
     this.map.setPaintProperty('streams', 'line-width', 2);
     this.map.setLayoutProperty('streams', 'visibility', 'none');
-  }
-
-  addHouses(){
-    // this.removeLayerFromMap('dar-trash');
-
-    this.map.addLayer({
-        id: 'houses',
-        type: 'symbol',
-        source: 'houses',
-        }, 'dar-trash');
-
-    // this.map.setLayoutProperty('household', 'visibility', 'none');
   }
 
   addDrainPiles(){
@@ -851,6 +842,76 @@ export class Map extends React.Component {
     return filter;
   }
 
+  // Creates a mapbox layer filter for the boundary layers
+
+  buildBoundaryFilter(selectedStops, property){
+
+    var wardStops = [0, 40, 100, 300, 700]
+    var shinaStops = [0, 5, 10, 20, 50, 100]
+
+    var filter = ['any']
+    var stops = selectedStops.sort(this.sortHelper)
+    var index;
+    var legendStops;
+
+    if(property === 'trash_sh'){
+      legendStops = shinaStops
+    }else{
+      legendStops = wardStops
+    }
+      for (var i = 0; i < stops.length; i++) {
+
+        index = legendStops.indexOf(stops[i]);
+
+        if(i === 0){
+          if(stops[i] === 0){
+            filter.push(["<=", property, 0])
+          }else{
+            if(index !== -1){
+              filter.push(["all",
+               [">", property, legendStops[index - 1]],
+                ["<=", property, legendStops[index]]])
+            }
+          }
+        }
+        else if(i === stops.length - 1){
+            if(index !== -1){
+              if(index === legendStops.length - 1){
+                filter.push(["all", 
+                  [">", property, legendStops[index - 1]],
+                ["<=", property, legendStops[index]]])
+                filter.push([">",
+                 property, legendStops[index]])
+              }
+            } 
+        }
+        else{
+            if(index !== -1){
+              filter.push(["all", [">", 
+                property, legendStops[index - 1]],
+                ["<=", property, legendStops[index]]])
+            }
+        }
+      }
+    return filter
+  }
+
+  getIndex(array, value){
+    for(var i = 0; i < array.length; i++){
+      if( array[i] === value) return i;
+    }
+    return -1;
+  }
+
+  //TODO use merge sort
+  sortArray(array, value){
+  }
+
+  sortHelper(a, b) {
+    return a > b ? 1 : b > a ? -1 : 0;
+  }
+
+
   removeLayerFromMap(id){
    if(this.map.getLayer(id)) this.map.removeLayer(id);
   }
@@ -876,7 +937,8 @@ function mapStateToProps(state) {
     currentFeature: state.currentFeature,
     analysisActive: state.analysisActive,
     zoomToFeature:  state.zoomToFeature,
-    activeLayers: state.activeLayers
+    activeLayers: state.activeLayers,
+    analysisOptions: state.analysisOptions
   };
 }
 

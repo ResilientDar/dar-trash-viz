@@ -56,7 +56,7 @@ const options = [{
 },
 {
   name: 'Image Analysis',
-  description: 'AI analysis identifying trash on images',
+  description: 'AI based analysis identifying trash on images',
   property: 'ga',
   stops: [
     ["Contains trash", '#ee8f9a'],
@@ -74,8 +74,7 @@ const analysisOptions = [{
     [40, '#f4bfb6'],
     [100, '#f1a8a5'],
     [300, '#ee8f9a'],
-    [700, '#ef4040'],
-    [1100,'#ff0000'] 
+    [700, '#ef4040']
   ],
   new: false
 },
@@ -89,8 +88,7 @@ const analysisOptions = [{
     [40, '#f4bfb6'],
     [100, '#f1a8a5'],
     [300, '#ee8f9a'],
-    [700, '#ef4040'],
-    [1100,'#ff0000'] 
+    [700, '#ef4040'] 
   ],
   new: (new Date() < new Date("2019-02-12"))
 },
