@@ -19,11 +19,12 @@ export class Analysis extends React.Component {
 
     const renderOptions = (option, i) => {
 
-      if(i < 3){
+      if(i < 4){
         return (
         <div key={i}>
         <div className={option.new ? "": "hide"}>
-        <button className=' btn--s fr glow txt-bold'>new </button></div>
+        <button className="btn--s fr glow txt-bold">new </button>
+        </div>
         <label  className="toggle-container">
           <input onChange={() => this.props.onChange(option)} checked={option.property === active.property} name="toggle" type="radio" />
           <div className="toggle txt-s py3 toggle--active-white">{option.name}</div>

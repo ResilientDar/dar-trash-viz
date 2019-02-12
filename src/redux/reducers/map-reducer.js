@@ -7,8 +7,8 @@ const options = [{
   stops: [
     ["Cartload", '#f4bfb6'],
     ["Truckload", '#ee8f9a']
-    
-  ]
+  ],
+  new: false
 }, {
   name: 'Waste site type',
   description: 'Type of the trash pile',
@@ -20,7 +20,8 @@ const options = [{
     ["Liquid_Waste", '#ee8f9a'],
     ["Other", '#18a6b9'],
     ["Unidentified", '#008000']
-  ]
+  ],
+  new: false
 },
 {
   name: 'Near bus station',
@@ -30,7 +31,8 @@ const options = [{
     ["Yes", '#ee8f9a'],
     ["No", '#f4bfb6'],
     ["Unidentified", '#18a6b9']
-  ]
+  ],
+  new: false
 },
 {
   name: 'Clean up method',
@@ -41,7 +43,8 @@ const options = [{
     ["By_Machine_Only", '#f1a8a5'],
     ["impossible", '#f4bfb6'],
     ["Unidentified", '#18a6b9']
-  ]
+  ],
+  new: false
 },
 {
   name: 'Accessibility',
@@ -52,17 +55,8 @@ const options = [{
     ["Truck", '#f1a8a5'],
     ["Foot only", '#f4bfb6'],
     ["Unidentified", '#18a6b9']
-  ]
-},
-{
-  name: 'Image Analysis',
-  description: 'AI based analysis identifying trash on images',
-  property: 'ga',
-  stops: [
-    ["Contains trash", '#ee8f9a'],
-    ["Does not contain trash", '#cccccc'],
-    ["No image", '#18a6b9']
-  ]
+  ],
+  new: false
 }]
 
 const analysisOptions = [{
@@ -106,6 +100,18 @@ const analysisOptions = [{
     [100,'#ff0000'] 
   ],
   new: (new Date() < new Date("2019-02-12"))
+},
+
+{
+  name: 'Trash tagging',
+  description: 'AI based analysis for identifying presence of trash on images',
+  property: 'ga',
+  stops: [
+    ["Contains trash", '#ee8f9a'],
+    ["Does not contain trash", '#cccccc'],
+    ["No image", '#18a6b9']
+  ],
+  new: (new Date() < new Date("2019-02-19"))
 },
 
 // {
@@ -159,7 +165,8 @@ const initialState = {
   layers: [],
   activeLayers: [],
   analysisActiveLayers: [],
-  clusterActive: false
+  clusterActive: false,
+  analysisActiveOption: null
 };
 
 function reducer(state = initialState, action) {
@@ -177,7 +184,8 @@ function reducer(state = initialState, action) {
       return Object.assign({}, state, {
         active: action.option,
         selectedStops: assignSelectedStops(action.option.stops),
-        analysisActive: true
+        analysisActive: true,
+        analysisActiveOption: action.option
       });
     case Constants.SET_CURRENT_FEATURE:
       return Object.assign({}, state, {

@@ -164,6 +164,27 @@ export class Map extends React.Component {
         this.map.setLayoutProperty('drains-piles', 'visibility', 'none');
       }
 
+      else if( property === 'ga'){
+
+        this.activeAnalysisLayer = 'image'
+
+        var points = document.getElementById('points');
+        points.className = points.className || 'active';
+
+        this.map.setLayoutProperty('dar-trash', 'visibility', 'visible');
+
+        this.map.setPaintProperty('dar-trash', 'circle-color', {
+          property,
+          stops,
+          type: "categorical"
+        });
+        
+        // this.map.setLayoutProperty('shinas', 'visibility', 'none');
+        // this.map.setLayoutProperty('sub-wards', 'visibility', 'none');
+        // this.map.setLayoutProperty('wards', 'visibility', 'none');
+        this.map.setLayoutProperty('drains-piles', 'visibility', 'none');
+      }
+
       else{
         this.activeAnalysisLayer = 'wards'
 
@@ -219,19 +240,22 @@ export class Map extends React.Component {
        // }
    
     }else{
-       console.log("inside else");
-       if(this.activeAnalysisLayer !== undefined &
-          this.activeAnalysisLayer !== '' ){
-          console.log("filter executed");
-          var activeFilter = this.buildBoundaryFilter(
-            selectedStops,
-             property) 
-          console.log(activeFilter)
-          this.map.setFilter(this.activeAnalysisLayer, activeFilter);
-       }
+      if(this.activeAnalysisLayer !== undefined && 
+        this.activeAnalysisLayer !== '' ){
+
+        if(this.activeAnalysisLayer === 'image' ){
+           this.map.setFilter('dar-trash', arr);
+        }
+        else{
+            var activeFilter = this.buildBoundaryFilter(
+              selectedStops,
+               property) 
+            this.map.setFilter(this.activeAnalysisLayer, activeFilter);
+         }
+      }
     }
-   
   }
+
 
   setTooltip(features, layer) {
     if (features.length) {
@@ -732,7 +756,6 @@ export class Map extends React.Component {
         layers.appendChild(link);
 
       }
-
       // Adding a control span for showing and adding extra layers
 
         var span = document.createElement('span');

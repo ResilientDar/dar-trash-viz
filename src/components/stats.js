@@ -14,8 +14,20 @@ export class Stats extends React.Component {
     moreStats: PropTypes.bool,
     selectedStops: PropTypes.array,
     clusterActive: PropTypes.bool,
-    analysisActive: PropTypes.bool
+    analysisActive: PropTypes.bool,
+    analysisActiveOption: PropTypes.object,
+    analysisOptions: PropTypes.array
   };
+
+  hasOptionProperty(property) {
+    if(this.props.analysisActiveOption === null) return false
+
+    return this.props.analysisActiveOption.property === property
+  }
+
+  showStats(property){
+    return this.hasOptionProperty('ga') || !this.props.analysisActive
+  }
 
   render() {
     const { name, description, property, stops } = this.props.active || {};    
@@ -48,7 +60,7 @@ export class Stats extends React.Component {
         <Draggable>
         <div className="absolute top left mt12 ml240 ">
 
-          {this.props.moreStats && this.props.features && !this.props.analysisActive  &&
+          {this.props.moreStats && this.props.features && this.showStats()  &&
           <div className="bg-white py12 px12 shadow-darken10 round wmax180">
             {/*Check if features are defined then map them*/}
             <div className='mb6'>
@@ -106,7 +118,9 @@ function mapStateToProps(state) {
     moreStats: state.moreStats,
     selectedStops: state.selectedStops,
     clusterActive: state.clusterActive,
-    analysisActive: state.analysisActive
+    analysisActive: state.analysisActive,
+    analysisOptions: state.analysisOptions,
+    analysisActiveOption: state.analysisActiveOption
 
   };
 }

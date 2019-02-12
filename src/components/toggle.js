@@ -16,16 +16,22 @@ export class Toggle extends React.Component {
 
     const renderOptions = (option, i) => {
       return (
-        <label key={i} className="toggle-container">
+        <div key={i}>
+        <div className={option.new ? "": "hide"}>
+            <button className="btn--s fr glow txt-bold">new </button>
+          </div>
+        <label  className="toggle-container">
           <input onChange={() => this.props.onChange(option)} checked={option.property === active.property} name="toggle" type="radio" />
           <div className="toggle txt-s py3 toggle--active-white">{option.name}</div>
+          
         </label>
+        </div>
       );
     }
 
     return (
       <Draggable>
-      <div className="listing-group absolute top left ml12 mt92 border border--2 border--white bg-white shadow-darken10 z1">
+      <div className="listing-group absolute top left w180 ml12 mt92 border border--2 border--white bg-white shadow-darken10 z1">
         {/*Check if options are defined then map them */}
         {options && options.map(renderOptions)}
       </div>
