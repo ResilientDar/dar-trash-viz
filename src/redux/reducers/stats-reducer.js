@@ -32,6 +32,10 @@ function statsReducer(state = initialState, action) {
           state.activeLayers, 
           action.layer)
       });
+    case Constants.SET_FEATURES:
+      return Object.assign({}, state, {
+        features: action.features,
+      });
     case Constants.SET_CLUSTER_ACTIVE:
       return Object.assign({}, state, {
         clusterActive: action.clusterActive
