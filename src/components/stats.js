@@ -111,14 +111,15 @@ export class Stats extends React.Component {
 
 function mapStateToProps(state) {
   let mainState = state["main"]
+  let statsState = state["stats"]
   return {
     active: mainState.active,
     activeLayers: mainState.activeLayers,
-    showNotification: mainState.showNotification,
-    features: mainState.features,
-    moreStats: mainState.moreStats,
+    showNotification: statsState.showNotification,
+    features: statsState.features,
+    moreStats: statsState.moreStats,
     selectedStops: mainState.selectedStops,
-    clusterActive: mainState.clusterActive,
+    clusterActive: statsState.clusterActive,
     analysisActive: mainState.analysisActive,
     analysisOptions: mainState.analysisOptions,
     analysisActiveOption: mainState.analysisActiveOption

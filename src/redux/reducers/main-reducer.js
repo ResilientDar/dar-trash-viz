@@ -1,4 +1,5 @@
 import * as Constants from '../../constants'
+import * as Helpers from '../../util/helpers'
 
 const options = [{
   name: 'Trash by size',
@@ -113,17 +114,6 @@ const analysisOptions = [{
   ],
   new: (new Date() < new Date("2019-02-19"))
 },
-
-// {
-//   name: 'Households',
-//   description: 'Households with trash piles within 1 meter',
-//   property: 'experience',
-//   stops: [
-//     ['yes', '#ff0000'],
-//     ['no', '#008000']
-//   ]
-// },
-
 {
   name: 'Trash near Drains',
   description: 'Trash piles within 1 meter from drains',
@@ -134,18 +124,7 @@ const analysisOptions = [{
     [100, '#f8d5cc']
   ],
   new: false
-},
-
-// {
-//   name: 'Trash near BRT',
-//   description: 'Trash piles within 20 meters from BRT Public Transit',
-//   property: 'distance',
-//   stops: [
-//     [0, '#ff0000'],
-//     [10, '#f1a8a5'],
-//     [20, '#f8d5cc']
-//   ]
-// }
+}
 ]
 
 const initialState = {
@@ -153,19 +132,15 @@ const initialState = {
   analysisOptions,
   active: options[0],
   currentFeature: null,
-  selectedStops: assignSelectedStops(options[0].stops),
+  selectedStops: Helpers.assignSelectedStops(options[0].stops),
   infoActive: false,
   showModalImg: false,
   analysisActive: false,
   zoomToFeature: false,
-  showNotification: true,
   moreAnalysis: false,
-  moreStats: false,
-  features: [],
   layers: [],
   activeLayers: [],
   analysisActiveLayers: [],
-  clusterActive: false,
   analysisActiveOption: null
 };
 
@@ -176,14 +151,14 @@ function mainReducer(state = initialState, action) {
 
       return Object.assign({}, state, {
         active: action.option,
-        selectedStops: assignSelectedStops(action.option.stops),
+        selectedStops: Helpers.assignSelectedStops(action.option.stops),
         analysisActive: false
       });
     case Constants.SET_ANALYSIS_ACTIVE_OPTION:
 
       return Object.assign({}, state, {
         active: action.option,
-        selectedStops: assignSelectedStops(action.option.stops),
+        selectedStops: Helpers.assignSelectedStops(action.option.stops),
         analysisActive: true,
         analysisActiveOption: action.option
       });
@@ -195,119 +170,33 @@ function mainReducer(state = initialState, action) {
 
     case Constants.SET_LEGEND_ACTIVE_OPTION:
       var stops;
-      if(contains(state.selectedStops, action.option)){
-        stops = removeStop(state.selectedStops, action.option);
+      if(Helpers.contains(state.selectedStops, action.option)){
+        stops = Helpers.removeStop(state.selectedStops, action.option);
         return Object.assign({}, state, {
           selectedStops: stops
         });
       }
       else{
-        stops = addStop(state.selectedStops, action.option);
+        stops = Helpers.addStop(state.selectedStops, action.option);
 
           return Object.assign({}, state, {
             selectedStops: stops
           });
       }
     case Constants.SET_INFO_ACTIVE:
-
       return Object.assign({}, state, {
         infoActive: action.infoActive,
         showModalImg: action.showModalImg,
         zoomToFeature: action.zoomToFeature
       });
     case Constants.CHANGE_MORE_ANALYSIS:
-
       return Object.assign({}, state, {
         moreAnalysis: action.moreAnalysis
-      });
-    case Constants.SET_MORE_STATS_OPTION:
-
-      return Object.assign({}, state, {
-        moreStats: action.moreStats,
-      });
-    case Constants.SET_FEATURES:
-      return Object.assign({}, state, {
-        features: action.features,
-      });
-    case Constants.ADD_LAYER:
-      return Object.assign({}, state, {
-        activeLayers: addLayer(
-          state.activeLayers, 
-          action.layer)
-      });
-    case Constants.REMOVE_LAYER:
-      return Object.assign({}, state, {
-        activeLayers: removeLayer(
-          state.activeLayers, 
-          action.layer)
-      });
-
-    case Constants.SET_CLUSTER_ACTIVE:
-      return Object.assign({}, state, {
-        clusterActive: action.clusterActive
       });
 
     default:
       return state;
   }
-}
-
-// Helpers
-
-function assignSelectedStops(stops){
-  var selectedStops = [];
-  if(stops === undefined) return selectedStops;
-
-  for (var i = 0; i < stops.length; i++) {
-      selectedStops[i] = stops[i][0];
-  }
-  return selectedStops;
-}
-
-function contains(selectedStops, stop){
-  return selectedStops.includes(stop);
-}
-
-function addStop(selectedStops, stop){
-  // make a separate array copy
-  var slicedStops = selectedStops.slice();
-
-  if( stop === undefined) return slicedStops;
-
-  slicedStops.push(stop);
-
-  return slicedStops;
-}
-
-function removeStop(selectedStops, stop){
-  // make a separate array copy
-  var slicedStops = selectedStops.slice();
-
-  var index = selectedStops.indexOf(stop);
-  slicedStops.splice(index, 1);
-
-  return slicedStops;
-}
-
-function addLayer(layers, layer){
-  // make a separate array copy
-  var slicedLayers = layers.slice();
-
-  if( layer === undefined) return slicedLayers;
-
-  slicedLayers.push(layer);
-
-  return slicedLayers;
-}
-
-function removeLayer(layers, layer){
-  // make a separate array copy
-  var slicedLayers = layers.slice();
-
-  var index = layers.indexOf(layer);
-  slicedLayers.splice(index, 1);
-
-  return slicedLayers;
 }
 
 export { mainReducer, initialState };

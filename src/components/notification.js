@@ -72,12 +72,13 @@ export class Notification extends React.Component {
 
 function mapStateToProps(state) {
   let mainState = state["main"]
+  let statsState = state["stats"]
   return {
     options: mainState.options,
     active: mainState.active,
-    showNotification: mainState.showNotification,
-    features: mainState.features,
-    moreStats: mainState.moreStats,
+    showNotification: statsState.showNotification,
+    features: statsState.features,
+    moreStats: statsState.moreStats,
     analysisActive: mainState.analysisActive
   };
 }
