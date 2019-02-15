@@ -16,7 +16,7 @@ jest.mock("mapbox-gl", () => {
 
 const middlewares = []
 const mockStore = configureStore(middlewares)
-const initialState = {}
+const initialState = { main:{} }
 const store = mockStore(initialState)
 
 configure({ adapter: new Adapter() })

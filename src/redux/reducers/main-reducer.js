@@ -138,8 +138,6 @@ const initialState = {
   analysisActive: false,
   zoomToFeature: false,
   moreAnalysis: false,
-  layers: [],
-  activeLayers: [],
   analysisActiveLayers: [],
   analysisActiveOption: null
 };
@@ -188,6 +186,10 @@ function mainReducer(state = initialState, action) {
         infoActive: action.infoActive,
         showModalImg: action.showModalImg,
         zoomToFeature: action.zoomToFeature
+      }); 
+    case Constants.SET_FEATURES:
+      return Object.assign({}, state, {
+        features: action.features,
       });
     case Constants.CHANGE_MORE_ANALYSIS:
       return Object.assign({}, state, {
