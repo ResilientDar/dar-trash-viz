@@ -41,9 +41,10 @@ export class Toggle extends React.Component {
 }
 
 function mapStateToProps(state) {
+  let mainState = state["main"]
   return {
-    options: state.options,
-    active: state.active
+    options: mainState.options,
+    active: mainState.active
   };
 }
 

@@ -954,14 +954,15 @@ export class Map extends React.Component {
 }
 
 function mapStateToProps(state) {
+  let mainState = state["main"]
   return {
-    active: state.active,
-    selectedStops: state.selectedStops,
-    currentFeature: state.currentFeature,
-    analysisActive: state.analysisActive,
-    zoomToFeature:  state.zoomToFeature,
-    activeLayers: state.activeLayers,
-    analysisOptions: state.analysisOptions
+    active: mainState.active,
+    selectedStops: mainState.selectedStops,
+    currentFeature: mainState.currentFeature,
+    analysisActive: mainState.analysisActive,
+    zoomToFeature:  mainState.zoomToFeature,
+    activeLayers: mainState.activeLayers,
+    analysisOptions: mainState.analysisOptions
   };
 }
 

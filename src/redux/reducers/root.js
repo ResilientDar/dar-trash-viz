@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux'
-import { mapReducer } from './map-reducer'
+import { mainReducer } from './main-reducer'
 import { statsReducer }  from './stats-reducer'
 
 
 export default combineReducers({ 
-  mapReducer,
-  statsReducer
+  main: mainReducer,
+  stats: statsReducer
 });

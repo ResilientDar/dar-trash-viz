@@ -63,11 +63,12 @@ export class Analysis extends React.Component {
 }
 
 function mapStateToProps(state) {
+  let mainState = state["main"]
   return {
-    analysisOptions: state.analysisOptions,
-    active: state.active,
-    analysisActive: state.analysisActive,
-    moreAnalysis: state.moreAnalysis
+    analysisOptions: mainState.analysisOptions,
+    active: mainState.active,
+    analysisActive: mainState.analysisActive,
+    moreAnalysis: mainState.moreAnalysis
   };
 }
 

@@ -77,8 +77,8 @@ export class Stats extends React.Component {
               <nav id="filter-group" className="filter-group">
                 <div className="txt-s" >
                     <span className="mr6 round-full w12 h12 inline-block align-middle txt-h4" style={{ backgroundColor: "#51bbd6" }} /> 
-                    <label htmlFor="0 - 99" >
-                      0 - 99
+                    <label htmlFor="1 - 99" >
+                      1 - 99
                     </label>
                 </div>
                  <div className="txt-s" >
@@ -110,17 +110,18 @@ export class Stats extends React.Component {
 }
 
 function mapStateToProps(state) {
+  let mainState = state["main"]
   return {
-    active: state.active,
-    activeLayers: state.activeLayers,
-    showNotification: state.showNotification,
-    features: state.features,
-    moreStats: state.moreStats,
-    selectedStops: state.selectedStops,
-    clusterActive: state.clusterActive,
-    analysisActive: state.analysisActive,
-    analysisOptions: state.analysisOptions,
-    analysisActiveOption: state.analysisActiveOption
+    active: mainState.active,
+    activeLayers: mainState.activeLayers,
+    showNotification: mainState.showNotification,
+    features: mainState.features,
+    moreStats: mainState.moreStats,
+    selectedStops: mainState.selectedStops,
+    clusterActive: mainState.clusterActive,
+    analysisActive: mainState.analysisActive,
+    analysisOptions: mainState.analysisOptions,
+    analysisActiveOption: mainState.analysisActiveOption
 
   };
 }

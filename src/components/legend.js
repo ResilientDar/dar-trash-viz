@@ -48,9 +48,10 @@ export class Legend extends React.Component {
 }
 
 function mapStateToProps(state) {
+  let mainState = state["main"]
   return {
-    active: state.active,
-    selectedStops: state.selectedStops
+    active: mainState.active,
+    selectedStops: mainState.selectedStops
   };
 }
 

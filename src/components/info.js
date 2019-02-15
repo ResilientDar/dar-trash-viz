@@ -120,13 +120,14 @@ export class Info extends React.Component {
 }
 
 function mapStateToProps(state) {
+  let mainState = state["main"]
   return {
-    active: state.active,
-    options: state.options,
-    currentFeature: state.currentFeature,
-    infoActive: state.infoActive,
-    showModalImg: state.showModalImg,
-    zoomToFeature: state.zoomToFeature
+    active: mainState.active,
+    options: mainState.options,
+    currentFeature: mainState.currentFeature,
+    infoActive: mainState.infoActive,
+    showModalImg: mainState.showModalImg,
+    zoomToFeature: mainState.zoomToFeature
   };
 }
 

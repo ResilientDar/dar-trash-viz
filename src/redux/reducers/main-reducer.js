@@ -169,7 +169,7 @@ const initialState = {
   analysisActiveOption: null
 };
 
-function reducer(state = initialState, action) {
+function mainReducer(state = initialState, action) {
 
   switch (action.type) {
     case Constants.SET_ACTIVE_OPTION:
@@ -310,4 +310,4 @@ function removeLayer(layers, layer){
   return slicedLayers;
 }
 
-export { reducer, initialState };
+export { mainReducer, initialState };
