@@ -30,7 +30,7 @@ export class Stats extends React.Component {
   }
 
   render() {
-    const { name, description, property, stops } = this.props.active || {};    
+    const {property, stops } = this.props.active || {};
 
     const renderPointStats = (stop, i) => {
       if(this.props.selectedStops.includes(stop[0])){

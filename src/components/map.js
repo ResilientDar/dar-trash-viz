@@ -4,9 +4,7 @@ import mapboxgl from 'mapbox-gl'
 import { connect } from 'react-redux'
 import { setCurrentFeature } from '../redux/features'
 import { addActiveLayer } from '../redux/layers'
-import { removeActiveLayer } from '../redux/layers'
 import { setClusterActive } from '../redux/layers'
-import { setFeatures } from '../redux/features'
 import data from '../data.json'
 import Tooltip from './tooltip'
 import ReactDOM from 'react-dom'
@@ -221,7 +219,7 @@ export class Map extends React.Component {
 
   //Filter function for the layer in the map
   setFilter() {
-    const { property, stops } = this.props.active;
+    const { property } = this.props.active;
     
     const selectedStops = this.props.selectedStops;
     const arr = this.buildFilter(selectedStops, property);

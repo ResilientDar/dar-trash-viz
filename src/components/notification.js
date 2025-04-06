@@ -30,8 +30,6 @@ export class Notification extends React.Component {
   }
 
   render() {
-    const { options, active } = this.props;
-    
     return (
       <Draggable>
       <div>

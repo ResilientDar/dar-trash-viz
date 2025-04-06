@@ -5,6 +5,8 @@ Dar es salaam Trash pile visualization (with [redux](https://www.npmjs.com/packa
 ### Run it
 
     git clone https://github.com/ResilientDar/dar-trash-viz.git
+    
+    cd dar-trash-viz 
 
     npm install
     npm start

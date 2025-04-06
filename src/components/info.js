@@ -18,10 +18,16 @@ export class Info extends React.Component {
   };
 
   render() {
-    
     var vari = {
       fontSize: '10px'
     }
+
+    var placeholderImage = 'https://placehold.co/600x400?text=Image\n+not+Found';
+
+    const onImageError = (e) => {
+        e.target.src = placeholderImage
+    }
+
     if(this.props.infoActive){
       
     return (
@@ -33,10 +39,11 @@ export class Info extends React.Component {
         </div>
         <div className='mb6 col popic spanpop'>
           <img src={this.props.currentFeature ? 
-            this.props.currentFeature.properties.imp:''} 
+            this.props.currentFeature.properties.imp:''}
 
           className="pic img-left" alt="Trash pile" onClick={() =>
-           this.props.onClick(this.props.infoActive, true)} />
+           this.props.onClick(this.props.infoActive, true)}
+                          onError={onImageError}/>
 
         </div>        
         <div className="col">
